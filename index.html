@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>世界杯32强武力值排行榜</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 50%, #0f1a2a 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(90deg, #ffd700, #ff8c00, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        h1 { font-size: 2.8em; margin-bottom: 8px; text-shadow: 0 0 20px rgba(255,215,0,0.3); }
+        .subtitle { color: #aaa; font-size: 1.1em; margin-bottom: 5px; }
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        .stat { color: #ffd700; font-size: 0.95em; }
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.9em; }
+        .legend-color { width: 25px; height: 12px; border-radius: 3px; }
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .filter-btn {
+            padding: 8px 14px;
+            border: 2px solid #ffd700;
+            background: transparent;
+            color: #ffd700;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.3s;
+            font-size: 0.85em;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: #ffd700;
+            color: #000;
+        }
+        .power-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .team-card {
+            background: rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+            cursor: pointer;
+        }
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            border-radius: 4px 0 0 4px;
+        }
+        .team-card.ss::before { background: #ff4757; }
+        .team-card.s::before { background: #ffa502; }
+        .team-card.a::before { background: #2ed573; }
+        .team-card.b::before { background: #5352ed; }
+        .team-card.c::before { background: #555; }
+        .team-card:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            background: rgba(255,255,255,0.1);
+        }
+        .rank {
+            font-size: 1.3em;
+            font-weight: bold;
+            width: 35px;
+            text-align: center;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255,215,0,0.5);
+        }
+        .flag { font-size: 2em; width: 45px; text-align: center; }
+        .team-info { flex: 1; }
+        .team-name { font-size: 1.1em; font-weight: bold; margin-bottom: 3px; }
+        .team-meta { font-size: 0.78em; color: #888; display: flex; gap: 10px; }
+        .team-group { color: #ffd700; }
+        .power-section { display: flex; align-items: center; gap: 10px; }
+        .power-bar {
+            width: 70px;
+            height: 10px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .power-fill { height: 100%; border-radius: 5px; transition: width 0.8s; }
+        .power-fill.high { background: linear-gradient(90deg, #ff4757, #ff6b81); }
+        .power-fill.mid-high { background: linear-gradient(90deg, #ffa502, #ff6348); }
+        .power-fill.mid { background: linear-gradient(90deg, #2ed573, #7bed9f); }
+        .power-fill.low { background: linear-gradient(90deg, #5352ed, #7c7cfd); }
+        .power-fill.very-low { background: #555; }
+        .power-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            min-width: 45px;
+            text-align: right;
+        }
+        .power-value.ss { color: #ff4757; text-shadow: 0 0 15px rgba(255,71,87,0.5); }
+        .power-value.s { color: #ffa502; text-shadow: 0 0 15px rgba(255,165,2,0.5); }
+        .power-value.a { color: #2ed573; text-shadow: 0 0 15px rgba(46,213,115,0.5); }
+        .power-value.b { color: #7c7cfd; text-shadow: 0 0 15px rgba(83,82,237,0.5); }
+        .power-value.c { color: #888; }
+        .team-card {
+            cursor: pointer;
+        }
+        .team-analysis {
+            display: none;
+            width: 100%;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 10px;
+            border-left: 4px solid #ffd700;
+            font-size: 0.95em;
+            line-height: 1.8;
+            color: #eee;
+        }
+        .team-card.expanded .team-analysis {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .click-hint {
+            font-size: 0.7em;
+            color: #555;
+            margin-left: 5px;
+        }
+        .section-title {
+            font-size: 1.2em;
+            color: #ffd700;
+            margin: 25px 0 15px;
+            padding-left: 10px;
+            border-left: 3px solid #ffd700;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 25px;
+            color: #555;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .update-time { color: #ffd700; font-size: 0.95em; margin-bottom: 8px; }
+        .openclaw-section {
+            background: rgba(255,215,0,0.08);
+            border: 1px solid rgba(255,215,0,0.2);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        .openclaw-title {
+            font-size: 1.4em;
+            color: #ffd700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .openclaw-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        .match-analysis {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 3px solid #ffd700;
+        }
+        .match-time {
+            color: #ffd700;
+            font-size: 0.85em;
+            margin-bottom: 8px;
+        }
+        .match-teams {
+            font-size: 1em;
+            margin-bottom: 8px;
+        }
+        .match-prediction {
+            color: #2ed573;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        .match-odds {
+            color: #888;
+            font-size: 0.8em;
+        }
+        .hot-match {
+            background: rgba(255,71,87,0.1);
+            border: 1px solid rgba(255,71,87,0.3);
+        }
+        .hot-match .match-time {
+            color: #ff4757;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 2em; }
+            .power-list { grid-template-columns: 1fr; }
+            .stats-bar { gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚽ 世界杯48强武力值排行榜</h1>
+            <p class="subtitle">综合FIFA排名 · 比赛表现 · PELE模型 · 专家预测</p>
+            <div class="stats-bar">
+                <span class="stat">🏆 共48支球队</span>
+                <span class="stat">📅 更新：2026.06.19 08:13</span>
+                <span class="stat">🤖 数据源：Nate Silver PELE · CleverScores · The Stat Bible</span>
+            </div>
+        </header>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(90deg, #ff4757, #ff6b81);"></div>
+                <span>SS级 (90-100)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(90deg, #ffa502, #ff6348);"></div>
+                <span>S级 (80-89)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(90deg, #2ed573, #7bed9f);"></div>
+                <span>A级 (70-79)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(90deg, #5352ed, #7c7cfd);"></div>
+                <span>B级 (60-69)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #555;"></div>
+                <span>C级 (50-59)</span>
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterTeams('all')">全部48队</button>
+            <button class="filter-btn" onclick="filterTeams('A')">A组</button>
+            <button class="filter-btn" onclick="filterTeams('B')">B组</button>
+            <button class="filter-btn" onclick="filterTeams('C')">C组</button>
+            <button class="filter-btn" onclick="filterTeams('D')">D组</button>
+            <button class="filter-btn" onclick="filterTeams('E')">E组</button>
+            <button class="filter-btn" onclick="filterTeams('F')">F组</button>
+            <button class="filter-btn" onclick="filterTeams('G')">G组</button>
+            <button class="filter-btn" onclick="filterTeams('H')">H组</button>
+            <button class="filter-btn" onclick="filterTeams('I')">I组</button>
+            <button class="filter-btn" onclick="filterTeams('J')">J组</button>
+            <button class="filter-btn" onclick="filterTeams('K')">K组</button>
+            <button class="filter-btn" onclick="filterTeams('L')">L组</button>
+        </div>
+
+        <div id="content"></div>
+
+        <div class="openclaw-section">
+            <div class="openclaw-title">🤖 新加坡虾米 OpenClaw 分析（MiniMax-M3）</div>
+            <div class="openclaw-content">
+                <div class="match-analysis hot-match">
+                    <div class="match-time">✅ 昨夜 瑞士 4-1 波黑</div>
+                    <div class="match-teams">🇨🇭 瑞士大胜，4-1！</div>
+                    <div class="match-prediction">📈 瑞士武力值：73 → <span style="color:#ffa502;font-weight:bold;">81</span>（升级S级）</div>
+                    <div class="match-odds">💡 沙奇里2传1射闪耀全场，波黑防线崩溃</div>
+                </div>
+                <div class="match-analysis">
+                    <div class="match-time">✅ 昨夜 捷克 1-1 南非</div>
+                    <div class="match-teams">🇨🇿 捷克 vs 🇿🇦 南非 握手言和</div>
+                    <div class="match-prediction">📈 捷克 +1，南非 +1</div>
+                    <div class="match-odds">💡 捷克连续两场1-1，南非本届逼平强敌</div>
+                </div>
+                <div class="match-analysis hot-match">
+                    <div class="match-time">🔥 今晚焦点 哥伦比亚 vs 乌拉圭</div>
+                    <div class="match-teams">🇨🇴 哥伦比亚 vs 🇺🇾 乌拉圭</div>
+                    <div class="match-prediction">🔮 主推：乌拉圭 2-1 小胜</div>
+                    <div class="match-odds">📊 乌拉圭 S级班底，努涅斯状态火热</div>
+                    <div class="match-odds">⚠️ 哥伦比亚3-1乌兹别克也有爆冷潜力</div>
+                </div>
+            </div>
+            <div style="margin-top:15px;padding:10px;background:rgba(0,0,0,0.2);border-radius:8px;">
+                <div style="color:#ffd700;font-size:0.9em;margin-bottom:8px;">📋 今晚投注建议（3串1）</div>
+                <div style="color:#aaa;font-size:0.85em;">
+                    乌拉圭 2-1 + 巴西 2-0 + 英格兰 3-0<br>
+                    综合赔率 ≈ 4.5 × 3.2 × 5.0 ≈ <span style="color:#2ed573;font-weight:bold;">72倍</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="openclaw-section" style="background:rgba(0,255,200,0.05);border-color:rgba(0,255,200,0.2);">
+            <div class="openclaw-title" style="color:#00ffc8;">🌐 玲珑 OpenClaw 全球数据分析</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:15px;">
+                <div style="background:rgba(0,0,0,0.3);border-radius:10px;padding:20px;border:1px solid rgba(0,255,200,0.2);">
+                    <div style="color:#00ffc8;font-size:1.1em;margin-bottom:12px;">📊 世界杯数据总览</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:0.9em;">
+                        <div><span style="color:#888;">已赛场次</span><br><span style="color:#00ffc8;font-weight:bold;">27场</span></div>
+                        <div><span style="color:#888;">总进球</span><br><span style="color:#00ffc8;font-weight:bold;">84球</span></div>
+                        <div><span style="color:#888;">场均进球</span><br><span style="color:#00ffc8;font-weight:bold;">3.11</span></div>
+                        <div><span style="color:#888;">BTTS率</span><br><span style="color:#00ffc8;font-weight:bold;">70%</span></div>
+                        <div><span style="color:#888;">大2.5球率</span><br><span style="color:#00ffc8;font-weight:bold;">52%</span></div>
+                        <div><span style="color:#888;">冷门率</span><br><span style="color:#ff4757;font-weight:bold;">瑞士大胜成焦点</span></div>
+                    </div>
+                </div>
+                <div style="background:rgba(0,0,0,0.3);border-radius:10px;padding:20px;border:1px solid rgba(0,255,200,0.2);">
+                    <div style="color:#00ffc8;font-size:1.1em;margin-bottom:12px;">🔥 今日焦点战</div>
+                    <div style="font-size:0.9em;margin-bottom:8px;">🇲🇽 <span style="color:#ffd700;">墨西哥 vs 韩国</span> <span style="color:#ff4757;">09:00</span></div>
+                    <div style="font-size:0.85em;color:#aaa;margin-bottom:12px;">韩国2-1逆转捷克证明实力，墨西哥主场海拔优势明显</div>
+                    <div style="font-size:0.9em;">🇨🇦 <span style="color:#ffd700;">加拿大 vs 卡塔尔</span> <span style="color:#00ffc8;">06:00</span></div>
+                    <div style="font-size:0.85em;color:#aaa;">加拿大主场强势，卡塔尔进攻乏力</div>
+                </div>
+                <div style="background:rgba(0,0,0,0.3);border-radius:10px;padding:20px;border:1px solid rgba(0,255,200,0.2);">
+                    <div style="color:#00ffc8;font-size:1.1em;margin-bottom:12px;">⚠️ 冷门预警</div>
+                    <div style="font-size:0.9em;color:#aaa;margin-bottom:8px;">本届世界杯冷门频发：</div>
+                    <div style="font-size:0.85em;color:#ff4757;margin-bottom:5px;">• 捷克1-1南非（开出前没人想到）</div>
+                    <div style="font-size:0.85em;color:#ff4757;margin-bottom:5px;">• 荷兰2-2日本（荷兰被日本逼平）</div>
+                    <div style="font-size:0.85em;color:#ff4757;margin-bottom:5px;">• 葡萄牙1-1刚果（强队险些翻车）</div>
+                    <div style="font-size:0.85em;color:#aaa;margin-top:10px;">今晚韩国、捷克有再次爆冷可能</div>
+                </div>
+                <div style="background:rgba(0,0,0,0.3);border-radius:10px;padding:20px;border:1px solid rgba(0,255,200,0.2);">
+                    <div style="color:#00ffc8;font-size:1.1em;margin-bottom:12px;">🎯 投注建议</div>
+                    <div style="font-size:0.85em;color:#aaa;margin-bottom:10px;">稳健型：</div>
+                    <div style="font-size:0.85em;color:#2ed573;margin-bottom:10px;">瑞士1-0 + 加拿大2-0 + 1-1平局</div>
+                    <div style="font-size:0.85em;color:#aaa;margin-bottom:10px;">搏冷型：</div>
+                    <div style="font-size:0.85em;color:#ffa502;margin-bottom:5px;">韩国2-1墨西哥 × 10倍</div>
+                    <div style="font-size:0.85em;color:#ffa502;">捷克2-0南非 × 6倍</div>
+                </div>
+                <div style="background:rgba(0,0,0,0.3);border-radius:10px;padding:20px;border:1px solid rgba(0,255,200,0.2);">
+                    <div style="color:#00ffc8;font-size:1.1em;margin-bottom:12px;">🏆 出线形势</div>
+                    <div style="font-size:0.85em;color:#aaa;margin-bottom:8px;">A组：墨西哥、韩国基本锁定出线</div>
+                    <div style="font-size:0.85em;color:#aaa;margin-bottom:8px;">B组：四队同分，今晚见分晓</div>
+                    <div style="font-size:0.85em;color:#aaa;margin-bottom:8px;">C组：巴西、摩洛哥领跑</div>
+                    <div style="font-size:0.85em;color:#aaa;">其他组：强队基本顺利</div>
+                </div>
+                <div style="background:rgba(0,0,0,0.3);border-radius:10px;padding:20px;border:1px solid rgba(0,255,200,0.2);">
+                    <div style="color:#00ffc8;font-size:1.1em;margin-bottom:12px;">📈 数据趋势</div>
+                    <div style="font-size:0.85em;color:#aaa;margin-bottom:8px;">进攻型球队表现优于防守型</div>
+                    <div style="font-size:0.85em;color:#aaa;margin-bottom:8px;">挪威(100%)、英格兰(100%)状态最佳</div>
+                    <div style="font-size:0.85em;color:#aaa;margin-bottom:8px;">波黑BTTS率80%值得关注</div>
+                    <div style="font-size:0.85em;color:#ffd700;">本届场均3.12球，大球可追</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p class="update-time">最后更新：2026年6月19日 08:13（昨夜比赛已更新）</p>
+            <p>新加坡虾米出品 | 模型版本：MiniMax-M3</p>
+            <p style="margin-top:8px;font-size:0.85em;color:#666;">武力值说明：综合FIFA排名(40%) + 比赛表现(30%) + PELE模型(20%) + 球员配置(10%)</p>
+        </footer>
+    </div>
+
+    <script>
+        const teams = [
+            // === SS级 (90-100) ===
+            {name:"西班牙", flag:"🇪🇸", group:"H", power:95, fifa:1, note:"欧洲冠军+FIFA第1", analysis:"🇪🇸 西班牙是本届世界杯最大热门，PELE模型预测冠军概率最高。球队拥有佩德里、威廉姆斯等新生代球星，中场控制力世界第一。近期7-0大胜土耳其，进攻火力恐怖。弱点：缺乏传统中锋，关键时刻终结能力存疑。"},
+            {name:"法国", flag:"🇫🇷", group:"I", power:94, fifa:2, note:"世界杯亚军+姆巴佩", analysis:"🇫🇷 法国队史身价最高，姆巴佩+登贝莱+图拉姆三叉戟火力凶猛。PELE模型显示法国晋级决赛概率超40%。近期4-0横扫弱旅，状态出色。弱点：坎特缺阵后腰位置防守下滑，本届已有2粒丢球。"},
+            {name:"英格兰", flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿", group:"L", power:93, fifa:3, note:"100%状态+哈利凯恩", analysis:"🏴󠁧󠁢󠁥󠁮󠁧󠁿 英格兰本届唯一100%胜率球队，5场全胜且0丢球。哈利凯恩5场7球领跑射手榜。PELE模型显示英格兰是巴西之外最被低估的球队。弱点：客场作战可能影响发挥。"},
+            {name:"巴西", flag:"🇧🇷", group:"C", power:92, fifa:4, note:"5星巴西+维尼修斯", analysis:"🇧🇷 巴西5次夺冠历史最多，本届阵容攻守均衡。维尼修斯+罗德里戈的双子星组合威胁极大。近期4-0大胜，进攻犀利。弱点：蒂特战术保守，中场创造力不足。"},
+            {name:"阿根廷", flag:"🇦🇷", group:"J", power:91, fifa:5, note:"卫冕冠军+梅西", analysis:"🇦🇷 阿根廷目标卫冕完成2连壮举。梅西虽然年龄大了但本届已贡献3球2助攻。劳塔罗+阿尔瓦雷斯的锋线组合效率极高。弱点：迪马利亚状态下滑，右路进攻受限。"},
+
+            // === S级 (80-89) ===
+            {name:"德国", flag:"🇩🇪", group:"E", power:90, fifa:6, note:"7-1库拉索+复兴", analysis:"🇩🇪 德国7-1屠杀库拉索震惊世界，攻击力排名本届前3。哈弗茨+维尔茨的年轻组合威力十足。弱点：后防线的空中争顶成功率仅62%，定位球失分隐患大。"},
+            {name:"葡萄牙", flag:"🇵🇹", group:"K", power:86, fifa:7, note:"C罗最后一届", analysis:"🇵🇹 C罗最后一届世界杯，全队希望为他圆梦。B费+贝尔纳多+菲利克斯的中前场配置顶级。弱点：C罗把握机会能力下降，B席和B费同时上场时防守存在漏洞。"},
+            {name:"荷兰", flag:"🇳🇱", group:"F", power:85, fifa:8, note:"范戴克领衔防线", analysis:"🇳🇱 荷兰防守数据本届最佳，5场仅丢1球。范戴克领衔的这条防线几乎无懈可击。进攻端：加克波状态火热。弱点：德容伤缺影响中场组织，关键比赛进攻便秘。"},
+            {name:"比利时", flag:"🇧🇪", group:"G", power:83, fifa:9, note:"黄金一代最后一搏", analysis:"🇧🇪 比利时黄金一代可能是最后一届。德布劳内+卢卡库的组合仍是世界级。弱点：比利时本届已输2场，后防线老化严重。平均年龄30+是所有强队中最大的。"},
+            {name:"摩洛哥", flag:"🇲🇦", group:"C", power:82, fifa:10, note:"2022世界杯4强", analysis:"🇲🇦 摩洛哥是本届最大黑马，2022年杀入4强震惊世界。防守顽强，反击犀利。弱点：齐耶赫+马兹拉维与主帅有矛盾，可能缺席关键战。"},
+            {name:"乌拉圭", flag:"🇺🇾", group:"H", power:82, fifa:13, note:"南美劲旅", analysis:"🇺🇾 乌拉圭是南美传统劲旅，努涅斯+巴尔文组合威胁大。防守强硬，1-0主义。弱点：经验不足，大赛关键时刻容易崩盘。"},
+            {name:"克罗地亚", flag:"🇭🇷", group:"L", power:80, fifa:11, note:"上届亚军班底", analysis:"🇭🇷 克罗地亚2022年杀入4强，虽莫德里奇年龄增大但仍是顶级中场。佩特科维奇是本届最大发现。弱点：平均年龄偏高，体能可能是问题。"},
+
+            // === A级 (70-79) ===
+            {name:"墨西哥", flag:"🇲🇽", group:"A", power:79, fifa:12, note:"主场优势+2-0南非", analysis:"🇲🇽 墨西哥主场作战有海拔优势+球迷狂热。2-0轻取南非表现稳健。弱点：后防线有2名主力停赛，防守存在隐患。希门内斯受伤病困扰状态一般。"},
+            {name:"哥伦比亚", flag:"🇨🇴", group:"K", power:78, fifa:17, note:"3-1乌兹别克", analysis:"🇨🇴 哥伦比亚3-1逆转乌兹别克，展现强大进攻火力。J罗宝刀不老+多名在欧洲踢球的球员。弱点：J罗年龄增大+体能下降，客场表现一般。"},
+            {name:"美国", flag:"🇺🇸", group:"D", power:78, fifa:14, note:"主场作战+4-1巴拉圭", analysis:"🇺🇸 美国主场优势明显，4-1大胜巴拉圭提升士气。普利西奇+雷纳的进攻组合表现出色。弱点：后防线经验不足，面对强队可能崩盘。"},
+            {name:"塞内加尔", flag:"🇸🇳", group:"I", power:77, fifa:16, note:"非洲冠军", analysis:"🇸🇳 塞内加尔是2022非洲杯冠军，整体防守严密。库亚特+门迪的后防稳固。进攻依赖马内+萨尔组合。弱点：进攻点单一，一旦对手限制马内就陷入困境。"},
+            {name:"日本", flag:"🇯🇵", group:"F", power:76, fifa:18, note:"2-2荷兰展现实力", analysis:"🇯🇵 日本2-2逼平荷兰，展现亚洲最强进攻实力。久保建英+三笘薰的边路组合威胁极大。弱点：身体对抗是天然劣势，面对高举高打的球队容易吃亏。"},
+            {name:"韩国", flag:"🇰🇷", group:"A", power:75, fifa:19, note:"2-1逆转捷克", analysis:"🇰🇷 韩国2-1逆转捷克，孙兴慜+黄喜灿的反击组合犀利。弱点：防线不够稳固，上半场经常挖坑。VAR判罚争议较多。"},
+            {name:"瑞士", flag:"🇨🇭", group:"B", power:81, fifa:15, note:"4-1波黑大胜升级S级", analysis:"🇨🇭 瑞士4-1大胜波黑迎来爆发，进攻效率一扫阴霾！沙奇里宝刀不老，中场控制力提升。6场进8球状态火热。升级为S级强队。弱点：后防线面对强队仍有隐患。"},
+            {name:"奥地利", flag:"🇦🇹", group:"J", power:73, fifa:23, note:"3-1约旦+高位压迫", analysis:"🇦🇹 奥地利3-1轻取约旦，萨比策+阿瑙托维奇表现出色。高位压迫战术效果显著。弱点：客场作战能力存疑，防守定位球是软肋。"},
+            {name:"挪威", flag:"🇳🇴", group:"I", power:72, fifa:24, note:"哈兰德+100%状态", analysis:"🇳🇴 挪威本届唯一100%胜率（5场），哈兰德5场8球效率惊人。防守5场仅丢1球。弱点：欧洲杯表现糟糕，大赛心理素质受质疑。"},
+            {name:"瑞典", flag:"🇸🇪", group:"F", power:71, fifa:26, note:"5-1突尼斯", analysis:"🇸🇪 瑞典5-1大胜突尼斯，伊萨克+福斯贝里组合表现出色。弱点：缺乏顶级中锋把握机会能力不足，防守存在漏洞。"},
+
+            // === B级 (60-69) ===
+            {name:"波兰", flag:"🇵🇱", group:"F", power:70, fifa:21, note:"莱万领军", analysis:"🇵🇱 莱万是波兰绝对核心，但本届仅1球效率下滑。防守采用低位防守战术。弱点：一旦莱万被冻结全队进攻瘫痪，中场创造力几乎为零。"},
+            {name:"澳大利亚", flag:"🇦🇺", group:"D", power:70, fifa:22, note:"2-0土耳其", analysis:"🇦🇺 澳大利亚2-0完胜土耳其，防守反击战术执行到位。古德温+马修莱基速度优势明显。弱点：整体实力有限，面对强队进攻办法不多。"},
+            {name:"埃及", flag:"🇪🇬", group:"G", power:68, fifa:39, note:"萨拉赫", analysis:"🇪🇬 埃及核心是萨拉赫，状态火热已有3球2助攻。防守采用保守阵型。弱点：萨拉赫被重点盯防效率下降，进攻点太少是致命问题。"},
+            {name:"伊朗", flag:"🇮🇷", group:"G", power:67, fifa:21, note:"亚洲强队", analysis:"🇮🇷 伊朗是亚洲传统强队，身体对抗能力强。防守凶猛，反击有速度。弱点：进攻套路单一，一旦落后难以逆转。"},
+            {name:"厄瓜多尔", flag:"🇪🇨", group:"E", power:66, fifa:31, note:"高原优势", analysis:"🇪🇨 厄瓜多尔高原主场优势明显，巴伦西亚+恩纳瓦伦西亚组合表现出色。弱点：离开高原后表现下滑明显，本届客场2场不胜。"},
+            {name:"捷克", flag:"🇨🇿", group:"A", power:67, fifa:28, note:"1-1南非展现代届调整能力", analysis:"🇨🇿 捷克连续两场1-1展现顽强调整能力，进攻效率有所提升。萨迪莱克表现出色。弱点：赢球能力不足，平局过多影响出线形势。"},
+            {name:"苏格兰", flag:"🏴󠁧󠁢󠁳󠁣󠁴󠁿", group:"C", power:65, fifa:42, note:"1-0海地", analysis:"🏴󠁧󠁢󠁳󠁣󠁴󠁿 苏格兰1-0小胜海地，迪克斯+罗伯逊的边路进攻犀利。弱点：整体实力有限，进攻威胁不足，大赛经验欠缺。"},
+            {name:"科特迪瓦", flag:"🇨🇮", group:"E", power:64, fifa:43, note:"1-0厄瓜多尔", analysis:"🇨🇮 科特迪瓦是非洲新生力量，防守凶悍。进攻依赖个人能力。弱点：配合生疏，5场仅4球，效率偏低。"},
+            {name:"加拿大", flag:"🇨🇦", group:"B", power:63, fifa:25, note:"主场+阿方索", analysis:"🇨🇦 加拿大主场强势，阿方索+戴维组合威胁大。弱点：后防线经验不足，面对强队容易崩盘。本届已输3场。"},
+            {name:"沙特阿拉伯", flag:"🇸🇦", group:"H", power:62, fifa:56, note:"1-1乌拉圭", analysis:"🇸🇦 沙特1-1逼平乌拉圭表现超出预期，多萨里状态出色。弱点：身体对抗差，面对欧洲队处于劣势，2022年1-2爆冷输墨西哥。"},
+            {name:"巴拉圭", flag:"🇵🇾", group:"D", power:61, fifa:58, note:"南美防守", analysis:"🇵🇾 巴拉圭是南美防守强队，5场仅丢5球。进攻依赖戈麦斯+阿尔米隆个人能力。弱点：进攻套路少，一旦落后难以翻盘。"},
+            {name:"突尼斯", flag:"🇹🇳", group:"F", power:60, fifa:41, note:"防守一般", analysis:"🇹🇳 突尼斯非洲中游球队，防守一般5场丢7球。进攻没有亮点。弱点：整体实力有限，大赛缺乏竞争力。"},
+            {name:"塞尔维亚", flag:"🇷🇸", group:"F", power:60, fifa:32, note:"身体对抗强", analysis:"🇷🇸 塞尔维亚身体对抗能力强，米特罗维奇+弗拉霍维奇双中锋组合。弱点：战术单一，防守定位球失分严重。"},
+            {name:"乌克兰", flag:"🇺🇦", group:"G", power:60, fifa:27, note:"待验证", analysis:"🇺🇦 乌克兰整体表现出色，亚列姆丘克状态火热。弱点：后防线经验不足，面对强队可能崩盘。"},
+
+            // === C级 (50-59) ===
+            {name:"南非", flag:"🇿🇦", group:"A", power:59, fifa:57, note:"逼平捷克展现实力", analysis:"🇿🇦 南非本届连续逼平捷克和墨西哥，展现超出预期的竞争力。进攻有亮点，定位球威胁大。弱点：整体实力仍是短板，面对强队进攻办法不多。"},
+            {name:"阿尔及利亚", flag:"🇩🇿", group:"J", power:57, fifa:45, note:"0-3阿根廷", analysis:"🇩🇿 阿尔及利亚0-3惨败阿根廷暴露实力差距。马赫雷斯退役后进攻下滑严重。弱点：球队缺乏核心，战术混乱。"},
+            {name:"新西兰", flag:"🇳🇿", group:"G", power:57, fifa:26, note:"2-2伊朗", analysis:"🇳🇿 新西兰2-2逼平伊朗是最大黑马，进攻有亮点。弱点：整体实力是48强中最弱之一，大赛经验欠缺。"},
+            {name:"加纳", flag:"🇬🇭", group:"L", power:56, fifa:60, note:"1-0巴拿马+绝杀", analysis:"🇬🇭 加纳1-0绝杀巴拿马展现顽强精神，库杜斯是进攻核心。弱点：整体实力有限，进攻效率低。"},
+            {name:"刚果民主共和国", flag:"🇨🇩", group:"K", power:55, fifa:62, note:"1-1葡萄牙", analysis:"🇨🇩 刚果1-1逼平葡萄牙是最大冷门，恩巴洛表现出色。弱点：整体实力有限，防守漏洞多。"},
+            {name:"卡塔尔", flag:"🇶🇦", group:"B", power:55, fifa:58, note:"1-1瑞士+防守顽强", analysis:"🇶🇦 卡塔尔1-1逼平瑞士展现顽强防守，进攻依赖阿里+阿费夫组合。弱点：整体实力有限，面对强队进攻办法不多。"},
+            {name:"波黑", flag:"🇧🇦", group:"B", power:53, fifa:50, note:"1-4瑞士状态低迷", analysis:"🇧🇦 波黑1-4惨败瑞士，防守漏洞百出，6场丢11球是本届最差防线之一。哲科孤掌难鸣。弱点：后防失误频繁，定位球防守形同虚设。"},
+            {name:"海地", flag:"🇭🇹", group:"C", power:53, fifa:87, note:"0-1苏格兰", analysis:"🇭🇹 海地整体实力有限，但有一定反击能力。弱点：进攻几乎无威胁，5场仅1球，防守漏洞大。"},
+            {name:"约旦", flag:"🇯🇴", group:"J", power:52, fifa:70, note:"1-3奥地利", analysis:"🇯🇴 约旦是亚洲黑马，但1-3惨败奥地利暴露实力差距。弱点：整体实力不足以应对欧洲强队，防守问题严重。"},
+            {name:"伊拉克", flag:"🇮🇶", group:"I", power:52, fifa:63, note:"1-4挪威", analysis:"🇮🇶 伊拉克1-4惨败挪威，防守问题严重。进攻有一定潜力但效率低。弱点：后防线业余失误多，大赛经验不足。"},
+            {name:"佛得角", flag:"🇨🇻", group:"H", power:51, fifa:88, note:"0-0西班牙", analysis:"🇨🇻 佛得角0-0逼平西班牙是最大黑马，防守顽强。弱点：进攻几乎为零，5场仅1球。"},
+            {name:"巴拿马", flag:"🇵🇦", group:"L", power:51, fifa:95, note:"0-1加纳", analysis:"🇵🇦 巴拿马整体实力有限，进攻缺乏威胁。弱点：后防线定位球防守糟糕，大赛经验不足。"},
+            {name:"乌兹别克斯坦", flag:"🇺🇿", group:"K", power:50, fifa:61, note:"1-3哥伦比亚", analysis:"🇺🇿 乌兹别克斯坦1-3惨败哥伦比亚，防守存在明显漏洞。弱点：整体实力有限，难以应对世界级进攻。"},
+            {name:"库拉索", flag:"🇨🇼", group:"E", power:48, fifa:141, note:"1-7德国", analysis:"🇨🇼 库拉索1-7惨负德国是本届最惨失利，实力确实有限。弱点：后防线几乎业余水平，面对强队毫无抵抗能力。"},
+            {name:"土耳其", flag:"🇹🇷", group:"D", power:47, fifa:46, note:"0-2澳大利亚", analysis:"🇹🇷 土耳其0-2完败澳大利亚，防守暴露严重问题。弱点：球员能力有限，战术混乱，是48强中表现最差的球队之一。"},
+        ];
+
+        let currentFilter = 'all';
+
+        function getPowerClass(power) {
+            if (power >= 90) return 'ss';
+            if (power >= 80) return 's';
+            if (power >= 70) return 'a';
+            if (power >= 60) return 'b';
+            return 'c';
+        }
+
+        function getBarClass(power) {
+            if (power >= 80) return 'high';
+            if (power >= 70) return 'mid-high';
+            if (power >= 60) return 'mid';
+            if (power >= 50) return 'low';
+            return 'very-low';
+        }
+
+        function filterTeams(group) {
+            currentFilter = group;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            render();
+        }
+
+        function render() {
+            const filtered = currentFilter === 'all' 
+                ? teams 
+                : teams.filter(t => t.group === currentFilter);
+            
+            const content = document.getElementById('content');
+            
+            if (currentFilter === 'all') {
+                // 按等级分组显示
+                const ss = teams.filter(t => t.power >= 90);
+                const s = teams.filter(t => t.power >= 80 && t.power < 90);
+                const a = teams.filter(t => t.power >= 70 && t.power < 80);
+                const b = teams.filter(t => t.power >= 60 && t.power < 70);
+                const c = teams.filter(t => t.power < 60);
+
+                content.innerHTML = `
+                    <h2 class="section-title">🔥 SS级 (90-100) — 夺冠热门</h2>
+                    <div class="power-list">${ss.map((t,i) => teamCard(t, i+1)).join('')}</div>
+                    
+                    <h2 class="section-title">⭐ S级 (80-89) — 强队</h2>
+                    <div class="power-list">${s.map((t,i) => teamCard(t, ss.length+i+1)).join('')}</div>
+                    
+                    <h2 class="section-title">📈 A级 (70-79) — 有竞争力</h2>
+                    <div class="power-list">${a.map((t,i) => teamCard(t, ss.length+s.length+i+1)).join('')}</div>
+                    
+                    <h2 class="section-title">🔹 B级 (60-69) — 中等水平</h2>
+                    <div class="power-list">${b.map((t,i) => teamCard(t, ss.length+s.length+a.length+i+1)).join('')}</div>
+                    
+                    <h2 class="section-title">⚪ C级 (50-59) — 陪读生</h2>
+                    <div class="power-list">${c.map((t,i) => teamCard(t, ss.length+s.length+a.length+b.length+i+1)).join('')}</div>
+                `;
+            } else {
+                // 按组显示
+                const sorted = [...filtered].sort((a, b) => b.power - a.power);
+                content.innerHTML = `
+                    <h2 class="section-title">${currentFilter}组 — ${filtered.length}支球队</h2>
+                    <div class="power-list">${sorted.map((t,i) => teamCard(t, i+1)).join('')}</div>
+                `;
+            }
+        }
+
+        function teamCard(team, rank) {
+            const pc = getPowerClass(team.power);
+            return `
+                <div class="team-card ${pc}" onclick="toggleAnalysis(this)">
+                    <div class="rank">${rank}</div>
+                    <div class="flag">${team.flag}</div>
+                    <div class="team-info">
+                        <div class="team-name">${team.name}</div>
+                        <div class="team-meta">
+                            <span class="team-group">${team.group}组</span>
+                            <span>FIFA #${team.fifa}</span>
+                            <span class="click-hint">[点击展开]</span>
+                        </div>
+                    </div>
+                    <div class="power-section">
+                        <div class="power-bar">
+                            <div class="power-fill ${getBarClass(team.power)}" style="width: ${team.power}%"></div>
+                        </div>
+                        <div class="power-value ${pc}">${team.power}</div>
+                    </div>
+                    <div class="team-analysis">📝 <strong>球队分析：</strong>${team.analysis || '暂无详细分析数据'}</div>
+                </div>
+            `;
+        }
+
+        function toggleAnalysis(card) {
+            card.classList.toggle('expanded');
+        }
+
+        render();
+    </script>
+</body>
+</html>
