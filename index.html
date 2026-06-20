@@ -6,80 +6,85 @@
 <title>2026世界杯追踪 · 48强战力全图</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; background:#0a1929; color:#e6eef7; line-height:1.6; }
-.hero { background:linear-gradient(135deg,#0a1929,#1a3a5c); padding:20px 16px; text-align:center; }
-.hero h1 { font-size:24px; background:linear-gradient(90deg,#ffb700,#ff6a00); -webkit-background-clip:text; background-clip:text; color:transparent; }
-.hero .sub { color:#8aa3bd; font-size:12px; margin-top:4px; }
-.hero .time { color:#5a6e84; font-size:11px; margin-top:6px; }
+body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; background:#0a1929; color:#e6eef7; line-height:1.5; font-size:14px; }
+.hero { background:linear-gradient(135deg,#0a1929,#1a3a5c); padding:16px 12px; text-align:center; }
+.hero h1 { font-size:22px; background:linear-gradient(90deg,#ffb700,#ff6a00); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.hero .sub { color:#8aa3bd; font-size:11px; margin-top:4px; }
+.hero .time { color:#5a6e84; font-size:10px; margin-top:4px; }
 
-.container { max-width:900px; margin:0 auto; padding:0 12px 20px; }
-.section { margin-top:20px; }
-.section-title { font-size:16px; font-weight:700; margin-bottom:10px; padding-left:8px; border-left:3px solid #ffb700; }
+.container { max-width:1100px; margin:0 auto; padding:0 10px 16px; }
+.section { margin-top:16px; }
+.section-title { font-size:15px; font-weight:700; margin-bottom:10px; padding-left:8px; border-left:3px solid #ffb700; }
 
-/* 武力榜TOP3 */
-.power-top { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-.power-card { background:rgba(255,255,255,0.05); border-radius:10px; padding:12px; text-align:center; }
+/* 武力榜TOP3 - 横向排列 */
+.power-top { display:flex; gap:10px; justify-content:center; margin-bottom:14px; }
+.power-card { flex:1; max-width:200px; background:rgba(255,255,255,0.05); border-radius:10px; padding:12px 8px; text-align:center; }
 .power-card.gold { background:linear-gradient(135deg,rgba(255,215,0,0.12),rgba(255,180,0,0.05)); border:1px solid rgba(255,215,0,0.25); }
-.power-card .flag { font-size:26px; }
+.power-card .flag { font-size:24px; }
 .power-card .name { font-size:13px; font-weight:700; margin-top:2px; }
 .power-card .power { font-size:20px; font-weight:800; color:#ffb700; }
 .power-card .note { font-size:10px; color:#8aa3bd; }
 
-/* 比赛预测 */
-.match-card { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:14px; margin-bottom:14px; }
-.match-time { font-size:11px; color:#8aa3bd; margin-bottom:8px; }
-.match-teams { display:flex; align-items:center; justify-content:center; gap:16px; padding:10px; background:rgba(0,0,0,0.2); border-radius:8px; }
-.team { text-align:center; flex:1; }
-.team .flag { font-size:28px; }
-.team .name { font-size:14px; font-weight:700; margin-top:2px; }
-.team .power { font-size:11px; color:#8aa3bd; }
-.vs { font-size:18px; color:#8aa3bd; font-weight:700; }
-.scores { display:flex; gap:8px; margin-top:10px; justify-content:center; }
-.score-card { flex:1; background:rgba(0,0,0,0.25); border:1px solid rgba(255,180,0,0.15); border-radius:8px; padding:8px; text-align:center; max-width:120px; }
-.score-card.main { background:rgba(255,180,0,0.12); border-color:#ffb700; }
-.score-card .score { font-size:18px; font-weight:800; color:#ffd966; }
-.score-card.main .score { font-size:20px; }
-.score-card .odds { font-size:10px; color:#3ec46d; }
-.score-card .desc { font-size:9px; color:#8aa3bd; margin-top:3px; line-height:1.3; }
-.match-advice { margin-top:8px; padding:8px 10px; background:rgba(255,180,0,0.08); border-radius:6px; font-size:12px; color:#ffd966; text-align:center; }
+/* 比赛预测 - 横向排列 */
+.predictions { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:14px; }
+@media(max-width:700px) { .predictions { grid-template-columns:1fr; } }
 
-/* 武力榜列表 */
-.power-list { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:6px; }
-.power-row { display:flex; align-items:center; gap:8px; padding:6px 10px; background:rgba(255,255,255,0.03); border-radius:6px; font-size:12px; }
+.match-card { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px; }
+.match-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.match-time { font-size:10px; color:#8aa3bd; }
+.match-badge { font-size:10px; background:rgba(255,180,0,0.2); color:#ffd966; padding:2px 8px; border-radius:10px; }
+.match-teams { display:flex; align-items:center; justify-content:center; gap:12px; padding:8px; background:rgba(0,0,0,0.2); border-radius:6px; }
+.team { text-align:center; }
+.team .flag { font-size:24px; }
+.team .name { font-size:13px; font-weight:700; margin-top:1px; }
+.team .power { font-size:10px; color:#8aa3bd; }
+.vs { font-size:16px; color:#8aa3bd; font-weight:700; }
+.scores { display:flex; gap:6px; margin-top:8px; justify-content:center; }
+.score-card { flex:1; max-width:90px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,180,0,0.15); border-radius:6px; padding:6px 4px; text-align:center; }
+.score-card.main { background:rgba(255,180,0,0.12); border-color:#ffb700; }
+.score-card .score { font-size:16px; font-weight:800; color:#ffd966; }
+.score-card.main .score { font-size:18px; }
+.score-card .odds { font-size:9px; color:#3ec46d; }
+.score-card .desc { font-size:9px; color:#8aa3bd; margin-top:2px; }
+.match-advice { margin-top:6px; padding:5px 8px; background:rgba(255,180,0,0.08); border-radius:4px; font-size:11px; color:#ffd966; text-align:center; }
+
+/* 投注建议 - 横向排列 */
+.betting { background:rgba(0,0,0,0.2); border-radius:10px; padding:10px 12px; margin-bottom:14px; }
+.betting h4 { color:#ffb700; margin-bottom:6px; font-size:12px; }
+.bet-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:6px 16px; }
+@media(max-width:500px) { .bet-grid { grid-template-columns:1fr; } }
+.bet-row { display:flex; justify-content:space-between; padding:3px 0; font-size:11px; }
+.bet-match { color:#c8d6e2; }
+.bet-score { color:#ffd966; font-weight:700; }
+.bet-odds { color:#3ec46d; margin-left:8px; }
+
+/* 武力榜 */
+.power-section { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+@media(max-width:700px) { .power-section { grid-template-columns:1fr; } }
+.power-col { background:rgba(255,255,255,0.03); border-radius:10px; padding:10px; }
+.power-row { display:flex; align-items:center; gap:8px; padding:4px 0; font-size:12px; border-bottom:1px solid rgba(255,255,255,0.04); }
+.power-row:last-child { border-bottom:none; }
 .power-row .pos { font-weight:800; min-width:18px; color:#8aa3bd; }
-.power-row .flag { font-size:14px; }
+.power-row .flag { font-size:13px; }
 .power-row .name { flex:1; }
 .power-row .bar { flex:1; height:3px; background:rgba(255,255,255,0.1); border-radius:2px; }
 .power-row .bar-fill { height:100%; border-radius:2px; }
 .power-row .pwr { font-weight:800; min-width:24px; text-align:right; }
 
-/* 分组表格 */
-table { width:100%; border-collapse:collapse; font-size:11px; margin-top:8px; }
-th { background:rgba(255,180,0,0.1); color:#ffd966; padding:6px 4px; text-align:center; font-size:10px; }
-td { padding:5px 4px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.05); }
-td.team { text-align:left; }
-.group-title { background:rgba(0,0,0,0.2); }
-.group-title td { font-weight:700; color:#ffb700; padding:6px 4px; }
-
-/* 投注建议 */
-.betting { background:rgba(0,0,0,0.2); border-radius:10px; padding:12px; margin-top:16px; }
-.betting h4 { color:#ffb700; margin-bottom:8px; font-size:13px; }
-.bet-row { display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:12px; }
-.bet-row:last-child { border-bottom:none; }
-.bet-match { color:#c8d6e2; }
-.bet-score { color:#ffd966; font-weight:700; }
-.bet-odds { color:#3ec46d; }
+/* 分组 */
+.groups-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+@media(max-width:800px) { .groups-grid { grid-template-columns:repeat(2,1fr); } }
+@media(max-width:500px) { .groups-grid { grid-template-columns:1fr; } }
+.group-card { background:rgba(255,255,255,0.03); border-radius:10px; padding:10px; }
+.group-card h4 { color:#ffb700; font-size:12px; margin-bottom:6px; }
+table { width:100%; border-collapse:collapse; font-size:10px; }
+th { color:#8aa3bd; padding:3px 2px; text-align:left; font-weight:500; border-bottom:1px solid rgba(255,255,255,0.1); }
+td { padding:3px 2px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.04); }
+td.rank { color:#ffb700; font-weight:700; width:16px; }
+td.adv { color:#3ec46d; font-size:9px; }
 
 /* 底部 */
-footer { text-align:center; padding:20px 16px; color:#5a6e84; font-size:10px; border-top:1px solid rgba(255,255,255,0.05); margin-top:20px; }
-
-@media(max-width:500px) {
-  .power-top { grid-template-columns:1fr; }
-  .scores { flex-wrap:wrap; }
-  .score-card { min-width:80px; }
-  .match-teams { flex-direction:column; gap:8px; }
-  .vs { transform:rotate(90deg); }
-}
+footer { text-align:center; padding:16px 12px; color:#5a6e84; font-size:10px; border-top:1px solid rgba(255,255,255,0.05); margin-top:16px; }
 </style>
 </head>
 <body>
@@ -115,176 +120,187 @@ footer { text-align:center; padding:20px 16px; color:#5a6e84; font-size:10px; bo
     </div>
   </div>
 
-  <!-- 6/21预测 -->
+  <!-- 4场预测 -->
   <div class="section">
     <div class="section-title">⭐ 6月21日 4场比分预测 (北京时间)</div>
+    <div class="predictions">
+      <!-- 荷兰 vs 瑞典 -->
+      <div class="match-card">
+        <div class="match-header">
+          <div class="match-time">🕒 01:00 · F组 · 休斯敦</div>
+          <div class="match-badge">主推×7.00</div>
+        </div>
+        <div class="match-teams">
+          <div class="team">
+            <div class="flag">🇳🇱</div>
+            <div class="name">荷兰</div>
+            <div class="power">武力 89</div>
+          </div>
+          <div class="vs">VS</div>
+          <div class="team">
+            <div class="flag">🇸🇪</div>
+            <div class="name">瑞典</div>
+            <div class="power">武力 83</div>
+          </div>
+        </div>
+        <div class="scores">
+          <div class="score-card main">
+            <div class="score">2-0</div>
+            <div class="odds">×7.00</div>
+            <div class="desc">稳健推荐</div>
+          </div>
+          <div class="score-card">
+            <div class="score">1-0</div>
+            <div class="odds">×6.50</div>
+            <div class="desc">可能</div>
+          </div>
+          <div class="score-card">
+            <div class="score">1-1</div>
+            <div class="odds">×5.50</div>
+            <div class="desc">冷门</div>
+          </div>
+        </div>
+        <div class="match-advice">荷兰不能再次丢分，防守稳健小胜过关</div>
+      </div>
 
-    <!-- 荷兰 vs 瑞典 -->
-    <div class="match-card">
-      <div class="match-time">🕒 01:00 · F组 · 休斯敦</div>
-      <div class="match-teams">
-        <div class="team">
-          <div class="flag">🇳🇱</div>
-          <div class="name">荷兰</div>
-          <div class="power">武力 89</div>
+      <!-- 德国 vs 科特迪瓦 -->
+      <div class="match-card">
+        <div class="match-header">
+          <div class="match-time">🕒 04:00 · E组 · 多伦多</div>
+          <div class="match-badge">主推×8.00</div>
         </div>
-        <div class="vs">VS</div>
-        <div class="team">
-          <div class="flag">🇸🇪</div>
-          <div class="name">瑞典</div>
-          <div class="power">武力 83</div>
+        <div class="match-teams">
+          <div class="team">
+            <div class="flag">🇩🇪</div>
+            <div class="name">德国</div>
+            <div class="power">武力 92</div>
+          </div>
+          <div class="vs">VS</div>
+          <div class="team">
+            <div class="flag">🇨🇮</div>
+            <div class="name">科特迪瓦</div>
+            <div class="power">武力 78</div>
+          </div>
         </div>
+        <div class="scores">
+          <div class="score-card main">
+            <div class="score">2-1</div>
+            <div class="odds">×8.00</div>
+            <div class="desc">主推</div>
+          </div>
+          <div class="score-card">
+            <div class="score">3-1</div>
+            <div class="odds">×11.00</div>
+            <div class="desc">可能</div>
+          </div>
+          <div class="score-card">
+            <div class="score">1-0</div>
+            <div class="odds">×8.00</div>
+            <div class="desc">防冷</div>
+          </div>
+        </div>
+        <div class="match-advice">德国进攻最强，但科特迪瓦会进球</div>
       </div>
-      <div class="scores">
-        <div class="score-card main">
-          <div class="score">2-0</div>
-          <div class="odds">×7.00</div>
-          <div class="desc">稳健推荐</div>
-        </div>
-        <div class="score-card">
-          <div class="score">1-0</div>
-          <div class="odds">×6.50</div>
-          <div class="desc">可能</div>
-        </div>
-        <div class="score-card">
-          <div class="score">1-1</div>
-          <div class="odds">×5.50</div>
-          <div class="desc">冷门平局</div>
-        </div>
-      </div>
-      <div class="match-advice">💡 荷兰不能再次丢分，防守稳健小胜过关</div>
-    </div>
 
-    <!-- 德国 vs 科特迪瓦 -->
-    <div class="match-card">
-      <div class="match-time">🕒 04:00 · E组 · 多伦多</div>
-      <div class="match-teams">
-        <div class="team">
-          <div class="flag">🇩🇪</div>
-          <div class="name">德国</div>
-          <div class="power">武力 92</div>
+      <!-- 厄瓜多尔 vs 库拉索 -->
+      <div class="match-card">
+        <div class="match-header">
+          <div class="match-time">🕒 08:00 · E组 · 堪萨斯城</div>
+          <div class="match-badge">主推×6.50</div>
         </div>
-        <div class="vs">VS</div>
-        <div class="team">
-          <div class="flag">🇨🇮</div>
-          <div class="name">科特迪瓦</div>
-          <div class="power">武力 78</div>
+        <div class="match-teams">
+          <div class="team">
+            <div class="flag">🇪🇨</div>
+            <div class="name">厄瓜多尔</div>
+            <div class="power">武力 82</div>
+          </div>
+          <div class="vs">VS</div>
+          <div class="team">
+            <div class="flag">🇨🇼</div>
+            <div class="name">库拉索</div>
+            <div class="power">武力 65</div>
+          </div>
         </div>
+        <div class="scores">
+          <div class="score-card main">
+            <div class="score">2-0</div>
+            <div class="odds">×6.50</div>
+            <div class="desc">稳健推荐</div>
+          </div>
+          <div class="score-card">
+            <div class="score">3-0</div>
+            <div class="odds">×8.00</div>
+            <div class="desc">可能</div>
+          </div>
+          <div class="score-card">
+            <div class="score">4-0</div>
+            <div class="odds">×12.00</div>
+            <div class="desc">冷门</div>
+          </div>
+        </div>
+        <div class="match-advice">厄瓜多尔实力碾压，必胜之战</div>
       </div>
-      <div class="scores">
-        <div class="score-card main">
-          <div class="score">2-1</div>
-          <div class="odds">×8.00</div>
-          <div class="desc">主推</div>
-        </div>
-        <div class="score-card">
-          <div class="score">3-1</div>
-          <div class="odds">×11.00</div>
-          <div class="desc">可能</div>
-        </div>
-        <div class="score-card">
-          <div class="score">1-0</div>
-          <div class="odds">×8.00</div>
-          <div class="desc">防冷</div>
-        </div>
-      </div>
-      <div class="match-advice">💡 德国进攻最强，但科特迪瓦会进球（搏双方进球）</div>
-    </div>
 
-    <!-- 厄瓜多尔 vs 库拉索 -->
-    <div class="match-card">
-      <div class="match-time">🕒 08:00 · E组 · 堪萨斯城</div>
-      <div class="match-teams">
-        <div class="team">
-          <div class="flag">🇪🇨</div>
-          <div class="name">厄瓜多尔</div>
-          <div class="power">武力 82</div>
+      <!-- 突尼斯 vs 日本 -->
+      <div class="match-card">
+        <div class="match-header">
+          <div class="match-time">🕒 12:00 · F组 · 洛杉矶</div>
+          <div class="match-badge">主推×7.00</div>
         </div>
-        <div class="vs">VS</div>
-        <div class="team">
-          <div class="flag">🇨🇼</div>
-          <div class="name">库拉索</div>
-          <div class="power">武力 65</div>
+        <div class="match-teams">
+          <div class="team">
+            <div class="flag">🇹🇳</div>
+            <div class="name">突尼斯</div>
+            <div class="power">武力 74</div>
+          </div>
+          <div class="vs">VS</div>
+          <div class="team">
+            <div class="flag">🇯🇵</div>
+            <div class="name">日本</div>
+            <div class="power">武力 84</div>
+          </div>
         </div>
+        <div class="scores">
+          <div class="score-card main">
+            <div class="score">0-2</div>
+            <div class="odds">×7.00</div>
+            <div class="desc">稳健推荐</div>
+          </div>
+          <div class="score-card">
+            <div class="score">0-3</div>
+            <div class="odds">×12.00</div>
+            <div class="desc">可能</div>
+          </div>
+          <div class="score-card">
+            <div class="score">1-3</div>
+            <div class="odds">×15.00</div>
+            <div class="desc">冷门</div>
+          </div>
+        </div>
+        <div class="match-advice">日本状态稳定，突尼斯军心大乱</div>
       </div>
-      <div class="scores">
-        <div class="score-card main">
-          <div class="score">2-0</div>
-          <div class="odds">×6.50</div>
-          <div class="desc">稳健推荐</div>
-        </div>
-        <div class="score-card">
-          <div class="score">3-0</div>
-          <div class="odds">×8.00</div>
-          <div class="desc">可能</div>
-        </div>
-        <div class="score-card">
-          <div class="score">4-0</div>
-          <div class="odds">×12.00</div>
-          <div class="desc">冷门</div>
-        </div>
-      </div>
-      <div class="match-advice">💡 厄瓜多尔实力碾压，必胜之战</div>
-    </div>
-
-    <!-- 突尼斯 vs 日本 -->
-    <div class="match-card">
-      <div class="match-time">🕒 12:00 · F组 · 洛杉矶</div>
-      <div class="match-teams">
-        <div class="team">
-          <div class="flag">🇹🇳</div>
-          <div class="name">突尼斯</div>
-          <div class="power">武力 74</div>
-        </div>
-        <div class="vs">VS</div>
-        <div class="team">
-          <div class="flag">🇯🇵</div>
-          <div class="name">日本</div>
-          <div class="power">武力 84</div>
-        </div>
-      </div>
-      <div class="scores">
-        <div class="score-card main">
-          <div class="score">0-2</div>
-          <div class="odds">×7.00</div>
-          <div class="desc">稳健推荐</div>
-        </div>
-        <div class="score-card">
-          <div class="score">0-3</div>
-          <div class="odds">×12.00</div>
-          <div class="desc">可能</div>
-        </div>
-        <div class="score-card">
-          <div class="score">1-3</div>
-          <div class="odds">×15.00</div>
-          <div class="desc">冷门</div>
-        </div>
-      </div>
-      <div class="match-advice">💡 日本状态稳定，突尼斯军心大乱</div>
     </div>
 
     <!-- 投注建议 -->
     <div class="betting">
       <h4>💰 投注建议</h4>
-      <div class="bet-row">
-        <div class="bet-match">🇳🇱 荷兰 vs 🇸🇪 瑞典</div>
-        <div class="bet-score">2-0</div>
-        <div class="bet-odds">×7.00</div>
-      </div>
-      <div class="bet-row">
-        <div class="bet-match">🇩🇪 德国 vs 🇨🇮 科特迪瓦</div>
-        <div class="bet-score">2-1</div>
-        <div class="bet-odds">×8.00</div>
-      </div>
-      <div class="bet-row">
-        <div class="bet-match">🇪🇨 厄瓜多尔 vs 🇨🇼 库拉索</div>
-        <div class="bet-score">2-0</div>
-        <div class="bet-odds">×6.50</div>
-      </div>
-      <div class="bet-row">
-        <div class="bet-match">🇹🇳 突尼斯 vs 🇯🇵 日本</div>
-        <div class="bet-score">0-2</div>
-        <div class="bet-odds">×7.00</div>
+      <div class="bet-grid">
+        <div class="bet-row">
+          <div class="bet-match">🇳🇱 荷兰 vs 🇸🇪 瑞典</div>
+          <div><span class="bet-score">2-0</span><span class="bet-odds">×7.00</span></div>
+        </div>
+        <div class="bet-row">
+          <div class="bet-match">🇩🇪 德国 vs 🇨🇮 科特迪瓦</div>
+          <div><span class="bet-score">2-1</span><span class="bet-odds">×8.00</span></div>
+        </div>
+        <div class="bet-row">
+          <div class="bet-match">🇪🇨 厄瓜多尔 vs 🇨🇼 库拉索</div>
+          <div><span class="bet-score">2-0</span><span class="bet-odds">×6.50</span></div>
+        </div>
+        <div class="bet-row">
+          <div class="bet-match">🇹🇳 突尼斯 vs 🇯🇵 日本</div>
+          <div><span class="bet-score">0-2</span><span class="bet-odds">×7.00</span></div>
+        </div>
       </div>
     </div>
   </div>
@@ -292,86 +308,120 @@ footer { text-align:center; padding:20px 16px; color:#5a6e84; font-size:10px; bo
   <!-- 武力榜 -->
   <div class="section">
     <div class="section-title">⚔ 武力榜 (48强)</div>
-    <div class="power-list">
-      <div class="power-row" style="background:rgba(255,215,0,0.08)">
-        <div class="pos">🥇</div><div class="flag">🇦🇷</div><div class="name">阿根廷</div>
-        <div class="bar"><div class="bar-fill" style="width:96%;background:#ff3a3a"></div></div>
-        <div class="pwr" style="color:#ff3a3a">96</div>
+    <div class="power-section">
+      <div class="power-col">
+        <div class="power-row" style="background:rgba(255,215,0,0.08)">
+          <div class="pos">🥇</div><div class="flag">🇦🇷</div><div class="name">阿根廷</div>
+          <div class="bar"><div class="bar-fill" style="width:96%;background:#ff3a3a"></div></div>
+          <div class="pwr" style="color:#ff3a3a">96</div>
+        </div>
+        <div class="power-row" style="background:rgba(255,215,0,0.08)">
+          <div class="pos">🥈</div><div class="flag">🇫🇷</div><div class="name">法国</div>
+          <div class="bar"><div class="bar-fill" style="width:96%;background:#ff3a3a"></div></div>
+          <div class="pwr" style="color:#ff3a3a">96</div>
+        </div>
+        <div class="power-row">
+          <div class="pos">🥉</div><div class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</div><div class="name">英格兰</div>
+          <div class="bar"><div class="bar-fill" style="width:93%;background:#ff3a3a"></div></div>
+          <div class="pwr" style="color:#ff3a3a">93</div>
+        </div>
+        <div class="power-row">
+          <div class="pos">4</div><div class="flag">🇧🇷</div><div class="name">巴西</div>
+          <div class="bar"><div class="bar-fill" style="width:92%;background:#ff3a3a"></div></div>
+          <div class="pwr" style="color:#ff3a3a">92</div>
+        </div>
+        <div class="power-row">
+          <div class="pos">5</div><div class="flag">🇪🇸</div><div class="name">西班牙</div>
+          <div class="bar"><div class="bar-fill" style="width:92%;background:#ff3a3a"></div></div>
+          <div class="pwr" style="color:#ff3a3a">92</div>
+        </div>
+        <div class="power-row">
+          <div class="pos">6</div><div class="flag">🇩🇪</div><div class="name">德国</div>
+          <div class="bar"><div class="bar-fill" style="width:90%;background:#ff3a3a"></div></div>
+          <div class="pwr" style="color:#ff3a3a">90</div>
+        </div>
+        <div class="power-row">
+          <div class="pos">7</div><div class="flag">🇵🇹</div><div class="name">葡萄牙</div>
+          <div class="bar"><div class="bar-fill" style="width:89%;background:#ff8a00"></div></div>
+          <div class="pwr" style="color:#ff8a00">89</div>
+        </div>
+        <div class="power-row">
+          <div class="pos">8</div><div class="flag">🇳🇱</div><div class="name">荷兰</div>
+          <div class="bar"><div class="bar-fill" style="width:87%;background:#ff8a00"></div></div>
+          <div class="pwr" style="color:#ff8a00">87</div>
+        </div>
+        <div class="power-row">
+          <div class="pos">9</div><div class="flag">🇺🇾</div><div class="name">乌拉圭</div>
+          <div class="bar"><div class="bar-fill" style="width:86%;background:#ff8a00"></div></div>
+          <div class="pwr" style="color:#ff8a00">86</div>
+        </div>
+        <div class="power-row">
+          <div class="pos">10</div><div class="flag">🇲🇦</div><div class="name">摩洛哥</div>
+          <div class="bar"><div class="bar-fill" style="width:85%;background:#ff8a00"></div></div>
+          <div class="pwr" style="color:#ff8a00">85</div>
+        </div>
+        <div class="power-row">
+          <div class="pos">11</div><div class="flag">🇧🇪</div><div class="name">比利时</div>
+          <div class="bar"><div class="bar-fill" style="width:84%;background:#ff8a00"></div></div>
+          <div class="pwr" style="color:#ff8a00">84</div>
+        </div>
       </div>
-      <div class="power-row" style="background:rgba(255,215,0,0.08)">
-        <div class="pos">🥈</div><div class="flag">🇫🇷</div><div class="name">法国</div>
-        <div class="bar"><div class="bar-fill" style="width:96%;background:#ff3a3a"></div></div>
-        <div class="pwr" style="color:#ff3a3a">96</div>
-      </div>
-      <div class="power-row">
-        <div class="pos">🥉</div><div class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</div><div class="name">英格兰</div>
-        <div class="bar"><div class="bar-fill" style="width:93%;background:#ff3a3a"></div></div>
-        <div class="pwr" style="color:#ff3a3a">93</div>
-      </div>
-      <div class="power-row">
-        <div class="pos">4</div><div class="flag">🇧🇷</div><div class="name">巴西</div>
-        <div class="bar"><div class="bar-fill" style="width:92%;background:#ff3a3a"></div></div>
-        <div class="pwr" style="color:#ff3a3a">92</div>
-      </div>
-      <div class="power-row">
-        <div class="pos">5</div><div class="flag">🇪🇸</div><div class="name">西班牙</div>
-        <div class="bar"><div class="bar-fill" style="width:92%;background:#ff3a3a"></div></div>
-        <div class="pwr" style="color:#ff3a3a">92</div>
-      </div>
-      <div class="power-row">
-        <div class="pos">6</div><div class="flag">🇩🇪</div><div class="name">德国</div>
-        <div class="bar"><div class="bar-fill" style="width:90%;background:#ff3a3a"></div></div>
-        <div class="pwr" style="color:#ff3a3a">90</div>
-      </div>
-      <div class="power-row">
-        <div class="pos">7</div><div class="flag">🇵🇹</div><div class="name">葡萄牙</div>
-        <div class="bar"><div class="bar-fill" style="width:89%;background:#ff8a00"></div></div>
-        <div class="pwr" style="color:#ff8a00">89</div>
-      </div>
-      <div class="power-row">
-        <div class="pos">8</div><div class="flag">🇳🇱</div><div class="name">荷兰</div>
-        <div class="bar"><div class="bar-fill" style="width:87%;background:#ff8a00"></div></div>
-        <div class="pwr" style="color:#ff8a00">87</div>
-      </div>
-      <div class="power-row">
-        <div class="pos">9</div><div class="flag">🇺🇾</div><div class="name">乌拉圭</div>
-        <div class="bar"><div class="bar-fill" style="width:86%;background:#ff8a00"></div></div>
-        <div class="pwr" style="color:#ff8a00">86</div>
-      </div>
-      <div class="power-row">
-        <div class="pos">10</div><div class="flag">🇲🇦</div><div class="name">摩洛哥</div>
-        <div class="bar"><div class="bar-fill" style="width:85%;background:#ff8a00"></div></div>
-        <div class="pwr" style="color:#ff8a00">85</div>
-      </div>
-      <div class="power-row">
-        <div class="pos">11</div><div class="flag">🇧🇪</div><div class="name">比利时</div>
-        <div class="bar"><div class="bar-fill" style="width:84%;background:#ff8a00"></div></div>
-        <div class="pwr" style="color:#ff8a00">84</div>
-      </div>
-      <div class="power-row">
-        <div class="pos">12</div><div class="flag">🇨🇴</div><div class="name">哥伦比亚</div>
-        <div class="bar"><div class="bar-fill" style="width:84%;background:#ff8a00"></div></div>
-        <div class="pwr" style="color:#ff8a00">84</div>
-      </div>
-      <div class="power-row">
-        <div class="pos">13</div><div class="flag">🇭🇷</div><div class="name">克罗地亚</div>
-        <div class="bar"><div class="bar-fill" style="width:84%;background:#ff8a00"></div></div>
-        <div class="pwr" style="color:#ff8a00">84</div>
-      </div>
-      <div class="power-row">
-        <div class="pos">14</div><div class="flag">🇯🇵</div><div class="name">日本</div>
-        <div class="bar"><div class="bar-fill" style="width:79%;background:#ffb700"></div></div>
-        <div class="pwr" style="color:#ffb700">79</div>
-      </div>
-      <div class="power-row">
-        <div class="pos">15</div><div class="flag">🇺🇸</div><div class="name">美国</div>
-        <div class="bar"><div class="bar-fill" style="width:79%;background:#ffb700"></div></div>
-        <div class="pwr" style="color:#ffb700">79</div>
-      </div>
-      <div class="power-row">
-        <div class="pos">16</div><div class="flag">🇪🇨</div><div class="name">厄瓜多尔</div>
-        <div class="bar"><div class="bar-fill" style="width:78%;background:#ffb700"></div></div>
-        <div class="pwr" style="color:#ffb700">78</div>
+      <div class="power-col">
+        <div class="power-row">
+          <div class="pos">12</div><div class="flag">🇨🇴</div><div class="name">哥伦比亚</div>
+          <div class="bar"><div class="bar-fill" style="width:84%;background:#ff8a00"></div></div>
+          <div class="pwr" style="color:#ff8a00">84</div>
+        </div>
+        <div class="power-row">
+          <div class="pos">13</div><div class="flag">🇭🇷</div><div class="name">克罗地亚</div>
+          <div class="bar"><div class="bar-fill" style="width:84%;background:#ff8a00"></div></div>
+          <div class="pwr" style="color:#ff8a00">84</div>
+        </div>
+        <div class="power-row">
+          <div class="pos">14</div><div class="flag">🇯🇵</div><div class="name">日本</div>
+          <div class="bar"><div class="bar-fill" style="width:79%;background:#ffb700"></div></div>
+          <div class="pwr" style="color:#ffb700">79</div>
+        </div>
+        <div class="power-row">
+          <div class="pos">15</div><div class="flag">🇺🇸</div><div class="name">美国</div>
+          <div class="bar"><div class="bar-fill" style="width:79%;background:#ffb700"></div></div>
+          <div class="pwr" style="color:#ffb700">79</div>
+        </div>
+        <div class="power-row">
+          <div class="pos">16</div><div class="flag">🇪🇨</div><div class="name">厄瓜多尔</div>
+          <div class="bar"><div class="bar-fill" style="width:78%;background:#ffb700"></div></div>
+          <div class="pwr" style="color:#ffb700">78</div>
+        </div>
+        <div class="power-row">
+          <div class="pos">17</div><div class="flag">🇸🇪</div><div class="name">瑞典</div>
+          <div class="bar"><div class="bar-fill" style="width:74%;background:#ffb700"></div></div>
+          <div class="pwr" style="color:#ffb700">74</div>
+        </div>
+        <div class="power-row">
+          <div class="pos">18</div><div class="flag">🇨🇮</div><div class="name">科特迪瓦</div>
+          <div class="bar"><div class="bar-fill" style="width:74%;background:#ffb700"></div></div>
+          <div class="pwr" style="color:#ffb700">74</div>
+        </div>
+        <div class="power-row">
+          <div class="pos">19</div><div class="flag">🇹🇷</div><div class="name">土耳其</div>
+          <div class="bar"><div class="bar-fill" style="width:73%;background:#ffb700"></div></div>
+          <div class="pwr" style="color:#ffb700">73</div>
+        </div>
+        <div class="power-row">
+          <div class="pos">20</div><div class="flag">🇦🇺</div><div class="name">澳大利亚</div>
+          <div class="bar"><div class="bar-fill" style="width:73%;background:#ffb700"></div></div>
+          <div class="pwr" style="color:#ffb700">73</div>
+        </div>
+        <div class="power-row">
+          <div class="pos">21</div><div class="flag">🇸🇳</div><div class="name">塞内加尔</div>
+          <div class="bar"><div class="bar-fill" style="width:77%;background:#ffb700"></div></div>
+          <div class="pwr" style="color:#ffb700">77</div>
+        </div>
+        <div class="power-row">
+          <div class="pos">22</div><div class="flag">🇰🇷</div><div class="name">韩国</div>
+          <div class="bar"><div class="bar-fill" style="width:78%;background:#ffb700"></div></div>
+          <div class="pwr" style="color:#ffb700">78</div>
+        </div>
       </div>
     </div>
   </div>
@@ -379,37 +429,68 @@ footer { text-align:center; padding:20px 16px; color:#5a6e84; font-size:10px; bo
   <!-- 分组 -->
   <div class="section">
     <div class="section-title">📋 分组赛况</div>
-    <table>
-      <tr>
-        <th>组</th><th>球队</th><th>胜</th><th>平</th><th>负</th><th>积分</th><th>晋级</th>
-      </tr>
-      <tr class="group-title"><td colspan="7">A组</td></tr>
-      <tr><td></td><td class="team">🇲🇽 墨西哥</td><td>1</td><td>0</td><td>0</td><td>3</td><td style="color:#3ec46d">✅</td></tr>
-      <tr><td></td><td class="team">🇰🇷 韩国</td><td>1</td><td>0</td><td>0</td><td>3</td><td></td></tr>
-      <tr><td></td><td class="team">🇿🇦 南非</td><td>0</td><td>1</td><td>0</td><td>1</td><td></td></tr>
-      <tr><td></td><td class="team">🇨🇿 捷克</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
-      <tr class="group-title"><td colspan="7">B组</td></tr>
-      <tr><td></td><td class="team">🇨🇭 瑞士</td><td>1</td><td>0</td><td>0</td><td>3</td><td style="color:#3ec46d">✅</td></tr>
-      <tr><td></td><td class="team">🇨🇦 加拿大</td><td>1</td><td>0</td><td>0</td><td>3</td><td></td></tr>
-      <tr><td></td><td class="team">🇧🇦 波黑</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
-      <tr><td></td><td class="team">🇶🇦 卡塔尔</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
-      <tr class="group-title"><td colspan="7">C组</td></tr>
-      <tr><td></td><td class="team">🇧🇷 巴西</td><td>1</td><td>0</td><td>0</td><td>3</td><td style="color:#3ec46d">✅</td></tr>
-      <tr><td></td><td class="team">🇲🇦 摩洛哥</td><td>1</td><td>0</td><td>0</td><td>3</td><td></td></tr>
-      <tr><td></td><td class="team">🏴󠁧󠁢󠁳󠁣󠁴󠁿 苏格兰</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
-      <tr><td></td><td class="team">🇭🇹 海地</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
-      <tr class="group-title"><td colspan="7">D组</td></tr>
-      <tr><td></td><td class="team">🇺🇸 美国</td><td>1</td><td>0</td><td>0</td><td>3</td><td style="color:#3ec46d">✅</td></tr>
-      <tr><td></td><td class="team">🇲🇽 墨西哥</td><td>1</td><td>0</td><td>0</td><td>3</td><td></td></tr>
-      <tr class="group-title"><td colspan="7">E组</td></tr>
-      <tr><td></td><td class="team">🇩🇪 德国</td><td>1</td><td>0</td><td>0</td><td>3</td><td style="color:#3ec46d">✅</td></tr>
-      <tr><td></td><td class="team">🇨🇮 科特迪瓦</td><td>1</td><td>0</td><td>0</td><td>3</td><td></td></tr>
-      <tr class="group-title"><td colspan="7">F组</td></tr>
-      <tr><td></td><td class="team">🇸🇪 瑞典</td><td>1</td><td>0</td><td>0</td><td>3</td><td style="color:#3ec46d">✅</td></tr>
-      <tr><td></td><td class="team">🇳🇱 荷兰</td><td>0</td><td>1</td><td>0</td><td>1</td><td></td></tr>
-      <tr><td></td><td class="team">🇯🇵 日本</td><td>0</td><td>1</td><td>0</td><td>1</td><td></td></tr>
-      <tr><td></td><td class="team">🇹🇳 突尼斯</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
-    </table>
+    <div class="groups-grid">
+      <div class="group-card">
+        <h4>A组</h4>
+        <table>
+          <tr><th></th><th>胜</th><th>平</th><th>负</th><th>积分</th><th></th></tr>
+          <tr><td class="rank">1</td><td>🇲🇽 墨西哥</td><td>1</td><td>0</td><td>0</td><td>3</td><td class="adv">✅</td></tr>
+          <tr><td class="rank">2</td><td>🇰🇷 韩国</td><td>1</td><td>0</td><td>0</td><td>3</td><td></td></tr>
+          <tr><td class="rank">3</td><td>🇿🇦 南非</td><td>0</td><td>1</td><td>0</td><td>1</td><td></td></tr>
+          <tr><td class="rank">4</td><td>🇨🇿 捷克</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
+        </table>
+      </div>
+      <div class="group-card">
+        <h4>B组</h4>
+        <table>
+          <tr><th></th><th>胜</th><th>平</th><th>负</th><th>积分</th><th></th></tr>
+          <tr><td class="rank">1</td><td>🇨🇭 瑞士</td><td>1</td><td>0</td><td>0</td><td>3</td><td class="adv">✅</td></tr>
+          <tr><td class="rank">2</td><td>🇨🇦 加拿大</td><td>1</td><td>0</td><td>0</td><td>3</td><td></td></tr>
+          <tr><td class="rank">3</td><td>🇧🇦 波黑</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
+          <tr><td class="rank">4</td><td>🇶🇦 卡塔尔</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
+        </table>
+      </div>
+      <div class="group-card">
+        <h4>C组</h4>
+        <table>
+          <tr><th></th><th>胜</th><th>平</th><th>负</th><th>积分</th><th></th></tr>
+          <tr><td class="rank">1</td><td>🇧🇷 巴西</td><td>1</td><td>0</td><td>0</td><td>3</td><td class="adv">✅</td></tr>
+          <tr><td class="rank">2</td><td>🇲🇦 摩洛哥</td><td>1</td><td>0</td><td>0</td><td>3</td><td></td></tr>
+          <tr><td class="rank">3</td><td>🏴󠁧󠁢󠁳󠁣󠁴󠁿 苏格兰</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
+          <tr><td class="rank">4</td><td>🇭🇹 海地</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
+        </table>
+      </div>
+      <div class="group-card">
+        <h4>D组</h4>
+        <table>
+          <tr><th></th><th>胜</th><th>平</th><th>负</th><th>积分</th><th></th></tr>
+          <tr><td class="rank">1</td><td>🇺🇸 美国</td><td>1</td><td>0</td><td>0</td><td>3</td><td class="adv">✅</td></tr>
+          <tr><td class="rank">2</td><td>🇲🇽 墨西哥</td><td>1</td><td>0</td><td>0</td><td>3</td><td></td></tr>
+          <tr><td class="rank">3</td><td>🇹🇷 土耳其</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
+          <tr><td class="rank">4</td><td>🇵🇾 巴拉圭</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
+        </table>
+      </div>
+      <div class="group-card">
+        <h4>E组</h4>
+        <table>
+          <tr><th></th><th>胜</th><th>平</th><th>负</th><th>积分</th><th></th></tr>
+          <tr><td class="rank">1</td><td>🇩🇪 德国</td><td>1</td><td>0</td><td>0</td><td>3</td><td class="adv">✅</td></tr>
+          <tr><td class="rank">2</td><td>🇨🇮 科特迪瓦</td><td>1</td><td>0</td><td>0</td><td>3</td><td></td></tr>
+          <tr><td class="rank">3</td><td>🇪🇨 厄瓜多尔</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
+          <tr><td class="rank">4</td><td>🇨🇼 库拉索</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
+        </table>
+      </div>
+      <div class="group-card">
+        <h4>F组</h4>
+        <table>
+          <tr><th></th><th>胜</th><th>平</th><th>负</th><th>积分</th><th></th></tr>
+          <tr><td class="rank">1</td><td>🇸🇪 瑞典</td><td>1</td><td>0</td><td>0</td><td>3</td><td class="adv">✅</td></tr>
+          <tr><td class="rank">2</td><td>🇳🇱 荷兰</td><td>0</td><td>1</td><td>0</td><td>1</td><td></td></tr>
+          <tr><td class="rank">3</td><td>🇯🇵 日本</td><td>0</td><td>1</td><td>0</td><td>1</td><td></td></tr>
+          <tr><td class="rank">4</td><td>🇹🇳 突尼斯</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
 
