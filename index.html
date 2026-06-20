@@ -2,501 +2,1963 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+<meta name="theme-color" content="#0a1929">
 <title>2026世界杯追踪 · 48强战力全图</title>
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; background:#0a1929; color:#e6eef7; line-height:1.5; font-size:14px; }
-.hero { background:linear-gradient(135deg,#0a1929,#1a3a5c); padding:16px 12px; text-align:center; }
-.hero h1 { font-size:22px; background:linear-gradient(90deg,#ffb700,#ff6a00); -webkit-background-clip:text; background-clip:text; color:transparent; }
-.hero .sub { color:#8aa3bd; font-size:11px; margin-top:4px; }
-.hero .time { color:#5a6e84; font-size:10px; margin-top:4px; }
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif; background:#0a1929; color:#e6eef7; line-height:1.55; min-height:100vh; padding-bottom:60px; }
+a { color:inherit; text-decoration:none; }
+.hero { background: linear-gradient(135deg, #0a1929 0%, #1a3a5c 50%, #0a1929 100%); padding: 30px 16px 24px; text-align:center; position:relative; overflow:hidden; }
+.hero::before { content:""; position:absolute; inset:0; background: radial-gradient(circle at 20% 30%, rgba(255,180,0,0.15), transparent 50%), radial-gradient(circle at 80% 70%, rgba(0,150,255,0.15), transparent 50%); }
+.hero h1 { font-size:28px; font-weight:800; position:relative; background: linear-gradient(90deg, #ffb700, #ff6a00); -webkit-background-clip:text; background-clip:text; color:transparent; letter-spacing:1px; }
+.hero .sub { margin-top:8px; font-size:14px; color:#8aa3bd; position:relative; }
+.hero .meta { margin-top:14px; display:flex; flex-wrap:wrap; gap:8px; justify-content:center; position:relative; }
+.hero .meta span { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); padding:4px 12px; border-radius:20px; font-size:12px; color:#b8c9d9; }
+.nav { position:sticky; top:0; z-index:50; background:rgba(10,25,41,0.95); backdrop-filter: blur(8px); border-bottom:1px solid rgba(255,255,255,0.08); padding:10px 12px; display:flex; gap:8px; overflow-x:auto; }
+.nav button { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:#b8c9d9; padding:8px 14px; border-radius:18px; font-size:13px; cursor:pointer; white-space:nowrap; transition:all 0.2s; }
+.nav button:hover, .nav button.active { background:#ffb700; color:#0a1929; border-color:#ffb700; font-weight:600; }
+.container { max-width:1400px; margin:0 auto; padding:0 14px; }
+.section { margin-top:24px; }
+.section-title { font-size:20px; font-weight:700; margin-bottom:14px; padding-left:10px; border-left:4px solid #ffb700; }
+.overview { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:14px; }
+@media(min-width:600px){ .overview { grid-template-columns:repeat(4,1fr); } }
+.stat { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px; text-align:center; }
+.stat .v { font-size:22px; font-weight:800; color:#ffb700; }
+.stat .l { font-size:11px; color:#8aa3bd; margin-top:2px; }
 
-.container { max-width:1100px; margin:0 auto; padding:0 10px 16px; }
-.section { margin-top:16px; }
-.section-title { font-size:15px; font-weight:700; margin-bottom:10px; padding-left:8px; border-left:3px solid #ffb700; }
+/* 球队卡片 */
+.teams { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+@media(min-width:600px){ .teams { grid-template-columns:repeat(3,1fr); } }
+@media(min-width:900px){ .teams { grid-template-columns:repeat(4,1fr); } }
+@media(min-width:1200px){ .teams { grid-template-columns:repeat(6,1fr); } }
+.team-card { background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:12px; position:relative; overflow:hidden; cursor:pointer; transition:transform 0.2s; }
+.team-card:active { transform:scale(0.97); }
+.team-card .rank { position:absolute; top:8px; right:10px; font-size:11px; color:#8aa3bd; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:8px; }
+.team-card .name { font-size:15px; font-weight:700; }
+.team-card .name-en { font-size:10px; color:#8aa3bd; margin-top:2px; }
+.team-card .power-bar { margin-top:8px; height:8px; background:rgba(255,255,255,0.08); border-radius:4px; overflow:hidden; position:relative; }
+.team-card .power-fill { height:100%; border-radius:4px; transition:width 0.6s; }
+.team-card .power-meta { display:flex; justify-content:space-between; align-items:center; margin-top:6px; font-size:11px; }
+.team-card .power-v { font-weight:800; font-size:18px; }
+.team-card .tier { padding:1px 6px; border-radius:6px; font-size:10px; font-weight:700; }
+.team-card .stars { margin-top:8px; font-size:11px; color:#b8c9d9; line-height:1.4; max-height:42px; overflow:hidden; }
+.team-card .stars b { color:#ffd966; }
 
-/* 武力榜TOP3 - 横向排列 */
-.power-top { display:flex; gap:10px; justify-content:center; margin-bottom:14px; }
-.power-card { flex:1; max-width:200px; background:rgba(255,255,255,0.05); border-radius:10px; padding:12px 8px; text-align:center; }
-.power-card.gold { background:linear-gradient(135deg,rgba(255,215,0,0.12),rgba(255,180,0,0.05)); border:1px solid rgba(255,215,0,0.25); }
-.power-card .flag { font-size:24px; }
-.power-card .name { font-size:13px; font-weight:700; margin-top:2px; }
-.power-card .power { font-size:20px; font-weight:800; color:#ffb700; }
-.power-card .note { font-size:10px; color:#8aa3bd; }
+/* 详情弹层 */
+.modal { display:none; position:fixed; inset:0; z-index:100; background:rgba(0,0,0,0.85); overflow-y:auto; }
+.modal.active { display:flex; align-items:flex-start; justify-content:center; padding:14px; }
+.modal-content { background:#0f2740; border:1px solid rgba(255,255,255,0.1); border-radius:18px; max-width:560px; width:100%; margin-top:14px; padding:18px; position:relative; animation:slideUp 0.25s; }
+@keyframes slideUp { from { transform:translateY(20px); opacity:0; } to { transform:translateY(0); opacity:1; } }
+.modal-close { position:absolute; top:10px; right:14px; background:rgba(255,255,255,0.08); border:none; color:#fff; font-size:18px; width:32px; height:32px; border-radius:50%; cursor:pointer; }
+.modal h2 { font-size:22px; margin-bottom:4px; }
+.modal h2 small { font-size:12px; color:#8aa3bd; font-weight:400; margin-left:6px; }
+.modal .row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:13px; }
+.modal .row b { color:#ffb700; }
+.modal .power-big { font-size:42px; font-weight:800; text-align:center; margin:14px 0; }
+.modal .stars-list { background:rgba(0,0,0,0.25); border-radius:10px; padding:10px; margin-top:8px; }
+.modal .stars-list .item { padding:3px 0; font-size:13px; }
+.modal .stars-list .item b { color:#ffd966; }
+.modal .section-mini { margin-top:12px; }
+.modal .section-mini h4 { font-size:13px; color:#ffb700; margin-bottom:4px; }
+.modal .section-mini p { font-size:13px; color:#c8d6e2; }
 
-/* 比赛预测 - 横向排列 */
-.predictions { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:14px; }
-@media(max-width:700px) { .predictions { grid-template-columns:1fr; } }
+/* 分组赛 */
+.groups { display:grid; grid-template-columns:1fr; gap:14px; }
+@media(min-width:900px){ .groups { grid-template-columns:repeat(2,1fr); } }
+@media(min-width:1200px){ .groups { grid-template-columns:repeat(3,1fr); } }
+.group { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:14px; }
+.group h3 { font-size:18px; color:#ffb700; margin-bottom:6px; }
+.group .venue { font-size:11px; color:#8aa3bd; margin-bottom:10px; }
+table.stand { width:100%; border-collapse:collapse; font-size:12px; }
+table.stand th, table.stand td { padding:5px 4px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.06); }
+table.stand th { color:#8aa3bd; font-weight:500; font-size:10px; }
+table.stand td.t { text-align:left; }
+table.stand .rank1 { color:#ffb700; font-weight:700; }
+table.stand .adv { color:#3ec46d; font-size:10px; }
+.matches { margin-top:10px; padding-top:10px; border-top:1px dashed rgba(255,255,255,0.1); }
+.matches h4 { font-size:12px; color:#8aa3bd; margin-bottom:6px; }
+.match { display:flex; align-items:center; justify-content:space-between; padding:5px 0; font-size:12px; gap:6px; }
+.match .score { font-weight:800; color:#ffb700; min-width:42px; text-align:center; }
+.match .team { flex:1; }
+.match .team.left { text-align:right; }
+.match .meta { font-size:10px; color:#8aa3bd; padding:2px 0 6px 0; line-height:1.3; }
+.match.future { color:#b8c9d9; }
+.match.future .score { color:#2bbfd3; }
+.prediction { margin-top:10px; padding:8px; background:rgba(255,180,0,0.06); border-radius:8px; border-left:3px solid #ffb700; font-size:12px; }
+.prediction b { color:#ffb700; }
 
-.match-card { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px; }
-.match-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
-.match-time { font-size:10px; color:#8aa3bd; }
-.match-badge { font-size:10px; background:rgba(255,180,0,0.2); color:#ffd966; padding:2px 8px; border-radius:10px; }
-.match-teams { display:flex; align-items:center; justify-content:center; gap:12px; padding:8px; background:rgba(0,0,0,0.2); border-radius:6px; }
-.team { text-align:center; }
-.team .flag { font-size:24px; }
-.team .name { font-size:13px; font-weight:700; margin-top:1px; }
-.team .power { font-size:10px; color:#8aa3bd; }
-.vs { font-size:16px; color:#8aa3bd; font-weight:700; }
-.scores { display:flex; gap:6px; margin-top:8px; justify-content:center; }
-.score-card { flex:1; max-width:90px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,180,0,0.15); border-radius:6px; padding:6px 4px; text-align:center; }
-.score-card.main { background:rgba(255,180,0,0.12); border-color:#ffb700; }
-.score-card .score { font-size:16px; font-weight:800; color:#ffd966; }
-.score-card.main .score { font-size:18px; }
-.score-card .odds { font-size:9px; color:#3ec46d; }
-.score-card .desc { font-size:9px; color:#8aa3bd; margin-top:2px; }
-.match-advice { margin-top:6px; padding:5px 8px; background:rgba(255,180,0,0.08); border-radius:4px; font-size:11px; color:#ffd966; text-align:center; }
-
-/* 投注建议 - 横向排列 */
-.betting { background:rgba(0,0,0,0.2); border-radius:10px; padding:10px 12px; margin-bottom:14px; }
-.betting h4 { color:#ffb700; margin-bottom:6px; font-size:12px; }
-.bet-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:6px 16px; }
-@media(max-width:500px) { .bet-grid { grid-template-columns:1fr; } }
-.bet-row { display:flex; justify-content:space-between; padding:3px 0; font-size:11px; }
-.bet-match { color:#c8d6e2; }
-.bet-score { color:#ffd966; font-weight:700; }
-.bet-odds { color:#3ec46d; margin-left:8px; }
+/* 比分预测大板块 */
+.match-prediction { background:linear-gradient(180deg, rgba(255,180,0,0.04), rgba(255,180,0,0.01)); border:1px solid rgba(255,180,0,0.2); border-radius:14px; padding:14px; margin-bottom:12px; }
+.match-prediction .mp-header { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+.match-prediction .mp-title { font-size:16px; font-weight:700; color:#ffd966; }
+.match-prediction .mp-time { font-size:11px; color:#8aa3bd; }
+.match-prediction .mp-teams { display:flex; align-items:center; justify-content:space-around; margin:10px 0; padding:10px; background:rgba(0,0,0,0.25); border-radius:10px; }
+.match-prediction .mp-team { flex:1; text-align:center; }
+.match-prediction .mp-team .nm { font-size:14px; font-weight:700; }
+.match-prediction .mp-team .pwr { display:inline-block; margin-top:4px; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700; }
+.match-prediction .mp-vs { font-size:20px; color:#8aa3bd; padding:0 8px; }
+.match-prediction .mp-context { font-size:12px; color:#c8d6e2; padding:8px 10px; background:rgba(0,0,0,0.2); border-radius:8px; margin:8px 0; line-height:1.6; }
+.match-prediction .mp-form { font-size:12px; color:#8aa3bd; padding:6px 10px; border-left:2px solid #2bbfd3; margin:6px 0; }
+.match-prediction .mp-factors { font-size:12px; color:#c8d6e2; }
+.match-prediction .mp-factors li { padding:3px 0; padding-left:16px; position:relative; }
+.match-prediction .mp-factors li::before { content:"▶"; position:absolute; left:0; color:#ffb700; font-size:9px; top:5px; }
+.match-prediction .mp-scores { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:8px; margin-top:10px; }
+.match-prediction .mp-score-card { background:rgba(0,0,0,0.3); border:1px solid rgba(255,180,0,0.2); border-radius:8px; padding:8px; text-align:center; }
+.match-prediction .mp-score-card .sc { font-size:20px; font-weight:800; color:#ffd966; }
+.match-prediction .mp-score-card .pc { font-size:10px; color:#3ec46d; margin-top:2px; }
+.match-prediction .mp-score-card .desc { font-size:10px; color:#8aa3bd; margin-top:4px; line-height:1.3; }
+.match-prediction .mp-score-card.top { background:rgba(255,180,0,0.15); border-color:#ffb700; }
+.match-prediction .mp-main-score { background:linear-gradient(90deg, rgba(255,180,0,0.25), rgba(255,180,0,0.1)); padding:12px 14px; border-radius:10px; font-size:15px; color:#ffd966; margin-bottom:12px; text-align:center; border:1px solid rgba(255,180,0,0.3); }
+.match-prediction .mp-main-score b { font-size:24px; color:#fff; margin:0 4px; font-weight:900; }
+.match-prediction .mp-main-pc { display:inline-block; background:rgba(255,180,0,0.3); padding:2px 10px; border-radius:10px; font-size:12px; font-weight:700; margin-left:8px; }
+.match-prediction .mp-score-card { position:relative; }
+.match-prediction .mp-badge { position:absolute; top:-8px; right:-6px; background:#ffb700; color:#0a1929; font-size:10px; font-weight:800; padding:2px 8px; border-radius:8px; box-shadow:0 2px 4px rgba(0,0,0,0.3); }
+.match-prediction .mp-advice { margin-top:10px; padding:10px; background:linear-gradient(90deg, rgba(255,180,0,0.15), rgba(255,180,0,0.05)); border-radius:8px; font-size:13px; font-weight:700; text-align:center; color:#ffd966; }
 
 /* 武力榜 */
-.power-section { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
-@media(max-width:700px) { .power-section { grid-template-columns:1fr; } }
-.power-col { background:rgba(255,255,255,0.03); border-radius:10px; padding:10px; }
-.power-row { display:flex; align-items:center; gap:8px; padding:4px 0; font-size:12px; border-bottom:1px solid rgba(255,255,255,0.04); }
-.power-row:last-child { border-bottom:none; }
-.power-row .pos { font-weight:800; min-width:18px; color:#8aa3bd; }
-.power-row .flag { font-size:13px; }
-.power-row .name { flex:1; }
-.power-row .bar { flex:1; height:3px; background:rgba(255,255,255,0.1); border-radius:2px; }
-.power-row .bar-fill { height:100%; border-radius:2px; }
-.power-row .pwr { font-weight:800; min-width:24px; text-align:right; }
+.power-rank { display:grid; grid-template-columns:1fr; gap:6px; }
+@media(min-width:600px){ .power-rank { grid-template-columns:repeat(2,1fr); } }
+@media(min-width:1100px){ .power-rank { grid-template-columns:repeat(3,1fr); } }
+.pr-row { display:flex; align-items:center; gap:10px; padding:6px 10px; background:rgba(255,255,255,0.03); border-radius:8px; }
+.pr-row .pos { font-weight:800; min-width:24px; text-align:center; }
+.pr-row .nm { flex:1; font-size:13px; }
+.pr-row .pwr { font-weight:800; }
+.pr-row .bar { flex:2; height:6px; background:rgba(255,255,255,0.06); border-radius:3px; overflow:hidden; }
+.pr-row .fill { height:100%; }
 
-/* 分组 */
-.groups-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
-@media(max-width:800px) { .groups-grid { grid-template-columns:repeat(2,1fr); } }
-@media(max-width:500px) { .groups-grid { grid-template-columns:1fr; } }
-.group-card { background:rgba(255,255,255,0.03); border-radius:10px; padding:10px; }
-.group-card h4 { color:#ffb700; font-size:12px; margin-bottom:6px; }
-table { width:100%; border-collapse:collapse; font-size:10px; }
-th { color:#8aa3bd; padding:3px 2px; text-align:left; font-weight:500; border-bottom:1px solid rgba(255,255,255,0.1); }
-td { padding:3px 2px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.04); }
-td.rank { color:#ffb700; font-weight:700; width:16px; }
-td.adv { color:#3ec46d; font-size:9px; }
+/* R3 比分预测表格 */
+.r3-table { width:100%; border-collapse:collapse; font-size:12px; margin-top:10px; }
+.r3-table th { background:rgba(255,180,0,0.1); padding:6px 4px; color:#ffd966; text-align:center; font-size:11px; font-weight:600; }
+.r3-table td { padding:8px 4px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.06); }
+.r3-table td.t { text-align:left; }
+.r3-table td.sc { font-weight:800; color:#ffd966; }
+.r3-table td.sc small { display:block; color:#8aa3bd; font-size:9px; font-weight:400; }
+.r3-table tr:hover { background:rgba(255,180,0,0.04); }
 
-/* 底部 */
-footer { text-align:center; padding:16px 12px; color:#5a6e84; font-size:10px; border-top:1px solid rgba(255,255,255,0.05); margin-top:16px; }
+footer { text-align:center; padding:30px 16px 14px; color:#5a6e84; font-size:11px; }
+footer a { color:#ffb700; }
 </style>
 </head>
 <body>
 <div class="hero">
   <h1>🏆 2026 世界杯追踪</h1>
-  <div class="sub">美加墨48强战力全图 · 赛程预测与已踢战报</div>
-  <div class="time">📅 揭幕 6/11 · 决赛 7/19 · CN时间 · 更新 2026/6/20</div>
-</div>
-
-<div class="container">
-  <!-- 武力榜TOP3 -->
-  <div class="section">
-    <div class="section-title">📊 武力榜 TOP3</div>
-    <div class="power-top">
-      <div class="power-card gold">
-        <div class="flag">🇦🇷</div>
-        <div class="name">阿根廷</div>
-        <div class="power">96</div>
-        <div class="note">FIFA 5 · 卫冕冠军</div>
-      </div>
-      <div class="power-card gold">
-        <div class="flag">🇫🇷</div>
-        <div class="name">法国</div>
-        <div class="power">96</div>
-        <div class="note">FIFA 2 · 姆巴佩巅峰</div>
-      </div>
-      <div class="power-card gold">
-        <div class="flag">🇧🇷</div>
-        <div class="name">巴西</div>
-        <div class="power">92</div>
-        <div class="note">FIFA 4 · 5星豪门</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 4场预测 -->
-  <div class="section">
-    <div class="section-title">⭐ 6月21日 4场比分预测 (北京时间)</div>
-    <div class="predictions">
-      <!-- 荷兰 vs 瑞典 -->
-      <div class="match-card">
-        <div class="match-header">
-          <div class="match-time">🕒 01:00 · F组 · 休斯敦</div>
-          <div class="match-badge">主推×7.00</div>
-        </div>
-        <div class="match-teams">
-          <div class="team">
-            <div class="flag">🇳🇱</div>
-            <div class="name">荷兰</div>
-            <div class="power">武力 89</div>
-          </div>
-          <div class="vs">VS</div>
-          <div class="team">
-            <div class="flag">🇸🇪</div>
-            <div class="name">瑞典</div>
-            <div class="power">武力 83</div>
-          </div>
-        </div>
-        <div class="scores">
-          <div class="score-card main">
-            <div class="score">2-0</div>
-            <div class="odds">×7.00</div>
-            <div class="desc">稳健推荐</div>
-          </div>
-          <div class="score-card">
-            <div class="score">1-0</div>
-            <div class="odds">×6.50</div>
-            <div class="desc">可能</div>
-          </div>
-          <div class="score-card">
-            <div class="score">1-1</div>
-            <div class="odds">×5.50</div>
-            <div class="desc">冷门</div>
-          </div>
-        </div>
-        <div class="match-advice">荷兰不能再次丢分，防守稳健小胜过关</div>
-      </div>
-
-      <!-- 德国 vs 科特迪瓦 -->
-      <div class="match-card">
-        <div class="match-header">
-          <div class="match-time">🕒 04:00 · E组 · 多伦多</div>
-          <div class="match-badge">主推×8.00</div>
-        </div>
-        <div class="match-teams">
-          <div class="team">
-            <div class="flag">🇩🇪</div>
-            <div class="name">德国</div>
-            <div class="power">武力 92</div>
-          </div>
-          <div class="vs">VS</div>
-          <div class="team">
-            <div class="flag">🇨🇮</div>
-            <div class="name">科特迪瓦</div>
-            <div class="power">武力 78</div>
-          </div>
-        </div>
-        <div class="scores">
-          <div class="score-card main">
-            <div class="score">2-1</div>
-            <div class="odds">×8.00</div>
-            <div class="desc">主推</div>
-          </div>
-          <div class="score-card">
-            <div class="score">3-1</div>
-            <div class="odds">×11.00</div>
-            <div class="desc">可能</div>
-          </div>
-          <div class="score-card">
-            <div class="score">1-0</div>
-            <div class="odds">×8.00</div>
-            <div class="desc">防冷</div>
-          </div>
-        </div>
-        <div class="match-advice">德国进攻最强，但科特迪瓦会进球</div>
-      </div>
-
-      <!-- 厄瓜多尔 vs 库拉索 -->
-      <div class="match-card">
-        <div class="match-header">
-          <div class="match-time">🕒 08:00 · E组 · 堪萨斯城</div>
-          <div class="match-badge">主推×6.50</div>
-        </div>
-        <div class="match-teams">
-          <div class="team">
-            <div class="flag">🇪🇨</div>
-            <div class="name">厄瓜多尔</div>
-            <div class="power">武力 82</div>
-          </div>
-          <div class="vs">VS</div>
-          <div class="team">
-            <div class="flag">🇨🇼</div>
-            <div class="name">库拉索</div>
-            <div class="power">武力 65</div>
-          </div>
-        </div>
-        <div class="scores">
-          <div class="score-card main">
-            <div class="score">2-0</div>
-            <div class="odds">×6.50</div>
-            <div class="desc">稳健推荐</div>
-          </div>
-          <div class="score-card">
-            <div class="score">3-0</div>
-            <div class="odds">×8.00</div>
-            <div class="desc">可能</div>
-          </div>
-          <div class="score-card">
-            <div class="score">4-0</div>
-            <div class="odds">×12.00</div>
-            <div class="desc">冷门</div>
-          </div>
-        </div>
-        <div class="match-advice">厄瓜多尔实力碾压，必胜之战</div>
-      </div>
-
-      <!-- 突尼斯 vs 日本 -->
-      <div class="match-card">
-        <div class="match-header">
-          <div class="match-time">🕒 12:00 · F组 · 洛杉矶</div>
-          <div class="match-badge">主推×7.00</div>
-        </div>
-        <div class="match-teams">
-          <div class="team">
-            <div class="flag">🇹🇳</div>
-            <div class="name">突尼斯</div>
-            <div class="power">武力 74</div>
-          </div>
-          <div class="vs">VS</div>
-          <div class="team">
-            <div class="flag">🇯🇵</div>
-            <div class="name">日本</div>
-            <div class="power">武力 84</div>
-          </div>
-        </div>
-        <div class="scores">
-          <div class="score-card main">
-            <div class="score">0-2</div>
-            <div class="odds">×7.00</div>
-            <div class="desc">稳健推荐</div>
-          </div>
-          <div class="score-card">
-            <div class="score">0-3</div>
-            <div class="odds">×12.00</div>
-            <div class="desc">可能</div>
-          </div>
-          <div class="score-card">
-            <div class="score">1-3</div>
-            <div class="odds">×15.00</div>
-            <div class="desc">冷门</div>
-          </div>
-        </div>
-        <div class="match-advice">日本状态稳定，突尼斯军心大乱</div>
-      </div>
-    </div>
-
-    <!-- 投注建议 -->
-    <div class="betting">
-      <h4>💰 投注建议</h4>
-      <div class="bet-grid">
-        <div class="bet-row">
-          <div class="bet-match">🇳🇱 荷兰 vs 🇸🇪 瑞典</div>
-          <div><span class="bet-score">2-0</span><span class="bet-odds">×7.00</span></div>
-        </div>
-        <div class="bet-row">
-          <div class="bet-match">🇩🇪 德国 vs 🇨🇮 科特迪瓦</div>
-          <div><span class="bet-score">2-1</span><span class="bet-odds">×8.00</span></div>
-        </div>
-        <div class="bet-row">
-          <div class="bet-match">🇪🇨 厄瓜多尔 vs 🇨🇼 库拉索</div>
-          <div><span class="bet-score">2-0</span><span class="bet-odds">×6.50</span></div>
-        </div>
-        <div class="bet-row">
-          <div class="bet-match">🇹🇳 突尼斯 vs 🇯🇵 日本</div>
-          <div><span class="bet-score">0-2</span><span class="bet-odds">×7.00</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 武力榜 -->
-  <div class="section">
-    <div class="section-title">⚔ 武力榜 (48强)</div>
-    <div class="power-section">
-      <div class="power-col">
-        <div class="power-row" style="background:rgba(255,215,0,0.08)">
-          <div class="pos">🥇</div><div class="flag">🇦🇷</div><div class="name">阿根廷</div>
-          <div class="bar"><div class="bar-fill" style="width:96%;background:#ff3a3a"></div></div>
-          <div class="pwr" style="color:#ff3a3a">96</div>
-        </div>
-        <div class="power-row" style="background:rgba(255,215,0,0.08)">
-          <div class="pos">🥈</div><div class="flag">🇫🇷</div><div class="name">法国</div>
-          <div class="bar"><div class="bar-fill" style="width:96%;background:#ff3a3a"></div></div>
-          <div class="pwr" style="color:#ff3a3a">96</div>
-        </div>
-        <div class="power-row">
-          <div class="pos">🥉</div><div class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</div><div class="name">英格兰</div>
-          <div class="bar"><div class="bar-fill" style="width:93%;background:#ff3a3a"></div></div>
-          <div class="pwr" style="color:#ff3a3a">93</div>
-        </div>
-        <div class="power-row">
-          <div class="pos">4</div><div class="flag">🇧🇷</div><div class="name">巴西</div>
-          <div class="bar"><div class="bar-fill" style="width:92%;background:#ff3a3a"></div></div>
-          <div class="pwr" style="color:#ff3a3a">92</div>
-        </div>
-        <div class="power-row">
-          <div class="pos">5</div><div class="flag">🇪🇸</div><div class="name">西班牙</div>
-          <div class="bar"><div class="bar-fill" style="width:92%;background:#ff3a3a"></div></div>
-          <div class="pwr" style="color:#ff3a3a">92</div>
-        </div>
-        <div class="power-row">
-          <div class="pos">6</div><div class="flag">🇩🇪</div><div class="name">德国</div>
-          <div class="bar"><div class="bar-fill" style="width:90%;background:#ff3a3a"></div></div>
-          <div class="pwr" style="color:#ff3a3a">90</div>
-        </div>
-        <div class="power-row">
-          <div class="pos">7</div><div class="flag">🇵🇹</div><div class="name">葡萄牙</div>
-          <div class="bar"><div class="bar-fill" style="width:89%;background:#ff8a00"></div></div>
-          <div class="pwr" style="color:#ff8a00">89</div>
-        </div>
-        <div class="power-row">
-          <div class="pos">8</div><div class="flag">🇳🇱</div><div class="name">荷兰</div>
-          <div class="bar"><div class="bar-fill" style="width:87%;background:#ff8a00"></div></div>
-          <div class="pwr" style="color:#ff8a00">87</div>
-        </div>
-        <div class="power-row">
-          <div class="pos">9</div><div class="flag">🇺🇾</div><div class="name">乌拉圭</div>
-          <div class="bar"><div class="bar-fill" style="width:86%;background:#ff8a00"></div></div>
-          <div class="pwr" style="color:#ff8a00">86</div>
-        </div>
-        <div class="power-row">
-          <div class="pos">10</div><div class="flag">🇲🇦</div><div class="name">摩洛哥</div>
-          <div class="bar"><div class="bar-fill" style="width:85%;background:#ff8a00"></div></div>
-          <div class="pwr" style="color:#ff8a00">85</div>
-        </div>
-        <div class="power-row">
-          <div class="pos">11</div><div class="flag">🇧🇪</div><div class="name">比利时</div>
-          <div class="bar"><div class="bar-fill" style="width:84%;background:#ff8a00"></div></div>
-          <div class="pwr" style="color:#ff8a00">84</div>
-        </div>
-      </div>
-      <div class="power-col">
-        <div class="power-row">
-          <div class="pos">12</div><div class="flag">🇨🇴</div><div class="name">哥伦比亚</div>
-          <div class="bar"><div class="bar-fill" style="width:84%;background:#ff8a00"></div></div>
-          <div class="pwr" style="color:#ff8a00">84</div>
-        </div>
-        <div class="power-row">
-          <div class="pos">13</div><div class="flag">🇭🇷</div><div class="name">克罗地亚</div>
-          <div class="bar"><div class="bar-fill" style="width:84%;background:#ff8a00"></div></div>
-          <div class="pwr" style="color:#ff8a00">84</div>
-        </div>
-        <div class="power-row">
-          <div class="pos">14</div><div class="flag">🇯🇵</div><div class="name">日本</div>
-          <div class="bar"><div class="bar-fill" style="width:79%;background:#ffb700"></div></div>
-          <div class="pwr" style="color:#ffb700">79</div>
-        </div>
-        <div class="power-row">
-          <div class="pos">15</div><div class="flag">🇺🇸</div><div class="name">美国</div>
-          <div class="bar"><div class="bar-fill" style="width:79%;background:#ffb700"></div></div>
-          <div class="pwr" style="color:#ffb700">79</div>
-        </div>
-        <div class="power-row">
-          <div class="pos">16</div><div class="flag">🇪🇨</div><div class="name">厄瓜多尔</div>
-          <div class="bar"><div class="bar-fill" style="width:78%;background:#ffb700"></div></div>
-          <div class="pwr" style="color:#ffb700">78</div>
-        </div>
-        <div class="power-row">
-          <div class="pos">17</div><div class="flag">🇸🇪</div><div class="name">瑞典</div>
-          <div class="bar"><div class="bar-fill" style="width:74%;background:#ffb700"></div></div>
-          <div class="pwr" style="color:#ffb700">74</div>
-        </div>
-        <div class="power-row">
-          <div class="pos">18</div><div class="flag">🇨🇮</div><div class="name">科特迪瓦</div>
-          <div class="bar"><div class="bar-fill" style="width:74%;background:#ffb700"></div></div>
-          <div class="pwr" style="color:#ffb700">74</div>
-        </div>
-        <div class="power-row">
-          <div class="pos">19</div><div class="flag">🇹🇷</div><div class="name">土耳其</div>
-          <div class="bar"><div class="bar-fill" style="width:73%;background:#ffb700"></div></div>
-          <div class="pwr" style="color:#ffb700">73</div>
-        </div>
-        <div class="power-row">
-          <div class="pos">20</div><div class="flag">🇦🇺</div><div class="name">澳大利亚</div>
-          <div class="bar"><div class="bar-fill" style="width:73%;background:#ffb700"></div></div>
-          <div class="pwr" style="color:#ffb700">73</div>
-        </div>
-        <div class="power-row">
-          <div class="pos">21</div><div class="flag">🇸🇳</div><div class="name">塞内加尔</div>
-          <div class="bar"><div class="bar-fill" style="width:77%;background:#ffb700"></div></div>
-          <div class="pwr" style="color:#ffb700">77</div>
-        </div>
-        <div class="power-row">
-          <div class="pos">22</div><div class="flag">🇰🇷</div><div class="name">韩国</div>
-          <div class="bar"><div class="bar-fill" style="width:78%;background:#ffb700"></div></div>
-          <div class="pwr" style="color:#ffb700">78</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 分组 -->
-  <div class="section">
-    <div class="section-title">📋 分组赛况</div>
-    <div class="groups-grid">
-      <div class="group-card">
-        <h4>A组</h4>
-        <table>
-          <tr><th></th><th>胜</th><th>平</th><th>负</th><th>积分</th><th></th></tr>
-          <tr><td class="rank">1</td><td>🇲🇽 墨西哥</td><td>1</td><td>0</td><td>0</td><td>3</td><td class="adv">✅</td></tr>
-          <tr><td class="rank">2</td><td>🇰🇷 韩国</td><td>1</td><td>0</td><td>0</td><td>3</td><td></td></tr>
-          <tr><td class="rank">3</td><td>🇿🇦 南非</td><td>0</td><td>1</td><td>0</td><td>1</td><td></td></tr>
-          <tr><td class="rank">4</td><td>🇨🇿 捷克</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
-        </table>
-      </div>
-      <div class="group-card">
-        <h4>B组</h4>
-        <table>
-          <tr><th></th><th>胜</th><th>平</th><th>负</th><th>积分</th><th></th></tr>
-          <tr><td class="rank">1</td><td>🇨🇭 瑞士</td><td>1</td><td>0</td><td>0</td><td>3</td><td class="adv">✅</td></tr>
-          <tr><td class="rank">2</td><td>🇨🇦 加拿大</td><td>1</td><td>0</td><td>0</td><td>3</td><td></td></tr>
-          <tr><td class="rank">3</td><td>🇧🇦 波黑</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
-          <tr><td class="rank">4</td><td>🇶🇦 卡塔尔</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
-        </table>
-      </div>
-      <div class="group-card">
-        <h4>C组</h4>
-        <table>
-          <tr><th></th><th>胜</th><th>平</th><th>负</th><th>积分</th><th></th></tr>
-          <tr><td class="rank">1</td><td>🇧🇷 巴西</td><td>1</td><td>0</td><td>0</td><td>3</td><td class="adv">✅</td></tr>
-          <tr><td class="rank">2</td><td>🇲🇦 摩洛哥</td><td>1</td><td>0</td><td>0</td><td>3</td><td></td></tr>
-          <tr><td class="rank">3</td><td>🏴󠁧󠁢󠁳󠁣󠁴󠁿 苏格兰</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
-          <tr><td class="rank">4</td><td>🇭🇹 海地</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
-        </table>
-      </div>
-      <div class="group-card">
-        <h4>D组</h4>
-        <table>
-          <tr><th></th><th>胜</th><th>平</th><th>负</th><th>积分</th><th></th></tr>
-          <tr><td class="rank">1</td><td>🇺🇸 美国</td><td>1</td><td>0</td><td>0</td><td>3</td><td class="adv">✅</td></tr>
-          <tr><td class="rank">2</td><td>🇲🇽 墨西哥</td><td>1</td><td>0</td><td>0</td><td>3</td><td></td></tr>
-          <tr><td class="rank">3</td><td>🇹🇷 土耳其</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
-          <tr><td class="rank">4</td><td>🇵🇾 巴拉圭</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
-        </table>
-      </div>
-      <div class="group-card">
-        <h4>E组</h4>
-        <table>
-          <tr><th></th><th>胜</th><th>平</th><th>负</th><th>积分</th><th></th></tr>
-          <tr><td class="rank">1</td><td>🇩🇪 德国</td><td>1</td><td>0</td><td>0</td><td>3</td><td class="adv">✅</td></tr>
-          <tr><td class="rank">2</td><td>🇨🇮 科特迪瓦</td><td>1</td><td>0</td><td>0</td><td>3</td><td></td></tr>
-          <tr><td class="rank">3</td><td>🇪🇨 厄瓜多尔</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
-          <tr><td class="rank">4</td><td>🇨🇼 库拉索</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
-        </table>
-      </div>
-      <div class="group-card">
-        <h4>F组</h4>
-        <table>
-          <tr><th></th><th>胜</th><th>平</th><th>负</th><th>积分</th><th></th></tr>
-          <tr><td class="rank">1</td><td>🇸🇪 瑞典</td><td>1</td><td>0</td><td>0</td><td>3</td><td class="adv">✅</td></tr>
-          <tr><td class="rank">2</td><td>🇳🇱 荷兰</td><td>0</td><td>1</td><td>0</td><td>1</td><td></td></tr>
-          <tr><td class="rank">3</td><td>🇯🇵 日本</td><td>0</td><td>1</td><td>0</td><td>1</td><td></td></tr>
-          <tr><td class="rank">4</td><td>🇹🇳 突尼斯</td><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
-        </table>
-      </div>
-    </div>
+  <div class="sub">美加墨48强战力全图 · 含赛程预测与已踢战报</div>
+  <div class="meta">
+    <span>📅 揭幕 6/11</span>
+    <span>🏁 决赛 7/19</span>
+    <span>🏟 16城市</span>
+    <span>⚽ 104场</span>
+    <span>⏱ 数据: 6/20</span>
+    <span style="background:rgba(255,180,0,0.15);border-color:#ffb700;color:#ffd966">CN 全部时间均为北京时间</span>
   </div>
 </div>
-
+<div class="nav">
+  <button class="active" onclick="goTo('overview')">总览</button>
+  <button onclick="goTo('mpred')">⭐ 6/21凌晨预测</button>
+  <button onclick="goTo('r3pred')">R3预测</button>
+  <button onclick="goTo('power')">武力榜</button>
+  <button onclick="goTo('groups')">分组赛</button>
+  <button onclick="goTo('teams')">48强详情</button>
+  <button onclick="goTo('preview')">淘汰赛预测</button>
+</div>
+<div class="container"><div class="section" id="overview"><div class="section-title">📊 总览</div>
+    <div class="overview">
+      <div class="stat"><div class="v">48</div><div class="l">参赛球队</div></div>
+      <div class="stat"><div class="v">12</div><div class="l">分组 (A-L)</div></div>
+      <div class="stat"><div class="v">104</div><div class="l">总场次</div></div>
+      <div class="stat"><div class="v">68</div><div class="l">平均武力</div></div>
+    </div>
+    <div class="overview" style="margin-top:10px">
+      <div class="stat"><div class="v">🥇 阿根廷</div><div class="l">武力王者 · 93</div></div>
+      <div class="stat"><div class="v">🥈 巴西</div><div class="l">第二把交椅 · 92</div></div>
+      <div class="stat"><div class="v">🥉 西班牙</div><div class="l">第三极 · 91</div></div>
+      <div class="stat"><div class="v">📅 6/21凌晨</div><div class="l">4场比分预测(北京时间 6/21)</div></div>
+    </div></div><div class="section" id="mpred"><div class="section-title">⭐ 6/21凌晨-上午 4场比赛详细预测 (北京时间 6/21, 即美国 6/20 比赛日, 含3组比分)</div><div class="match-prediction"><div class="mp-main-score">主推比分 <b>3-0</b> <span class="mp-main-pc">35% 概率</span></div>
+  <div class="mp-header">
+    <div class="mp-title">⚽ 德国 vs 科特迪瓦</div>
+    <div class="mp-time">🕒 6/21 04:00 北京时间 (美国 6/20 16:00 EDT · 多伦多)</div>
+  </div>
+  <div class="mp-teams">
+    <div class="mp-team">
+      <div class="nm">德国</div>
+      <div class="pwr" style="background:#ff3a3a33;color:#ff3a3a">武力 88 · S级</div>
+    </div>
+    <div class="mp-vs">VS</div>
+    <div class="mp-team">
+      <div class="nm">科特迪瓦</div>
+      <div class="pwr" style="background:#3ec46d33;color:#3ec46d">武力 67 · C级</div>
+    </div>
+  </div>
+  <div class="mp-context">📋 E组第二轮, 德国首轮7-1屠杀库拉索状态爆表, 穆西亚拉+维尔茨+哈弗茨三叉戟全面爆发, 7个进球7人破门。科特迪瓦首轮1-0小胜厄瓜多尔, 迪亚洛90分钟绝杀, 凯西调度稳健。</div>
+  <div class="mp-form">📊 状态: 德国1胜0平0负 进7失1 状态满分 / 科特迪瓦1胜0平0负 进1失0 防守稳健</div>
+  <div class="mp-context">🏟 BMO Field, 多伦多</div>
+  <ul class="mp-factors"><li>德国火力分散: 7球由恩梅查、施洛特贝克、哈弗茨(2)、穆西亚拉、布朗、温达夫攻入, 科特迪瓦难以针对性布防</li><li>哈弗茨15分钟21场俱乐部国家队场场进球, 状态生涯巅峰</li><li>德国中场厚度世界顶级: 穆西亚拉+维尔茨+京多安+克罗斯二世(帕夫洛维奇)全面压制</li><li>科特迪瓦只能防守+反击: 佩佩+拜利+凯西三老领衔, 但年龄偏大(30+)60分钟后体能可能崩盘</li><li>德国主帅纳格尔斯曼高位逼抢+边路突击体系已成型, 科特迪瓦边路防守薄弱</li></ul>
+  <div class="mp-scores"><div class="mp-score-card top"><div class="mp-badge">主推</div><div class="sc">3-0</div><div class="pc">概率 35%</div><div class="desc">常规预测: 德国下半场连下两城, 哈弗茨+穆西亚拉+替补破门</div></div><div class="mp-score-card"><div class="sc">4-1</div><div class="pc">概率 25%</div><div class="desc">可能: 德国火力全开, 科特迪瓦偷一球</div></div><div class="mp-score-card"><div class="sc">2-0</div><div class="pc">概率 20%</div><div class="desc">可能: 德国稍显松懈, 稳健小胜</div></div></div>
+  <div class="mp-advice">💎 ⚽ 推荐比分: **3-0** 德国完胜</div>
+</div><div class="match-prediction"><div class="mp-main-score">主推比分 <b>3-0</b> <span class="mp-main-pc">40% 概率</span></div>
+  <div class="mp-header">
+    <div class="mp-title">⚽ 厄瓜多尔 vs 库拉索</div>
+    <div class="mp-time">🕒 6/21 07:00 北京时间 (美国 6/20 19:00 EDT · 堪萨斯城)</div>
+  </div>
+  <div class="mp-teams">
+    <div class="mp-team">
+      <div class="nm">厄瓜多尔</div>
+      <div class="pwr" style="background:#3ec46d33;color:#3ec46d">武力 68 · C级</div>
+    </div>
+    <div class="mp-vs">VS</div>
+    <div class="mp-team">
+      <div class="nm">库拉索</div>
+      <div class="pwr" style="background:#4a515833;color:#4a5158">武力 35 · F级</div>
+    </div>
+  </div>
+  <div class="mp-context">📋 E组第二轮, 厄瓜多尔首轮0-1惜败科特迪瓦, 恩纳·瓦伦西亚错失点球, 中前场核心普雷西亚多停赛; 库拉索首轮1-7惨败德国, 首次参赛经验不足。</div>
+  <div class="mp-form">📊 状态: 厄瓜多尔0胜0平1负 进0失1 状态低迷 / 库拉索0胜0平1负 进1失7 实力悬殊</div>
+  <div class="mp-context">🏟 Arrowhead Stadium, 堪萨斯城</div>
+  <ul class="mp-factors"><li>厄瓜多尔实力碾压: 武力值68 vs 35, 差距33分, 必胜之局</li><li>恩纳·瓦伦西亚须找回状态: 33岁老前锋大赛经验, 上场被零封+失点, 心理压力大</li><li>库拉索防守崩塌: 上一场7人破门, 后防业余级; 艾德沃卡特(70岁老帅)难以调整</li><li>高原球队: 厄瓜多尔世预赛主场2400米高原优势, 平原作战反而一般</li><li>库拉索核心巴克(中场)需要独自对抗厄瓜多尔三中场, 必败无疑</li></ul>
+  <div class="mp-scores"><div class="mp-score-card top"><div class="mp-badge">主推</div><div class="sc">3-0</div><div class="pc">概率 40%</div><div class="desc">常规预测: 厄瓜多尔大胜, 恩纳·瓦伦西亚+替补破门</div></div><div class="mp-score-card"><div class="sc">2-0</div><div class="pc">概率 30%</div><div class="desc">可能: 厄瓜多尔稳守, 小胜即可</div></div><div class="mp-score-card"><div class="sc">4-0</div><div class="pc">概率 20%</div><div class="desc">可能: 厄瓜多尔火力全开, 库拉索崩盘</div></div></div>
+  <div class="mp-advice">💎 ⚽ 推荐比分: **3-0** 厄瓜多尔大胜</div>
+</div><div class="match-prediction"><div class="mp-main-score">主推比分 <b>1-1</b> <span class="mp-main-pc">30% 概率</span></div>
+  <div class="mp-header">
+    <div class="mp-title">⚽ 荷兰 vs 瑞典</div>
+    <div class="mp-time">🕒 6/21 01:00 北京时间 (美国 6/20 12:00 CDT · 休斯敦)</div>
+  </div>
+  <div class="mp-teams">
+    <div class="mp-team">
+      <div class="nm">荷兰</div>
+      <div class="pwr" style="background:#ff8a0033;color:#ff8a00">武力 86 · A级</div>
+    </div>
+    <div class="mp-vs">VS</div>
+    <div class="mp-team">
+      <div class="nm">瑞典</div>
+      <div class="pwr" style="background:#3ec46d33;color:#3ec46d">武力 70 · C级</div>
+    </div>
+  </div>
+  <div class="mp-context">📋 F组第二轮, 荷兰首轮2-2战平日本(萨默维尔补时绝平), 范戴克+德容领衔但锋线把握能力堪忧, 加克波错失良机; 瑞典首轮5-1横扫突尼斯, 伊萨克+哲凯赖什+阿亚里(2球)锋线三叉戟状态爆表!</div>
+  <div class="mp-form">📊 状态: 荷兰0胜1平0负 进2失2 状态一般 / 瑞典1胜0平0负 进5失1 状态极佳</div>
+  <div class="mp-context">🏟 NRG Stadium, 休斯敦</div>
+  <ul class="mp-factors"><li>瑞典锋线极度凶猛: 5球由4人攻入, 伊萨克+哲凯赖什+阿亚里+斯万贝里多点开花, 难以防死</li><li>荷兰后防核心范戴克: 速度回追偏慢, 怕伊萨克+哲凯赖什这种高大快速前锋</li><li>荷兰中场双核德容+赖因德斯掌控力强, 但首场暴露攻防转换慢</li><li>德佩(31岁)状态下滑, 加克波+哈克波效率不足, 锋线乏力</li><li>瑞典主帅托马森442防守反击, 中场福斯贝里(34岁)体能隐患</li></ul>
+  <div class="mp-scores"><div class="mp-score-card top"><div class="mp-badge">主推</div><div class="sc">1-1</div><div class="pc">概率 30%</div><div class="desc">常规预测: 双方各一球平分秋色, 进球大战控成平局</div></div><div class="mp-score-card"><div class="sc">2-1</div><div class="pc">概率 25%</div><div class="desc">可能: 荷兰险胜, 加克波+替补绝杀</div></div><div class="mp-score-card"><div class="sc">1-2</div><div class="pc">概率 20%</div><div class="desc">冷门: 瑞典双塔连线破门, 爆冷赢球</div></div></div>
+  <div class="mp-advice">💎 ⚽ 推荐比分: **1-1** 平分秋色(警惕瑞典冷门)</div>
+</div><div class="match-prediction"><div class="mp-main-score">主推比分 <b>0-2</b> <span class="mp-main-pc">35% 概率</span></div>
+  <div class="mp-header">
+    <div class="mp-title">⚽ 突尼斯 vs 日本</div>
+    <div class="mp-time">🕒 6/21 11:00 北京时间 (美国 6/20 22:00 CDT · 瓜达卢佩)</div>
+  </div>
+  <div class="mp-teams">
+    <div class="mp-team">
+      <div class="nm">突尼斯</div>
+      <div class="pwr" style="background:#2bbfd333;color:#2bbfd3">武力 60 · D级</div>
+    </div>
+    <div class="mp-vs">VS</div>
+    <div class="mp-team">
+      <div class="nm">日本</div>
+      <div class="pwr" style="background:#ffb70033;color:#ffb700">武力 78 · B级</div>
+    </div>
+  </div>
+  <div class="mp-context">📋 F组第二轮, 突尼斯首轮1-5惨败瑞典, 后防5次被破, 雷基克一度扳回1球; 日本首轮2-2战平荷兰, 中村敬斗+镰田大地破门, 三笘薰+久保建英表现出色。</div>
+  <div class="mp-form">📊 状态: 突尼斯0胜0平1负 进1失5 状态低迷 / 日本0胜1平0负 进2失2 状态稳定</div>
+  <div class="mp-context">🏟 Estadio BBVA, 瓜达卢佩</div>
+  <ul class="mp-factors"><li>日本旅欧球员群实力碾压: 三笘薰(布莱顿)+久保建英(皇家社会)+远藤航(利物浦)+富安健洋(阿森纳)</li><li>突尼斯后防业余级: 上一场5次被破, 雷基克+姆萨克尼+杰巴利三中场难以抵挡</li><li>日本主帅森保一(55岁)调度能力强, 关键时刻换上进攻球员战术明确</li><li>突尼斯核心姆萨克尼(38岁)状态成疑, 38岁老将连续作战体能必出问题</li><li>日本边路突击: 三笘薰+伊东纯也速度压制突尼斯老迈边后卫</li></ul>
+  <div class="mp-scores"><div class="mp-score-card top"><div class="mp-badge">主推</div><div class="sc">0-2</div><div class="pc">概率 35%</div><div class="desc">常规预测: 日本完胜, 三笘薰+久保建英破门</div></div><div class="mp-score-card"><div class="sc">1-3</div><div class="pc">概率 25%</div><div class="desc">可能: 突尼斯偷一球, 日本火力全开</div></div><div class="mp-score-card"><div class="sc">0-1</div><div class="pc">概率 20%</div><div class="desc">可能: 日本小胜, 突尼斯摆大巴死守</div></div></div>
+  <div class="mp-advice">💎 ⚽ 推荐比分: **0-2** 日本完胜</div>
+</div></div><div class="section" id="r3pred"><div class="section-title">📋 R3 全部24场比分预测 (6/24-27)</div><table class="r3-table">
+<thead><tr><th>主队</th><th>客队</th><th>主推比分</th><th>其他可能 + 简析</th></tr></thead>
+<tbody><tr>
+  <td class="t"><b>捷克</b><br><small style="color:#2bbfd3">武力 63(D)</small></td>
+  <td class="t"><b>墨西哥</b><br><small style="color:#ffb700">武力 74(B)</small></td>
+  <td class="sc">0-2<small>35% 主推</small></td>
+  <td class="t" style="font-size:10px">0-2 / 1-2<br><small style="color:#8aa3bd">墨西哥主场+3连胜, 捷克仅1分难晋级, 实力差距明显</small></td>
+</tr><tr>
+  <td class="t"><b>南非</b><br><small style="color:#7a8b99">武力 52(E)</small></td>
+  <td class="t"><b>韩国</b><br><small style="color:#3ec46d">武力 71(C)</small></td>
+  <td class="sc">0-2<small>30% 主推</small></td>
+  <td class="t" style="font-size:10px">0-2 / 1-2<br><small style="color:#8aa3bd">孙兴慜+李刚仁冲击南非防线, 韩国为晋级必赢</small></td>
+</tr><tr>
+  <td class="t"><b>瑞士</b><br><small style="color:#ffb700">武力 75(B)</small></td>
+  <td class="t"><b>加拿大</b><br><small style="color:#3ec46d">武力 69(C)</small></td>
+  <td class="sc">1-1<small>30% 主推</small></td>
+  <td class="t" style="font-size:10px">1-1 / 0-1<br><small style="color:#8aa3bd">两队都已晋级, 小组头名之争, 加拿大主场略占优</small></td>
+</tr><tr>
+  <td class="t"><b>波黑</b><br><small style="color:#2bbfd3">武力 55(D)</small></td>
+  <td class="t"><b>卡塔尔</b><br><small style="color:#2bbfd3">武力 56(D)</small></td>
+  <td class="sc">2-1<small>30% 主推</small></td>
+  <td class="t" style="font-size:10px">2-1 / 1-0<br><small style="color:#8aa3bd">波黑哲科(39)老将最后一战, 必拼; 卡塔尔荣誉之战</small></td>
+</tr><tr>
+  <td class="t"><b>苏格兰</b><br><small style="color:#3ec46d">武力 68(C)</small></td>
+  <td class="t"><b>巴西</b><br><small style="color:#ff3a3a">武力 92(S)</small></td>
+  <td class="sc">0-2<small>40% 主推</small></td>
+  <td class="t" style="font-size:10px">0-2 / 1-3<br><small style="color:#8aa3bd">巴西实力碾压, 维尼修斯+罗德里戈冲击苏格兰防线</small></td>
+</tr><tr>
+  <td class="t"><b>摩洛哥</b><br><small style="color:#ff8a00">武力 80(A)</small></td>
+  <td class="t"><b>海地</b><br><small style="color:#4a5158">武力 42(F)</small></td>
+  <td class="sc">3-0<small>40% 主推</small></td>
+  <td class="t" style="font-size:10px">3-0 / 2-0<br><small style="color:#8aa3bd">海地实力最弱, 摩洛哥门将布努+阿什拉夫零封</small></td>
+</tr><tr>
+  <td class="t"><b>土耳其</b><br><small style="color:#3ec46d">武力 68(C)</small></td>
+  <td class="t"><b>美国</b><br><small style="color:#ffb700">武力 75(B)</small></td>
+  <td class="sc">1-2<small>30% 主推</small></td>
+  <td class="t" style="font-size:10px">1-2 / 0-2<br><small style="color:#8aa3bd">美国主场+青春风暴, 普利西奇+巴洛贡冲垮土耳其中场</small></td>
+</tr><tr>
+  <td class="t"><b>巴拉圭</b><br><small style="color:#2bbfd3">武力 64(D)</small></td>
+  <td class="t"><b>澳大利亚</b><br><small style="color:#2bbfd3">武力 64(D)</small></td>
+  <td class="sc">1-0<small>30% 主推</small></td>
+  <td class="t" style="font-size:10px">1-0 / 2-1<br><small style="color:#8aa3bd">双方都需赢球晋级, 巴拉圭防守反击略强</small></td>
+</tr><tr>
+  <td class="t"><b>科特迪瓦</b><br><small style="color:#3ec46d">武力 67(C)</small></td>
+  <td class="t"><b>德国</b><br><small style="color:#ff3a3a">武力 88(S)</small></td>
+  <td class="sc">0-3<small>30% 主推</small></td>
+  <td class="t" style="font-size:10px">0-3 / 1-3<br><small style="color:#8aa3bd">德国末战可能轮换, 但替补深度仍碾压</small></td>
+</tr><tr>
+  <td class="t"><b>库拉索</b><br><small style="color:#4a5158">武力 35(F)</small></td>
+  <td class="t"><b>厄瓜多尔</b><br><small style="color:#3ec46d">武力 68(C)</small></td>
+  <td class="sc">0-3<small>35% 主推</small></td>
+  <td class="t" style="font-size:10px">0-3 / 0-2<br><small style="color:#8aa3bd">实力悬殊, 厄瓜多尔为晋级必大胜刷净胜球</small></td>
+</tr><tr>
+  <td class="t"><b>瑞典</b><br><small style="color:#3ec46d">武力 70(C)</small></td>
+  <td class="t"><b>荷兰</b><br><small style="color:#ff8a00">武力 86(A)</small></td>
+  <td class="sc">1-2<small>30% 主推</small></td>
+  <td class="t" style="font-size:10px">1-2 / 0-2<br><small style="color:#8aa3bd">瑞典已晋级, 荷兰为头名必拼</small></td>
+</tr><tr>
+  <td class="t"><b>日本</b><br><small style="color:#ffb700">武力 78(B)</small></td>
+  <td class="t"><b>突尼斯</b><br><small style="color:#2bbfd3">武力 60(D)</small></td>
+  <td class="sc">2-0<small>30% 主推</small></td>
+  <td class="t" style="font-size:10px">2-0 / 3-0<br><small style="color:#8aa3bd">日本为晋级必赢, 突尼斯已淘汰</small></td>
+</tr><tr>
+  <td class="t"><b>伊朗</b><br><small style="color:#3ec46d">武力 69(C)</small></td>
+  <td class="t"><b>比利时</b><br><small style="color:#ff8a00">武力 83(A)</small></td>
+  <td class="sc">0-2<small>30% 主推</small></td>
+  <td class="t" style="font-size:10px">0-2 / 1-2<br><small style="color:#8aa3bd">比利时黄金一代最后合体, 必大胜</small></td>
+</tr><tr>
+  <td class="t"><b>埃及</b><br><small style="color:#3ec46d">武力 65(C)</small></td>
+  <td class="t"><b>新西兰</b><br><small style="color:#7a8b99">武力 45(E)</small></td>
+  <td class="sc">2-0<small>30% 主推</small></td>
+  <td class="t" style="font-size:10px">2-0 / 3-0<br><small style="color:#8aa3bd">萨拉赫一锤定音, 埃及必晋级</small></td>
+</tr><tr>
+  <td class="t"><b>沙特阿拉伯</b><br><small style="color:#2bbfd3">武力 58(D)</small></td>
+  <td class="t"><b>西班牙</b><br><small style="color:#ff3a3a">武力 91(S)</small></td>
+  <td class="sc">0-3<small>30% 主推</small></td>
+  <td class="t" style="font-size:10px">0-3 / 0-4<br><small style="color:#8aa3bd">西班牙末战求头名, 火力全开</small></td>
+</tr><tr>
+  <td class="t"><b>佛得角</b><br><small style="color:#7a8b99">武力 50(E)</small></td>
+  <td class="t"><b>乌拉圭</b><br><small style="color:#ff8a00">武力 81(A)</small></td>
+  <td class="sc">0-2<small>30% 主推</small></td>
+  <td class="t" style="font-size:10px">0-2 / 1-2<br><small style="color:#8aa3bd">乌拉圭必赢晋级, 佛得角首次参赛见识大场</small></td>
+</tr><tr>
+  <td class="t"><b>挪威</b><br><small style="color:#ffb700">武力 77(B)</small></td>
+  <td class="t"><b>法国</b><br><small style="color:#ff3a3a">武力 90(S)</small></td>
+  <td class="sc">0-2<small>30% 主推</small></td>
+  <td class="t" style="font-size:10px">0-2 / 1-2<br><small style="color:#8aa3bd">哈兰德+厄德高难以抵挡法国豪华中场</small></td>
+</tr><tr>
+  <td class="t"><b>塞内加尔</b><br><small style="color:#ffb700">武力 76(B)</small></td>
+  <td class="t"><b>伊拉克</b><br><small style="color:#7a8b99">武力 48(E)</small></td>
+  <td class="sc">2-0<small>30% 主推</small></td>
+  <td class="t" style="font-size:10px">2-0 / 3-0<br><small style="color:#8aa3bd">塞内加尔必赢晋级, 马内+库利巴利爆发</small></td>
+</tr><tr>
+  <td class="t"><b>奥地利</b><br><small style="color:#3ec46d">武力 68(C)</small></td>
+  <td class="t"><b>阿根廷</b><br><small style="color:#ff3a3a">武力 93(S)</small></td>
+  <td class="sc">0-2<small>30% 主推</small></td>
+  <td class="t" style="font-size:10px">0-2 / 1-3<br><small style="color:#8aa3bd">阿根廷梅西最后一舞, 火力全开</small></td>
+</tr><tr>
+  <td class="t"><b>阿尔及利亚</b><br><small style="color:#2bbfd3">武力 63(D)</small></td>
+  <td class="t"><b>约旦</b><br><small style="color:#7a8b99">武力 50(E)</small></td>
+  <td class="sc">2-0<small>30% 主推</small></td>
+  <td class="t" style="font-size:10px">2-0 / 1-0<br><small style="color:#8aa3bd">马赫雷斯领衔, 阿尔及利亚整体强于首次参赛约旦</small></td>
+</tr><tr>
+  <td class="t"><b>乌兹别克斯坦</b><br><small style="color:#2bbfd3">武力 60(D)</small></td>
+  <td class="t"><b>葡萄牙</b><br><small style="color:#ff3a3a">武力 88(S)</small></td>
+  <td class="sc">0-3<small>30% 主推</small></td>
+  <td class="t" style="font-size:10px">0-3 / 0-4<br><small style="color:#8aa3bd">C罗+菲利克斯+B费三叉戟 vs 乌兹别克斯坦, 实力碾压</small></td>
+</tr><tr>
+  <td class="t"><b>刚果(金)</b><br><small style="color:#7a8b99">武力 52(E)</small></td>
+  <td class="t"><b>哥伦比亚</b><br><small style="color:#ffb700">武力 78(B)</small></td>
+  <td class="sc">0-2<small>30% 主推</small></td>
+  <td class="t" style="font-size:10px">0-2 / 1-2<br><small style="color:#8aa3bd">J罗+迪亚斯 vs 刚果(金)防守, 哥伦比亚技术占优</small></td>
+</tr><tr>
+  <td class="t"><b>加纳</b><br><small style="color:#2bbfd3">武力 55(D)</small></td>
+  <td class="t"><b>英格兰</b><br><small style="color:#ff3a3a">武力 88(S)</small></td>
+  <td class="sc">0-2<small>30% 主推</small></td>
+  <td class="t" style="font-size:10px">0-2 / 1-3<br><small style="color:#8aa3bd">凯恩+贝林厄姆+萨卡三叉戟 vs 加纳库杜斯+阿尤兄弟</small></td>
+</tr><tr>
+  <td class="t"><b>克罗地亚</b><br><small style="color:#ffb700">武力 78(B)</small></td>
+  <td class="t"><b>巴拿马</b><br><small style="color:#7a8b99">武力 52(E)</small></td>
+  <td class="sc">2-0<small>30% 主推</small></td>
+  <td class="t" style="font-size:10px">2-0 / 3-0<br><small style="color:#8aa3bd">魔笛+佩里西奇+科瓦西奇中场控制 vs 巴拿马</small></td>
+</tr></tbody>
+</table><div class="prediction" style="margin-top:14px">💡 注: 主推比分为概率最高, 其他可能为备选; 综合武力值+近况+历史+关键球员+战术匹配给出</div></div><div class="section" id="power"><div class="section-title">⚔ 武力榜 (48强排名)</div><div class="power-rank"><div class="pr-row"><span class="pos">🥇</span><span class="nm">阿根廷 <span style="color:#8aa3bd;font-size:11px">(J组)</span></span><div class="bar"><div class="fill" style="width:93%;background:#ff3a3a"></div></div><span class="pwr" style="color:#ff3a3a">93</span></div><div class="pr-row"><span class="pos">🥈</span><span class="nm">巴西 <span style="color:#8aa3bd;font-size:11px">(C组)</span></span><div class="bar"><div class="fill" style="width:92%;background:#ff3a3a"></div></div><span class="pwr" style="color:#ff3a3a">92</span></div><div class="pr-row"><span class="pos">🥉</span><span class="nm">西班牙 <span style="color:#8aa3bd;font-size:11px">(H组)</span></span><div class="bar"><div class="fill" style="width:91%;background:#ff3a3a"></div></div><span class="pwr" style="color:#ff3a3a">91</span></div><div class="pr-row"><span class="pos">4</span><span class="nm">法国 <span style="color:#8aa3bd;font-size:11px">(I组)</span></span><div class="bar"><div class="fill" style="width:90%;background:#ff3a3a"></div></div><span class="pwr" style="color:#ff3a3a">90</span></div><div class="pr-row"><span class="pos">5</span><span class="nm">德国 <span style="color:#8aa3bd;font-size:11px">(E组)</span></span><div class="bar"><div class="fill" style="width:88%;background:#ff3a3a"></div></div><span class="pwr" style="color:#ff3a3a">88</span></div><div class="pr-row"><span class="pos">6</span><span class="nm">葡萄牙 <span style="color:#8aa3bd;font-size:11px">(K组)</span></span><div class="bar"><div class="fill" style="width:88%;background:#ff3a3a"></div></div><span class="pwr" style="color:#ff3a3a">88</span></div><div class="pr-row"><span class="pos">7</span><span class="nm">英格兰 <span style="color:#8aa3bd;font-size:11px">(L组)</span></span><div class="bar"><div class="fill" style="width:88%;background:#ff3a3a"></div></div><span class="pwr" style="color:#ff3a3a">88</span></div><div class="pr-row"><span class="pos">8</span><span class="nm">荷兰 <span style="color:#8aa3bd;font-size:11px">(F组)</span></span><div class="bar"><div class="fill" style="width:86%;background:#ff8a00"></div></div><span class="pwr" style="color:#ff8a00">86</span></div><div class="pr-row"><span class="pos">9</span><span class="nm">比利时 <span style="color:#8aa3bd;font-size:11px">(G组)</span></span><div class="bar"><div class="fill" style="width:83%;background:#ff8a00"></div></div><span class="pwr" style="color:#ff8a00">83</span></div><div class="pr-row"><span class="pos">10</span><span class="nm">乌拉圭 <span style="color:#8aa3bd;font-size:11px">(H组)</span></span><div class="bar"><div class="fill" style="width:81%;background:#ff8a00"></div></div><span class="pwr" style="color:#ff8a00">81</span></div><div class="pr-row"><span class="pos">11</span><span class="nm">摩洛哥 <span style="color:#8aa3bd;font-size:11px">(C组)</span></span><div class="bar"><div class="fill" style="width:80%;background:#ff8a00"></div></div><span class="pwr" style="color:#ff8a00">80</span></div><div class="pr-row"><span class="pos">12</span><span class="nm">日本 <span style="color:#8aa3bd;font-size:11px">(F组)</span></span><div class="bar"><div class="fill" style="width:78%;background:#ffb700"></div></div><span class="pwr" style="color:#ffb700">78</span></div><div class="pr-row"><span class="pos">13</span><span class="nm">哥伦比亚 <span style="color:#8aa3bd;font-size:11px">(K组)</span></span><div class="bar"><div class="fill" style="width:78%;background:#ffb700"></div></div><span class="pwr" style="color:#ffb700">78</span></div><div class="pr-row"><span class="pos">14</span><span class="nm">克罗地亚 <span style="color:#8aa3bd;font-size:11px">(L组)</span></span><div class="bar"><div class="fill" style="width:78%;background:#ffb700"></div></div><span class="pwr" style="color:#ffb700">78</span></div><div class="pr-row"><span class="pos">15</span><span class="nm">挪威 <span style="color:#8aa3bd;font-size:11px">(I组)</span></span><div class="bar"><div class="fill" style="width:77%;background:#ffb700"></div></div><span class="pwr" style="color:#ffb700">77</span></div><div class="pr-row"><span class="pos">16</span><span class="nm">塞内加尔 <span style="color:#8aa3bd;font-size:11px">(I组)</span></span><div class="bar"><div class="fill" style="width:76%;background:#ffb700"></div></div><span class="pwr" style="color:#ffb700">76</span></div><div class="pr-row"><span class="pos">17</span><span class="nm">瑞士 <span style="color:#8aa3bd;font-size:11px">(B组)</span></span><div class="bar"><div class="fill" style="width:75%;background:#ffb700"></div></div><span class="pwr" style="color:#ffb700">75</span></div><div class="pr-row"><span class="pos">18</span><span class="nm">美国 <span style="color:#8aa3bd;font-size:11px">(D组)</span></span><div class="bar"><div class="fill" style="width:75%;background:#ffb700"></div></div><span class="pwr" style="color:#ffb700">75</span></div><div class="pr-row"><span class="pos">19</span><span class="nm">墨西哥 <span style="color:#8aa3bd;font-size:11px">(A组)</span></span><div class="bar"><div class="fill" style="width:74%;background:#ffb700"></div></div><span class="pwr" style="color:#ffb700">74</span></div><div class="pr-row"><span class="pos">20</span><span class="nm">韩国 <span style="color:#8aa3bd;font-size:11px">(A组)</span></span><div class="bar"><div class="fill" style="width:71%;background:#3ec46d"></div></div><span class="pwr" style="color:#3ec46d">71</span></div><div class="pr-row"><span class="pos">21</span><span class="nm">瑞典 <span style="color:#8aa3bd;font-size:11px">(F组)</span></span><div class="bar"><div class="fill" style="width:70%;background:#3ec46d"></div></div><span class="pwr" style="color:#3ec46d">70</span></div><div class="pr-row"><span class="pos">22</span><span class="nm">加拿大 <span style="color:#8aa3bd;font-size:11px">(B组)</span></span><div class="bar"><div class="fill" style="width:69%;background:#3ec46d"></div></div><span class="pwr" style="color:#3ec46d">69</span></div><div class="pr-row"><span class="pos">23</span><span class="nm">伊朗 <span style="color:#8aa3bd;font-size:11px">(G组)</span></span><div class="bar"><div class="fill" style="width:69%;background:#3ec46d"></div></div><span class="pwr" style="color:#3ec46d">69</span></div><div class="pr-row"><span class="pos">24</span><span class="nm">苏格兰 <span style="color:#8aa3bd;font-size:11px">(C组)</span></span><div class="bar"><div class="fill" style="width:68%;background:#3ec46d"></div></div><span class="pwr" style="color:#3ec46d">68</span></div><div class="pr-row"><span class="pos">25</span><span class="nm">土耳其 <span style="color:#8aa3bd;font-size:11px">(D组)</span></span><div class="bar"><div class="fill" style="width:68%;background:#3ec46d"></div></div><span class="pwr" style="color:#3ec46d">68</span></div><div class="pr-row"><span class="pos">26</span><span class="nm">厄瓜多尔 <span style="color:#8aa3bd;font-size:11px">(E组)</span></span><div class="bar"><div class="fill" style="width:68%;background:#3ec46d"></div></div><span class="pwr" style="color:#3ec46d">68</span></div><div class="pr-row"><span class="pos">27</span><span class="nm">奥地利 <span style="color:#8aa3bd;font-size:11px">(J组)</span></span><div class="bar"><div class="fill" style="width:68%;background:#3ec46d"></div></div><span class="pwr" style="color:#3ec46d">68</span></div><div class="pr-row"><span class="pos">28</span><span class="nm">科特迪瓦 <span style="color:#8aa3bd;font-size:11px">(E组)</span></span><div class="bar"><div class="fill" style="width:67%;background:#3ec46d"></div></div><span class="pwr" style="color:#3ec46d">67</span></div><div class="pr-row"><span class="pos">29</span><span class="nm">埃及 <span style="color:#8aa3bd;font-size:11px">(G组)</span></span><div class="bar"><div class="fill" style="width:65%;background:#3ec46d"></div></div><span class="pwr" style="color:#3ec46d">65</span></div><div class="pr-row"><span class="pos">30</span><span class="nm">巴拉圭 <span style="color:#8aa3bd;font-size:11px">(D组)</span></span><div class="bar"><div class="fill" style="width:64%;background:#2bbfd3"></div></div><span class="pwr" style="color:#2bbfd3">64</span></div><div class="pr-row"><span class="pos">31</span><span class="nm">澳大利亚 <span style="color:#8aa3bd;font-size:11px">(D组)</span></span><div class="bar"><div class="fill" style="width:64%;background:#2bbfd3"></div></div><span class="pwr" style="color:#2bbfd3">64</span></div><div class="pr-row"><span class="pos">32</span><span class="nm">捷克 <span style="color:#8aa3bd;font-size:11px">(A组)</span></span><div class="bar"><div class="fill" style="width:63%;background:#2bbfd3"></div></div><span class="pwr" style="color:#2bbfd3">63</span></div><div class="pr-row"><span class="pos">33</span><span class="nm">阿尔及利亚 <span style="color:#8aa3bd;font-size:11px">(J组)</span></span><div class="bar"><div class="fill" style="width:63%;background:#2bbfd3"></div></div><span class="pwr" style="color:#2bbfd3">63</span></div><div class="pr-row"><span class="pos">34</span><span class="nm">突尼斯 <span style="color:#8aa3bd;font-size:11px">(F组)</span></span><div class="bar"><div class="fill" style="width:60%;background:#2bbfd3"></div></div><span class="pwr" style="color:#2bbfd3">60</span></div><div class="pr-row"><span class="pos">35</span><span class="nm">乌兹别克斯坦 <span style="color:#8aa3bd;font-size:11px">(K组)</span></span><div class="bar"><div class="fill" style="width:60%;background:#2bbfd3"></div></div><span class="pwr" style="color:#2bbfd3">60</span></div><div class="pr-row"><span class="pos">36</span><span class="nm">沙特阿拉伯 <span style="color:#8aa3bd;font-size:11px">(H组)</span></span><div class="bar"><div class="fill" style="width:58%;background:#2bbfd3"></div></div><span class="pwr" style="color:#2bbfd3">58</span></div><div class="pr-row"><span class="pos">37</span><span class="nm">卡塔尔 <span style="color:#8aa3bd;font-size:11px">(B组)</span></span><div class="bar"><div class="fill" style="width:56%;background:#2bbfd3"></div></div><span class="pwr" style="color:#2bbfd3">56</span></div><div class="pr-row"><span class="pos">38</span><span class="nm">波黑 <span style="color:#8aa3bd;font-size:11px">(B组)</span></span><div class="bar"><div class="fill" style="width:55%;background:#2bbfd3"></div></div><span class="pwr" style="color:#2bbfd3">55</span></div><div class="pr-row"><span class="pos">39</span><span class="nm">加纳 <span style="color:#8aa3bd;font-size:11px">(L组)</span></span><div class="bar"><div class="fill" style="width:55%;background:#2bbfd3"></div></div><span class="pwr" style="color:#2bbfd3">55</span></div><div class="pr-row"><span class="pos">40</span><span class="nm">南非 <span style="color:#8aa3bd;font-size:11px">(A组)</span></span><div class="bar"><div class="fill" style="width:52%;background:#7a8b99"></div></div><span class="pwr" style="color:#7a8b99">52</span></div><div class="pr-row"><span class="pos">41</span><span class="nm">刚果(金) <span style="color:#8aa3bd;font-size:11px">(K组)</span></span><div class="bar"><div class="fill" style="width:52%;background:#7a8b99"></div></div><span class="pwr" style="color:#7a8b99">52</span></div><div class="pr-row"><span class="pos">42</span><span class="nm">巴拿马 <span style="color:#8aa3bd;font-size:11px">(L组)</span></span><div class="bar"><div class="fill" style="width:52%;background:#7a8b99"></div></div><span class="pwr" style="color:#7a8b99">52</span></div><div class="pr-row"><span class="pos">43</span><span class="nm">佛得角 <span style="color:#8aa3bd;font-size:11px">(H组)</span></span><div class="bar"><div class="fill" style="width:50%;background:#7a8b99"></div></div><span class="pwr" style="color:#7a8b99">50</span></div><div class="pr-row"><span class="pos">44</span><span class="nm">约旦 <span style="color:#8aa3bd;font-size:11px">(J组)</span></span><div class="bar"><div class="fill" style="width:50%;background:#7a8b99"></div></div><span class="pwr" style="color:#7a8b99">50</span></div><div class="pr-row"><span class="pos">45</span><span class="nm">伊拉克 <span style="color:#8aa3bd;font-size:11px">(I组)</span></span><div class="bar"><div class="fill" style="width:48%;background:#7a8b99"></div></div><span class="pwr" style="color:#7a8b99">48</span></div><div class="pr-row"><span class="pos">46</span><span class="nm">新西兰 <span style="color:#8aa3bd;font-size:11px">(G组)</span></span><div class="bar"><div class="fill" style="width:45%;background:#7a8b99"></div></div><span class="pwr" style="color:#7a8b99">45</span></div><div class="pr-row"><span class="pos">47</span><span class="nm">海地 <span style="color:#8aa3bd;font-size:11px">(C组)</span></span><div class="bar"><div class="fill" style="width:42%;background:#4a5158"></div></div><span class="pwr" style="color:#4a5158">42</span></div><div class="pr-row"><span class="pos">48</span><span class="nm">库拉索 <span style="color:#8aa3bd;font-size:11px">(E组)</span></span><div class="bar"><div class="fill" style="width:35%;background:#4a5158"></div></div><span class="pwr" style="color:#4a5158">35</span></div></div></div><div class="section" id="groups"><div class="section-title">⚽ 小组赛战况 (A-L)</div><div class="groups"><div class="group">
+  <h3>第 A 组</h3>
+  <div class="venue">📍 墨西哥城/瓜达拉哈拉</div>
+  <table class="stand">
+    <thead><tr><th>#</th><th style="text-align:left">球队</th><th>赛</th><th>胜</th><th>平</th><th>负</th><th>进</th><th>失</th><th>分</th><th>晋级</th></tr></thead>
+    <tbody><tr><td class="rank1">1</td><td class="t">墨西哥</td><td>2</td><td>2</td><td>0</td><td>0</td><td>3</td><td>0</td><td>6</td><td><span class="adv">晋级</span></td></tr><tr><td class="">2</td><td class="t">韩国</td><td>2</td><td>1</td><td>0</td><td>1</td><td>2</td><td>2</td><td>3</td><td></td></tr><tr><td class="">3</td><td class="t">捷克</td><td>2</td><td>0</td><td>1</td><td>1</td><td>2</td><td>3</td><td>1</td><td></td></tr><tr><td class="">4</td><td class="t">南非</td><td>2</td><td>0</td><td>1</td><td>1</td><td>1</td><td>3</td><td>1</td><td></td></tr></tbody>
+  </table>
+  <div class="matches">
+    <h4>✅ 已结束 (R1-R2)</h4>
+    <div class="match"><span class="team left">墨西哥</span><span class="score">2-0</span><span class="team">南非</span></div><div class="meta">⚽ 基尼奥内斯 9', 希门尼斯 67'</div><div class="match"><span class="team left">韩国</span><span class="score">2-1</span><span class="team">捷克</span></div><div class="meta">⚽ 黄仁范 67', 吴贤揆 80' / 克雷伊奇 59'</div><div class="match"><span class="team left">捷克</span><span class="score">1-1</span><span class="team">南非</span></div><div class="meta">⚽ 萨迪莱克 6' / 莫科纳 83'(点)</div><div class="match"><span class="team left">墨西哥</span><span class="score">1-0</span><span class="team">韩国</span></div><div class="meta">⚽ 罗莫 50'</div>
+    <h4 style="margin-top:10px">⏳ 未踢 (R3 · 6/24-27)</h4>
+    <div class="match future"><span class="team left">捷克</span><span class="score">VS</span><span class="team">墨西哥</span></div><div class="meta">🕒 赛事53 6/24 (未踢)</div><div class="match future"><span class="team left">南非</span><span class="score">VS</span><span class="team">韩国</span></div><div class="meta">🕒 赛事54 6/24 (未踢)</div>
+  </div>
+  <div class="prediction">💡 预测: 晋级: <b>墨西哥</b> · 次席: <b>韩国</b> · 附加: <b>捷克</b></div>
+</div><div class="group">
+  <h3>第 B 组</h3>
+  <div class="venue">📍 多伦多/旧金山湾区</div>
+  <table class="stand">
+    <thead><tr><th>#</th><th style="text-align:left">球队</th><th>赛</th><th>胜</th><th>平</th><th>负</th><th>进</th><th>失</th><th>分</th><th>晋级</th></tr></thead>
+    <tbody><tr><td class="rank1">1</td><td class="t">加拿大</td><td>2</td><td>1</td><td>1</td><td>0</td><td>7</td><td>1</td><td>4</td><td><span class="adv">晋级</span></td></tr><tr><td class="">2</td><td class="t">瑞士</td><td>2</td><td>1</td><td>1</td><td>0</td><td>5</td><td>2</td><td>4</td><td></td></tr><tr><td class="">3</td><td class="t">波黑</td><td>2</td><td>0</td><td>1</td><td>1</td><td>2</td><td>5</td><td>1</td><td></td></tr><tr><td class="">4</td><td class="t">卡塔尔</td><td>2</td><td>0</td><td>1</td><td>1</td><td>1</td><td>7</td><td>1</td><td></td></tr></tbody>
+  </table>
+  <div class="matches">
+    <h4>✅ 已结束 (R1-R2)</h4>
+    <div class="match"><span class="team left">加拿大</span><span class="score">1-1</span><span class="team">波黑</span></div><div class="meta">⚽ 拉林 78' / 卢基奇 21'</div><div class="match"><span class="team left">卡塔尔</span><span class="score">1-1</span><span class="team">瑞士</span></div><div class="meta">⚽ 穆海姆 90+4'(乌龙) / 恩博洛 17'(点)</div><div class="match"><span class="team left">瑞士</span><span class="score">4-1</span><span class="team">波黑</span></div><div class="meta">⚽ 曼赞比 74',90' 巴尔加斯 84' 扎卡 90+7'(点) / 马赫米奇 90+3'</div><div class="match"><span class="team left">加拿大</span><span class="score">6-0</span><span class="team">卡塔尔</span></div><div class="meta">⚽ 拉林 16' J·戴维 29',45+3',90+2' 萨利巴 64' 马奈 75'(乌龙)</div>
+    <h4 style="margin-top:10px">⏳ 未踢 (R3 · 6/24-27)</h4>
+    <div class="match future"><span class="team left">瑞士</span><span class="score">VS</span><span class="team">加拿大</span></div><div class="meta">🕒 赛事51 6/24 (未踢)</div><div class="match future"><span class="team left">波黑</span><span class="score">VS</span><span class="team">卡塔尔</span></div><div class="meta">🕒 赛事52 6/24 (未踢)</div>
+  </div>
+  <div class="prediction">💡 预测: 晋级: <b>加拿大</b> · 次席: <b>瑞士</b> · 附加: <b>波黑</b></div>
+</div><div class="group">
+  <h3>第 C 组</h3>
+  <div class="venue">📍 迈阿密/纽约</div>
+  <table class="stand">
+    <thead><tr><th>#</th><th style="text-align:left">球队</th><th>赛</th><th>胜</th><th>平</th><th>负</th><th>进</th><th>失</th><th>分</th><th>晋级</th></tr></thead>
+    <tbody><tr><td class="rank1">1</td><td class="t">巴西</td><td>2</td><td>1</td><td>1</td><td>0</td><td>4</td><td>1</td><td>4</td><td><span class="adv">晋级</span></td></tr><tr><td class="">2</td><td class="t">摩洛哥</td><td>2</td><td>1</td><td>1</td><td>0</td><td>2</td><td>1</td><td>4</td><td></td></tr><tr><td class="">3</td><td class="t">苏格兰</td><td>2</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>3</td><td></td></tr><tr><td class="">4</td><td class="t">海地</td><td>2</td><td>0</td><td>0</td><td>2</td><td>0</td><td>4</td><td>0</td><td></td></tr></tbody>
+  </table>
+  <div class="matches">
+    <h4>✅ 已结束 (R1-R2)</h4>
+    <div class="match"><span class="team left">巴西</span><span class="score">1-1</span><span class="team">摩洛哥</span></div><div class="meta">⚽ 维尼修斯 32' / 塞巴里 21'</div><div class="match"><span class="team left">海地</span><span class="score">0-1</span><span class="team">苏格兰</span></div><div class="meta">⚽ / 麦金 28'</div><div class="match"><span class="team left">苏格兰</span><span class="score">0-1</span><span class="team">摩洛哥</span></div><div class="meta">⚽ / 塞巴里 2'</div><div class="match"><span class="team left">巴西</span><span class="score">3-0</span><span class="team">海地</span></div><div class="meta">⚽ 库尼亚 23',36' 维尼修斯 45+3'</div>
+    <h4 style="margin-top:10px">⏳ 未踢 (R3 · 6/24-27)</h4>
+    <div class="match future"><span class="team left">苏格兰</span><span class="score">VS</span><span class="team">巴西</span></div><div class="meta">🕒 赛事49 6/24 (未踢)</div><div class="match future"><span class="team left">摩洛哥</span><span class="score">VS</span><span class="team">海地</span></div><div class="meta">🕒 赛事50 6/24 (未踢)</div>
+  </div>
+  <div class="prediction">💡 预测: 晋级: <b>巴西</b> · 次席: <b>摩洛哥</b> · 附加: <b>苏格兰</b></div>
+</div><div class="group">
+  <h3>第 D 组</h3>
+  <div class="venue">📍 洛杉矶/达拉斯</div>
+  <table class="stand">
+    <thead><tr><th>#</th><th style="text-align:left">球队</th><th>赛</th><th>胜</th><th>平</th><th>负</th><th>进</th><th>失</th><th>分</th><th>晋级</th></tr></thead>
+    <tbody><tr><td class="rank1">1</td><td class="t">美国</td><td>2</td><td>2</td><td>0</td><td>0</td><td>6</td><td>1</td><td>6</td><td><span class="adv">晋级</span></td></tr><tr><td class="">2</td><td class="t">巴拉圭</td><td>2</td><td>1</td><td>0</td><td>1</td><td>1</td><td>4</td><td>3</td><td></td></tr><tr><td class="">3</td><td class="t">澳大利亚</td><td>2</td><td>1</td><td>0</td><td>1</td><td>2</td><td>2</td><td>3</td><td></td></tr><tr><td class="">4</td><td class="t">土耳其</td><td>2</td><td>0</td><td>0</td><td>2</td><td>0</td><td>3</td><td>0</td><td></td></tr></tbody>
+  </table>
+  <div class="matches">
+    <h4>✅ 已结束 (R1-R2)</h4>
+    <div class="match"><span class="team left">美国</span><span class="score">4-1</span><span class="team">巴拉圭</span></div><div class="meta">⚽ 博瓦迪利亚 7'(乌龙) 巴洛贡 31',45+5' 雷纳 90+8' / 毛里西奥 73'</div><div class="match"><span class="team left">澳大利亚</span><span class="score">2-0</span><span class="team">土耳其</span></div><div class="meta">⚽ 伊兰昆达 27' 梅特卡夫 75'</div><div class="match"><span class="team left">美国</span><span class="score">2-0</span><span class="team">澳大利亚</span></div><div class="meta">⚽ 伯吉斯 11'(乌龙) 弗里曼 43'</div><div class="match"><span class="team left">土耳其</span><span class="score">0-1</span><span class="team">巴拉圭</span></div><div class="meta">⚽ / 馬迪亞斯·加拉扎 2'</div>
+    <h4 style="margin-top:10px">⏳ 未踢 (R3 · 6/24-27)</h4>
+    <div class="match future"><span class="team left">土耳其</span><span class="score">VS</span><span class="team">美国</span></div><div class="meta">🕒 赛事59 6/25 (未踢)</div><div class="match future"><span class="team left">巴拉圭</span><span class="score">VS</span><span class="team">澳大利亚</span></div><div class="meta">🕒 赛事60 6/25 (未踢)</div>
+  </div>
+  <div class="prediction">💡 预测: 晋级: <b>美国</b> · 次席: <b>巴拉圭</b> · 附加: <b>澳大利亚</b></div>
+</div><div class="group">
+  <h3>第 E 组</h3>
+  <div class="venue">📍 达拉斯/休斯敦</div>
+  <table class="stand">
+    <thead><tr><th>#</th><th style="text-align:left">球队</th><th>赛</th><th>胜</th><th>平</th><th>负</th><th>进</th><th>失</th><th>分</th><th>晋级</th></tr></thead>
+    <tbody><tr><td class="rank1">1</td><td class="t">德国</td><td>1</td><td>1</td><td>0</td><td>0</td><td>7</td><td>1</td><td>3</td><td><span class="adv">晋级(少赛1)</span></td></tr><tr><td class="">2</td><td class="t">科特迪瓦</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>3</td><td></td></tr><tr><td class="">3</td><td class="t">厄瓜多尔</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td></td></tr><tr><td class="">4</td><td class="t">库拉索</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td></td></tr></tbody>
+  </table>
+  <div class="matches">
+    <h4>✅ 已结束 (R1-R2)</h4>
+    <div class="match"><span class="team left">德国</span><span class="score">7-1</span><span class="team">库拉索</span></div><div class="meta">⚽ 恩梅查 6' 施洛特贝克 38' 哈弗茨 45+5'(点),88' 穆西亚拉 47' 布朗 68' 温达夫 78' / 科梅嫩西亚 21'</div><div class="match"><span class="team left">科特迪瓦</span><span class="score">1-0</span><span class="team">厄瓜多尔</span></div><div class="meta">⚽ 迪亚洛 90'</div>
+    <h4 style="margin-top:10px">⏳ 未踢 (R3 · 6/24-27)</h4>
+    <div class="match future"><span class="team left">德国</span><span class="score">VS</span><span class="team">科特迪瓦</span></div><div class="meta">🕒 赛事33 6/24 (未踢)</div><div class="match future"><span class="team left">厄瓜多尔</span><span class="score">VS</span><span class="team">库拉索</span></div><div class="meta">🕒 赛事34 6/24 (未踢)</div><div class="match future"><span class="team left">库拉索</span><span class="score">VS</span><span class="team">科特迪瓦</span></div><div class="meta">🕒 赛事55 6/25 (未踢)</div><div class="match future"><span class="team left">厄瓜多尔</span><span class="score">VS</span><span class="team">德国</span></div><div class="meta">🕒 赛事56 6/25 (未踢)</div>
+  </div>
+  <div class="prediction">💡 预测: 晋级: <b>德国</b> · 次席: <b>科特迪瓦</b> · 附加: <b>厄瓜多尔</b></div>
+</div><div class="group">
+  <h3>第 F 组</h3>
+  <div class="venue">📍 纽约/新泽西</div>
+  <table class="stand">
+    <thead><tr><th>#</th><th style="text-align:left">球队</th><th>赛</th><th>胜</th><th>平</th><th>负</th><th>进</th><th>失</th><th>分</th><th>晋级</th></tr></thead>
+    <tbody><tr><td class="rank1">1</td><td class="t">瑞典</td><td>1</td><td>1</td><td>0</td><td>0</td><td>5</td><td>1</td><td>3</td><td><span class="adv">晋级(少赛1)</span></td></tr><tr><td class="">2</td><td class="t">荷兰</td><td>1</td><td>0</td><td>1</td><td>0</td><td>2</td><td>2</td><td>1</td><td></td></tr><tr><td class="">3</td><td class="t">日本</td><td>1</td><td>0</td><td>1</td><td>0</td><td>2</td><td>2</td><td>1</td><td></td></tr><tr><td class="">4</td><td class="t">突尼斯</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>5</td><td>0</td><td></td></tr></tbody>
+  </table>
+  <div class="matches">
+    <h4>✅ 已结束 (R1-R2)</h4>
+    <div class="match"><span class="team left">荷兰</span><span class="score">2-2</span><span class="team">日本</span></div><div class="meta">⚽ 范戴克 51' 萨默维尔 64' / 中村敬斗 57' 鎌田大地 89'</div><div class="match"><span class="team left">瑞典</span><span class="score">5-1</span><span class="team">突尼斯</span></div><div class="meta">⚽ 阿亚里 7',90+6' 伊萨克 30' 哲凯赖什 59' 斯万贝里 84' / 雷基克 43'</div>
+    <h4 style="margin-top:10px">⏳ 未踢 (R3 · 6/24-27)</h4>
+    <div class="match future"><span class="team left">荷兰</span><span class="score">VS</span><span class="team">瑞典</span></div><div class="meta">🕒 赛事35 6/24 (未踢)</div><div class="match future"><span class="team left">突尼斯</span><span class="score">VS</span><span class="team">日本</span></div><div class="meta">🕒 赛事36 6/24 (未踢)</div><div class="match future"><span class="team left">日本</span><span class="score">VS</span><span class="team">瑞典</span></div><div class="meta">🕒 赛事57 6/25 (未踢)</div><div class="match future"><span class="team left">突尼斯</span><span class="score">VS</span><span class="team">荷兰</span></div><div class="meta">🕒 赛事58 6/25 (未踢)</div>
+  </div>
+  <div class="prediction">💡 预测: 晋级: <b>荷兰</b> · 次席: <b>瑞典</b> · 附加: <b>日本</b></div>
+</div><div class="group">
+  <h3>第 G 组</h3>
+  <div class="venue">📍 亚特兰大/波士顿</div>
+  <table class="stand">
+    <thead><tr><th>#</th><th style="text-align:left">球队</th><th>赛</th><th>胜</th><th>平</th><th>负</th><th>进</th><th>失</th><th>分</th><th>晋级</th></tr></thead>
+    <tbody><tr><td class="rank1">1</td><td class="t">伊朗</td><td>1</td><td>0</td><td>1</td><td>0</td><td>2</td><td>2</td><td>1</td><td></td></tr><tr><td class="">2</td><td class="t">新西兰</td><td>1</td><td>0</td><td>1</td><td>0</td><td>2</td><td>2</td><td>1</td><td></td></tr><tr><td class="">3</td><td class="t">比利时</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td></td></tr><tr><td class="">4</td><td class="t">埃及</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td></td></tr></tbody>
+  </table>
+  <div class="matches">
+    <h4>✅ 已结束 (R1-R2)</h4>
+    <div class="match"><span class="team left">比利时</span><span class="score">1-1</span><span class="team">埃及</span></div><div class="meta">⚽ 汉尼 66'(乌龙) / 阿舒尔 20'</div><div class="match"><span class="team left">伊朗</span><span class="score">2-2</span><span class="team">新西兰</span></div><div class="meta">⚽ 雷扎伊安 32' 莫赫比 64' / 贾斯特 7',54'</div>
+    <h4 style="margin-top:10px">⏳ 未踢 (R3 · 6/24-27)</h4>
+    <div class="match future"><span class="team left">比利时</span><span class="score">VS</span><span class="team">伊朗</span></div><div class="meta">🕒 赛事39 6/24 (未踢)</div><div class="match future"><span class="team left">新西兰</span><span class="score">VS</span><span class="team">埃及</span></div><div class="meta">🕒 赛事40 6/24 (未踢)</div><div class="match future"><span class="team left">埃及</span><span class="score">VS</span><span class="team">伊朗</span></div><div class="meta">🕒 赛事63 6/25 (未踢)</div><div class="match future"><span class="team left">新西兰</span><span class="score">VS</span><span class="team">比利时</span></div><div class="meta">🕒 赛事64 6/25 (未踢)</div>
+  </div>
+  <div class="prediction">💡 预测: 晋级: <b>比利时</b> · 次席: <b>伊朗</b> · 附加: <b>埃及</b></div>
+</div><div class="group">
+  <h3>第 H 组</h3>
+  <div class="venue">📍 西雅图/温哥华</div>
+  <table class="stand">
+    <thead><tr><th>#</th><th style="text-align:left">球队</th><th>赛</th><th>胜</th><th>平</th><th>负</th><th>进</th><th>失</th><th>分</th><th>晋级</th></tr></thead>
+    <tbody><tr><td class="rank1">1</td><td class="t">乌拉圭</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td></td></tr><tr><td class="">2</td><td class="t">西班牙</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td></td></tr><tr><td class="">3</td><td class="t">沙特阿拉伯</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td></td></tr><tr><td class="">4</td><td class="t">佛得角</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td></td></tr></tbody>
+  </table>
+  <div class="matches">
+    <h4>✅ 已结束 (R1-R2)</h4>
+    <div class="match"><span class="team left">西班牙</span><span class="score">0-0</span><span class="team">佛得角</span></div><div class="meta">⚽ /</div><div class="match"><span class="team left">沙特阿拉伯</span><span class="score">1-1</span><span class="team">乌拉圭</span></div><div class="meta">⚽ 阿姆里 41' / M·阿劳霍 80'</div>
+    <h4 style="margin-top:10px">⏳ 未踢 (R3 · 6/24-27)</h4>
+    <div class="match future"><span class="team left">西班牙</span><span class="score">VS</span><span class="team">沙特阿拉伯</span></div><div class="meta">🕒 赛事38 6/24 (未踢)</div><div class="match future"><span class="team left">乌拉圭</span><span class="score">VS</span><span class="team">佛得角</span></div><div class="meta">🕒 赛事37 6/24 (未踢)</div><div class="match future"><span class="team left">佛得角</span><span class="score">VS</span><span class="team">沙特阿拉伯</span></div><div class="meta">🕒 赛事65 6/25 (未踢)</div><div class="match future"><span class="team left">乌拉圭</span><span class="score">VS</span><span class="team">西班牙</span></div><div class="meta">🕒 赛事66 6/25 (未踢)</div>
+  </div>
+  <div class="prediction">💡 预测: 晋级: <b>西班牙</b> · 次席: <b>乌拉圭</b> · 附加: <b>沙特阿拉伯</b></div>
+</div><div class="group">
+  <h3>第 I 组</h3>
+  <div class="venue">📍 迈阿密/费城</div>
+  <table class="stand">
+    <thead><tr><th>#</th><th style="text-align:left">球队</th><th>赛</th><th>胜</th><th>平</th><th>负</th><th>进</th><th>失</th><th>分</th><th>晋级</th></tr></thead>
+    <tbody><tr><td class="rank1">1</td><td class="t">挪威</td><td>1</td><td>1</td><td>0</td><td>0</td><td>4</td><td>1</td><td>3</td><td><span class="adv">晋级(少赛1)</span></td></tr><tr><td class="">2</td><td class="t">法国</td><td>1</td><td>1</td><td>0</td><td>0</td><td>3</td><td>1</td><td>3</td><td></td></tr><tr><td class="">3</td><td class="t">塞内加尔</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>4</td><td>0</td><td></td></tr><tr><td class="">4</td><td class="t">伊拉克</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>4</td><td>0</td><td></td></tr></tbody>
+  </table>
+  <div class="matches">
+    <h4>✅ 已结束 (R1-R2)</h4>
+    <div class="match"><span class="team left">法国</span><span class="score">3-1</span><span class="team">塞内加尔</span></div><div class="meta">⚽ 姆巴佩 66',90+6' 巴尔科拉 82' / 姆巴耶 90+5'</div><div class="match"><span class="team left">伊拉克</span><span class="score">1-4</span><span class="team">挪威</span></div><div class="meta">⚽ 侯赛因 39' / 哈兰德 29',43' 厄斯蒂高 76' 侯赛因 90+6'(乌龙)</div>
+    <h4 style="margin-top:10px">⏳ 未踢 (R3 · 6/24-27)</h4>
+    <div class="match future"><span class="team left">法国</span><span class="score">VS</span><span class="team">伊拉克</span></div><div class="meta">🕒 赛事42 6/24 (未踢)</div><div class="match future"><span class="team left">挪威</span><span class="score">VS</span><span class="team">塞内加尔</span></div><div class="meta">🕒 赛事41 6/24 (未踢)</div><div class="match future"><span class="team left">挪威</span><span class="score">VS</span><span class="team">法国</span></div><div class="meta">🕒 赛事61 6/25 (未踢)</div><div class="match future"><span class="team left">塞内加尔</span><span class="score">VS</span><span class="team">伊拉克</span></div><div class="meta">🕒 赛事62 6/25 (未踢)</div>
+  </div>
+  <div class="prediction">💡 预测: 晋级: <b>法国</b> · 次席: <b>挪威</b> · 附加: <b>塞内加尔</b></div>
+</div><div class="group">
+  <h3>第 J 组</h3>
+  <div class="venue">📍 布宜诺斯艾利斯/洛杉矶</div>
+  <table class="stand">
+    <thead><tr><th>#</th><th style="text-align:left">球队</th><th>赛</th><th>胜</th><th>平</th><th>负</th><th>进</th><th>失</th><th>分</th><th>晋级</th></tr></thead>
+    <tbody><tr><td class="rank1">1</td><td class="t">阿根廷</td><td>1</td><td>1</td><td>0</td><td>0</td><td>3</td><td>0</td><td>3</td><td><span class="adv">晋级(少赛1)</span></td></tr><tr><td class="">2</td><td class="t">奥地利</td><td>1</td><td>1</td><td>0</td><td>0</td><td>3</td><td>1</td><td>3</td><td></td></tr><tr><td class="">3</td><td class="t">阿尔及利亚</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>3</td><td>0</td><td></td></tr><tr><td class="">4</td><td class="t">约旦</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>3</td><td>0</td><td></td></tr></tbody>
+  </table>
+  <div class="matches">
+    <h4>✅ 已结束 (R1-R2)</h4>
+    <div class="match"><span class="team left">阿根廷</span><span class="score">3-0</span><span class="team">阿尔及利亚</span></div><div class="meta">⚽ 梅西 17',60',76'</div><div class="match"><span class="team left">奥地利</span><span class="score">3-1</span><span class="team">约旦</span></div><div class="meta">⚽ 施密德 21' 阿拉伯 76'(乌龙) 阿瑙托维奇 90+12'(点) / 奥尔万 50'</div>
+    <h4 style="margin-top:10px">⏳ 未踢 (R3 · 6/24-27)</h4>
+    <div class="match future"><span class="team left">阿根廷</span><span class="score">VS</span><span class="team">奥地利</span></div><div class="meta">🕒 赛事43 6/24 (未踢)</div><div class="match future"><span class="team left">约旦</span><span class="score">VS</span><span class="team">阿尔及利亚</span></div><div class="meta">🕒 赛事44 6/24 (未踢)</div><div class="match future"><span class="team left">阿尔及利亚</span><span class="score">VS</span><span class="team">奥地利</span></div><div class="meta">🕒 赛事69 6/25 (未踢)</div><div class="match future"><span class="team left">约旦</span><span class="score">VS</span><span class="team">阿根廷</span></div><div class="meta">🕒 赛事70 6/25 (未踢)</div>
+  </div>
+  <div class="prediction">💡 预测: 晋级: <b>阿根廷</b> · 次席: <b>奥地利</b> · 附加: <b>阿尔及利亚</b></div>
+</div><div class="group">
+  <h3>第 K 组</h3>
+  <div class="venue">📍 休斯敦/堪萨斯城</div>
+  <table class="stand">
+    <thead><tr><th>#</th><th style="text-align:left">球队</th><th>赛</th><th>胜</th><th>平</th><th>负</th><th>进</th><th>失</th><th>分</th><th>晋级</th></tr></thead>
+    <tbody><tr><td class="rank1">1</td><td class="t">哥伦比亚</td><td>1</td><td>1</td><td>0</td><td>0</td><td>3</td><td>1</td><td>3</td><td><span class="adv">晋级(少赛1)</span></td></tr><tr><td class="">2</td><td class="t">葡萄牙</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td></td></tr><tr><td class="">3</td><td class="t">刚果(金)</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td></td></tr><tr><td class="">4</td><td class="t">乌兹别克斯坦</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>3</td><td>0</td><td></td></tr></tbody>
+  </table>
+  <div class="matches">
+    <h4>✅ 已结束 (R1-R2)</h4>
+    <div class="match"><span class="team left">葡萄牙</span><span class="score">1-1</span><span class="team">刚果(金)</span></div><div class="meta">⚽ J·内维斯 6' / 维萨 45+5'</div><div class="match"><span class="team left">乌兹别克斯坦</span><span class="score">1-3</span><span class="team">哥伦比亚</span></div><div class="meta">⚽ 法伊拉祖耶夫 60' / 穆尼奥斯 41' 迪亚斯 65' 坎帕斯 90+9'</div>
+    <h4 style="margin-top:10px">⏳ 未踢 (R3 · 6/24-27)</h4>
+    <div class="match future"><span class="team left">葡萄牙</span><span class="score">VS</span><span class="team">乌兹别克斯坦</span></div><div class="meta">🕒 赛事47 6/24 (未踢)</div><div class="match future"><span class="team left">哥伦比亚</span><span class="score">VS</span><span class="team">刚果(金)</span></div><div class="meta">🕒 赛事48 6/24 (未踢)</div><div class="match future"><span class="team left">哥伦比亚</span><span class="score">VS</span><span class="team">葡萄牙</span></div><div class="meta">🕒 赛事71 6/25 (未踢)</div><div class="match future"><span class="team left">刚果(金)</span><span class="score">VS</span><span class="team">乌兹别克斯坦</span></div><div class="meta">🕒 赛事72 6/25 (未踢)</div>
+  </div>
+  <div class="prediction">💡 预测: 晋级: <b>葡萄牙</b> · 次席: <b>哥伦比亚</b> · 附加: <b>刚果(金)</b></div>
+</div><div class="group">
+  <h3>第 L 组</h3>
+  <div class="venue">📍 多伦多/纽约/新泽西</div>
+  <table class="stand">
+    <thead><tr><th>#</th><th style="text-align:left">球队</th><th>赛</th><th>胜</th><th>平</th><th>负</th><th>进</th><th>失</th><th>分</th><th>晋级</th></tr></thead>
+    <tbody><tr><td class="rank1">1</td><td class="t">英格兰</td><td>1</td><td>1</td><td>0</td><td>0</td><td>4</td><td>2</td><td>3</td><td><span class="adv">晋级(少赛1)</span></td></tr><tr><td class="">2</td><td class="t">加纳</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>3</td><td></td></tr><tr><td class="">3</td><td class="t">克罗地亚</td><td>1</td><td>0</td><td>0</td><td>1</td><td>2</td><td>4</td><td>0</td><td></td></tr><tr><td class="">4</td><td class="t">巴拿马</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td></td></tr></tbody>
+  </table>
+  <div class="matches">
+    <h4>✅ 已结束 (R1-R2)</h4>
+    <div class="match"><span class="team left">英格兰</span><span class="score">4-2</span><span class="team">克罗地亚</span></div><div class="meta">⚽ 凯恩 12'(点),42' 贝林厄姆 47' 拉什福德 85' / 巴图里纳 36' 穆萨 45+5'</div><div class="match"><span class="team left">加纳</span><span class="score">1-0</span><span class="team">巴拿马</span></div><div class="meta">⚽ 伊伦基 90+5'</div>
+    <h4 style="margin-top:10px">⏳ 未踢 (R3 · 6/24-27)</h4>
+    <div class="match future"><span class="team left">英格兰</span><span class="score">VS</span><span class="team">加纳</span></div><div class="meta">🕒 赛事45 6/24 (未踢)</div><div class="match future"><span class="team left">巴拿马</span><span class="score">VS</span><span class="team">克罗地亚</span></div><div class="meta">🕒 赛事46 6/24 (未踢)</div><div class="match future"><span class="team left">巴拿马</span><span class="score">VS</span><span class="team">英格兰</span></div><div class="meta">🕒 赛事67 6/25 (未踢)</div><div class="match future"><span class="team left">克罗地亚</span><span class="score">VS</span><span class="team">加纳</span></div><div class="meta">🕒 赛事68 6/25 (未踢)</div>
+  </div>
+  <div class="prediction">💡 预测: 晋级: <b>英格兰</b> · 次席: <b>克罗地亚</b> · 附加: <b>加纳</b></div>
+</div></div></div><div class="section" id="teams"><div class="section-title">🏟 48强卡片 · 点击查看详情</div><div class="teams"><div class="team-card" onclick="showTeam('Mexico')" style="border-top:3px solid #ffb700">
+  <div class="rank">FIFA #14</div>
+  <div class="name">墨西哥</div>
+  <div class="name-en">Mexico</div>
+  <div class="power-bar"><div class="power-fill" style="width:74%;background:linear-gradient(90deg,#ffb700,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#ffb70033;color:#ffb700">B级</span>
+    <span class="power-v" style="color:#ffb700">74</span>
+  </div>
+  <div class="stars">⭐ <b>洛萨诺(前锋) · 埃德松·阿尔瓦雷斯(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('South Africa')" style="border-top:3px solid #7a8b99">
+  <div class="rank">FIFA #60</div>
+  <div class="name">南非</div>
+  <div class="name-en">South Africa</div>
+  <div class="power-bar"><div class="power-fill" style="width:52%;background:linear-gradient(90deg,#7a8b99,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#7a8b9933;color:#7a8b99">E级</span>
+    <span class="power-v" style="color:#7a8b99">52</span>
+  </div>
+  <div class="stars">⭐ <b>莫科纳(中场) · 勒特罗特罗夫(前锋)</b></div>
+</div><div class="team-card" onclick="showTeam('South Korea')" style="border-top:3px solid #3ec46d">
+  <div class="rank">FIFA #22</div>
+  <div class="name">韩国</div>
+  <div class="name-en">South Korea</div>
+  <div class="power-bar"><div class="power-fill" style="width:71%;background:linear-gradient(90deg,#3ec46d,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#3ec46d33;color:#3ec46d">C级</span>
+    <span class="power-v" style="color:#3ec46d">71</span>
+  </div>
+  <div class="stars">⭐ <b>孙兴慜(前锋) · 李刚仁(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Czech')" style="border-top:3px solid #2bbfd3">
+  <div class="rank">FIFA #44</div>
+  <div class="name">捷克</div>
+  <div class="name-en">Czech</div>
+  <div class="power-bar"><div class="power-fill" style="width:63%;background:linear-gradient(90deg,#2bbfd3,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#2bbfd333;color:#2bbfd3">D级</span>
+    <span class="power-v" style="color:#2bbfd3">63</span>
+  </div>
+  <div class="stars">⭐ <b>希克(前锋) · 曹法尔(后卫)</b></div>
+</div><div class="team-card" onclick="showTeam('Canada')" style="border-top:3px solid #3ec46d">
+  <div class="rank">FIFA #30</div>
+  <div class="name">加拿大</div>
+  <div class="name-en">Canada</div>
+  <div class="power-bar"><div class="power-fill" style="width:69%;background:linear-gradient(90deg,#3ec46d,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#3ec46d33;color:#3ec46d">C级</span>
+    <span class="power-v" style="color:#3ec46d">69</span>
+  </div>
+  <div class="stars">⭐ <b>戴维(前锋) · 拉林(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Bosnia')" style="border-top:3px solid #2bbfd3">
+  <div class="rank">FIFA #64</div>
+  <div class="name">波黑</div>
+  <div class="name-en">Bosnia</div>
+  <div class="power-bar"><div class="power-fill" style="width:55%;background:linear-gradient(90deg,#2bbfd3,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#2bbfd333;color:#2bbfd3">D级</span>
+    <span class="power-v" style="color:#2bbfd3">55</span>
+  </div>
+  <div class="stars">⭐ <b>哲科(前锋,39岁) · 克鲁尼奇(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Qatar')" style="border-top:3px solid #2bbfd3">
+  <div class="rank">FIFA #51</div>
+  <div class="name">卡塔尔</div>
+  <div class="name-en">Qatar</div>
+  <div class="power-bar"><div class="power-fill" style="width:56%;background:linear-gradient(90deg,#2bbfd3,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#2bbfd333;color:#2bbfd3">D级</span>
+    <span class="power-v" style="color:#2bbfd3">56</span>
+  </div>
+  <div class="stars">⭐ <b>阿菲夫(前锋) · 海多斯(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Switzerland')" style="border-top:3px solid #ffb700">
+  <div class="rank">FIFA #17</div>
+  <div class="name">瑞士</div>
+  <div class="name-en">Switzerland</div>
+  <div class="power-bar"><div class="power-fill" style="width:75%;background:linear-gradient(90deg,#ffb700,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#ffb70033;color:#ffb700">B级</span>
+    <span class="power-v" style="color:#ffb700">75</span>
+  </div>
+  <div class="stars">⭐ <b>扎卡(中场) · 恩博洛(前锋)</b></div>
+</div><div class="team-card" onclick="showTeam('Brazil')" style="border-top:3px solid #ff3a3a">
+  <div class="rank">FIFA #5</div>
+  <div class="name">巴西</div>
+  <div class="name-en">Brazil</div>
+  <div class="power-bar"><div class="power-fill" style="width:92%;background:linear-gradient(90deg,#ff3a3a,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#ff3a3a33;color:#ff3a3a">S级</span>
+    <span class="power-v" style="color:#ff3a3a">92</span>
+  </div>
+  <div class="stars">⭐ <b>维尼修斯(前锋) · 罗德里戈(前锋)</b></div>
+</div><div class="team-card" onclick="showTeam('Morocco')" style="border-top:3px solid #ff8a00">
+  <div class="rank">FIFA #11</div>
+  <div class="name">摩洛哥</div>
+  <div class="name-en">Morocco</div>
+  <div class="power-bar"><div class="power-fill" style="width:80%;background:linear-gradient(90deg,#ff8a00,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#ff8a0033;color:#ff8a00">A级</span>
+    <span class="power-v" style="color:#ff8a00">80</span>
+  </div>
+  <div class="stars">⭐ <b>阿什拉夫(后卫) · 塞巴里(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Haiti')" style="border-top:3px solid #4a5158">
+  <div class="rank">FIFA #84</div>
+  <div class="name">海地</div>
+  <div class="name-en">Haiti</div>
+  <div class="power-bar"><div class="power-fill" style="width:42%;background:linear-gradient(90deg,#4a5158,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#4a515833;color:#4a5158">F级</span>
+    <span class="power-v" style="color:#4a5158">42</span>
+  </div>
+  <div class="stars">⭐ <b>皮埃尔(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Scotland')" style="border-top:3px solid #3ec46d">
+  <div class="rank">FIFA #36</div>
+  <div class="name">苏格兰</div>
+  <div class="name-en">Scotland</div>
+  <div class="power-bar"><div class="power-fill" style="width:68%;background:linear-gradient(90deg,#3ec46d,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#3ec46d33;color:#3ec46d">C级</span>
+    <span class="power-v" style="color:#3ec46d">68</span>
+  </div>
+  <div class="stars">⭐ <b>罗伯逊(后卫) · 麦克托米奈(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('USA')" style="border-top:3px solid #ffb700">
+  <div class="rank">FIFA #17</div>
+  <div class="name">美国</div>
+  <div class="name-en">USA</div>
+  <div class="power-bar"><div class="power-fill" style="width:75%;background:linear-gradient(90deg,#ffb700,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#ffb70033;color:#ffb700">B级</span>
+    <span class="power-v" style="color:#ffb700">75</span>
+  </div>
+  <div class="stars">⭐ <b>普利西奇(前锋) · 巴洛贡(前锋)</b></div>
+</div><div class="team-card" onclick="showTeam('Paraguay')" style="border-top:3px solid #2bbfd3">
+  <div class="rank">FIFA #39</div>
+  <div class="name">巴拉圭</div>
+  <div class="name-en">Paraguay</div>
+  <div class="power-bar"><div class="power-fill" style="width:64%;background:linear-gradient(90deg,#2bbfd3,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#2bbfd333;color:#2bbfd3">D级</span>
+    <span class="power-v" style="color:#2bbfd3">64</span>
+  </div>
+  <div class="stars">⭐ <b>阿尔米隆(前锋) · 加马拉(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Australia')" style="border-top:3px solid #2bbfd3">
+  <div class="rank">FIFA #26</div>
+  <div class="name">澳大利亚</div>
+  <div class="name-en">Australia</div>
+  <div class="power-bar"><div class="power-fill" style="width:64%;background:linear-gradient(90deg,#2bbfd3,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#2bbfd333;color:#2bbfd3">D级</span>
+    <span class="power-v" style="color:#2bbfd3">64</span>
+  </div>
+  <div class="stars">⭐ <b>苏塔尔(后卫) · 莱基(前锋)</b></div>
+</div><div class="team-card" onclick="showTeam('Turkey')" style="border-top:3px solid #3ec46d">
+  <div class="rank">FIFA #25</div>
+  <div class="name">土耳其</div>
+  <div class="name-en">Turkey</div>
+  <div class="power-bar"><div class="power-fill" style="width:68%;background:linear-gradient(90deg,#3ec46d,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#3ec46d33;color:#3ec46d">C级</span>
+    <span class="power-v" style="color:#3ec46d">68</span>
+  </div>
+  <div class="stars">⭐ <b>恰尔汗奥卢(中场) · 伊尔迪兹(前锋)</b></div>
+</div><div class="team-card" onclick="showTeam('Germany')" style="border-top:3px solid #ff3a3a">
+  <div class="rank">FIFA #9</div>
+  <div class="name">德国</div>
+  <div class="name-en">Germany</div>
+  <div class="power-bar"><div class="power-fill" style="width:88%;background:linear-gradient(90deg,#ff3a3a,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#ff3a3a33;color:#ff3a3a">S级</span>
+    <span class="power-v" style="color:#ff3a3a">88</span>
+  </div>
+  <div class="stars">⭐ <b>穆西亚拉(中场) · 哈弗茨(前锋)</b></div>
+</div><div class="team-card" onclick="showTeam('Curacao')" style="border-top:3px solid #4a5158">
+  <div class="rank">FIFA #82</div>
+  <div class="name">库拉索</div>
+  <div class="name-en">Curacao</div>
+  <div class="power-bar"><div class="power-fill" style="width:35%;background:linear-gradient(90deg,#4a5158,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#4a515833;color:#4a5158">F级</span>
+    <span class="power-v" style="color:#4a5158">35</span>
+  </div>
+  <div class="stars">⭐ <b>巴克(中场) · 马蒂纳(前锋)</b></div>
+</div><div class="team-card" onclick="showTeam('Ivory Coast')" style="border-top:3px solid #3ec46d">
+  <div class="rank">FIFA #42</div>
+  <div class="name">科特迪瓦</div>
+  <div class="name-en">Ivory Coast</div>
+  <div class="power-bar"><div class="power-fill" style="width:67%;background:linear-gradient(90deg,#3ec46d,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#3ec46d33;color:#3ec46d">C级</span>
+    <span class="power-v" style="color:#3ec46d">67</span>
+  </div>
+  <div class="stars">⭐ <b>凯西(中场) · 佩佩(前锋)</b></div>
+</div><div class="team-card" onclick="showTeam('Ecuador')" style="border-top:3px solid #3ec46d">
+  <div class="rank">FIFA #23</div>
+  <div class="name">厄瓜多尔</div>
+  <div class="name-en">Ecuador</div>
+  <div class="power-bar"><div class="power-fill" style="width:68%;background:linear-gradient(90deg,#3ec46d,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#3ec46d33;color:#3ec46d">C级</span>
+    <span class="power-v" style="color:#3ec46d">68</span>
+  </div>
+  <div class="stars">⭐ <b>恩纳·瓦伦西亚(前锋) · 普雷西亚多(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Netherlands')" style="border-top:3px solid #ff8a00">
+  <div class="rank">FIFA #7</div>
+  <div class="name">荷兰</div>
+  <div class="name-en">Netherlands</div>
+  <div class="power-bar"><div class="power-fill" style="width:86%;background:linear-gradient(90deg,#ff8a00,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#ff8a0033;color:#ff8a00">A级</span>
+    <span class="power-v" style="color:#ff8a00">86</span>
+  </div>
+  <div class="stars">⭐ <b>范戴克(后卫) · 德容(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Japan')" style="border-top:3px solid #ffb700">
+  <div class="rank">FIFA #18</div>
+  <div class="name">日本</div>
+  <div class="name-en">Japan</div>
+  <div class="power-bar"><div class="power-fill" style="width:78%;background:linear-gradient(90deg,#ffb700,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#ffb70033;color:#ffb700">B级</span>
+    <span class="power-v" style="color:#ffb700">78</span>
+  </div>
+  <div class="stars">⭐ <b>久保建英(中场) · 三笘薰(前锋)</b></div>
+</div><div class="team-card" onclick="showTeam('Sweden')" style="border-top:3px solid #3ec46d">
+  <div class="rank">FIFA #43</div>
+  <div class="name">瑞典</div>
+  <div class="name-en">Sweden</div>
+  <div class="power-bar"><div class="power-fill" style="width:70%;background:linear-gradient(90deg,#3ec46d,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#3ec46d33;color:#3ec46d">C级</span>
+    <span class="power-v" style="color:#3ec46d">70</span>
+  </div>
+  <div class="stars">⭐ <b>伊萨克(前锋) · 哲凯赖什(前锋)</b></div>
+</div><div class="team-card" onclick="showTeam('Tunisia')" style="border-top:3px solid #2bbfd3">
+  <div class="rank">FIFA #40</div>
+  <div class="name">突尼斯</div>
+  <div class="name-en">Tunisia</div>
+  <div class="power-bar"><div class="power-fill" style="width:60%;background:linear-gradient(90deg,#2bbfd3,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#2bbfd333;color:#2bbfd3">D级</span>
+    <span class="power-v" style="color:#2bbfd3">60</span>
+  </div>
+  <div class="stars">⭐ <b>姆萨克尼(中场) · 杰巴利(前锋)</b></div>
+</div><div class="team-card" onclick="showTeam('Belgium')" style="border-top:3px solid #ff8a00">
+  <div class="rank">FIFA #8</div>
+  <div class="name">比利时</div>
+  <div class="name-en">Belgium</div>
+  <div class="power-bar"><div class="power-fill" style="width:83%;background:linear-gradient(90deg,#ff8a00,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#ff8a0033;color:#ff8a00">A级</span>
+    <span class="power-v" style="color:#ff8a00">83</span>
+  </div>
+  <div class="stars">⭐ <b>德布劳内(中场) · 卢卡库(前锋)</b></div>
+</div><div class="team-card" onclick="showTeam('Egypt')" style="border-top:3px solid #3ec46d">
+  <div class="rank">FIFA #34</div>
+  <div class="name">埃及</div>
+  <div class="name-en">Egypt</div>
+  <div class="power-bar"><div class="power-fill" style="width:65%;background:linear-gradient(90deg,#3ec46d,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#3ec46d33;color:#3ec46d">C级</span>
+    <span class="power-v" style="color:#3ec46d">65</span>
+  </div>
+  <div class="stars">⭐ <b>萨拉赫(前锋) · 埃尔内尼(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Iran')" style="border-top:3px solid #3ec46d">
+  <div class="rank">FIFA #20</div>
+  <div class="name">伊朗</div>
+  <div class="name-en">Iran</div>
+  <div class="power-bar"><div class="power-fill" style="width:69%;background:linear-gradient(90deg,#3ec46d,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#3ec46d33;color:#3ec46d">C级</span>
+    <span class="power-v" style="color:#3ec46d">69</span>
+  </div>
+  <div class="stars">⭐ <b>阿兹蒙(前锋) · 塔雷米(前锋)</b></div>
+</div><div class="team-card" onclick="showTeam('New Zealand')" style="border-top:3px solid #7a8b99">
+  <div class="rank">FIFA #86</div>
+  <div class="name">新西兰</div>
+  <div class="name-en">New Zealand</div>
+  <div class="power-bar"><div class="power-fill" style="width:45%;background:linear-gradient(90deg,#7a8b99,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#7a8b9933;color:#7a8b99">E级</span>
+    <span class="power-v" style="color:#7a8b99">45</span>
+  </div>
+  <div class="stars">⭐ <b>伍德(前锋,28) · 托马斯(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Spain')" style="border-top:3px solid #ff3a3a">
+  <div class="rank">FIFA #2</div>
+  <div class="name">西班牙</div>
+  <div class="name-en">Spain</div>
+  <div class="power-bar"><div class="power-fill" style="width:91%;background:linear-gradient(90deg,#ff3a3a,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#ff3a3a33;color:#ff3a3a">S级</span>
+    <span class="power-v" style="color:#ff3a3a">91</span>
+  </div>
+  <div class="stars">⭐ <b>罗德里(中场) · 佩德里(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Cabo Verde')" style="border-top:3px solid #7a8b99">
+  <div class="rank">FIFA #68</div>
+  <div class="name">佛得角</div>
+  <div class="name-en">Cabo Verde</div>
+  <div class="power-bar"><div class="power-fill" style="width:50%;background:linear-gradient(90deg,#7a8b99,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#7a8b9933;color:#7a8b99">E级</span>
+    <span class="power-v" style="color:#7a8b99">50</span>
+  </div>
+  <div class="stars">⭐ <b>罗德里格斯(中场) · 丰特斯(后卫)</b></div>
+</div><div class="team-card" onclick="showTeam('Saudi Arabia')" style="border-top:3px solid #2bbfd3">
+  <div class="rank">FIFA #60</div>
+  <div class="name">沙特阿拉伯</div>
+  <div class="name-en">Saudi Arabia</div>
+  <div class="power-bar"><div class="power-fill" style="width:58%;background:linear-gradient(90deg,#2bbfd3,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#2bbfd333;color:#2bbfd3">D级</span>
+    <span class="power-v" style="color:#2bbfd3">58</span>
+  </div>
+  <div class="stars">⭐ <b>萨利姆·多萨里(前锋) · 布莱希(后卫)</b></div>
+</div><div class="team-card" onclick="showTeam('Uruguay')" style="border-top:3px solid #ff8a00">
+  <div class="rank">FIFA #16</div>
+  <div class="name">乌拉圭</div>
+  <div class="name-en">Uruguay</div>
+  <div class="power-bar"><div class="power-fill" style="width:81%;background:linear-gradient(90deg,#ff8a00,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#ff8a0033;color:#ff8a00">A级</span>
+    <span class="power-v" style="color:#ff8a00">81</span>
+  </div>
+  <div class="stars">⭐ <b>苏亚雷斯(前锋,39) · 努涅斯(前锋)</b></div>
+</div><div class="team-card" onclick="showTeam('France')" style="border-top:3px solid #ff3a3a">
+  <div class="rank">FIFA #3</div>
+  <div class="name">法国</div>
+  <div class="name-en">France</div>
+  <div class="power-bar"><div class="power-fill" style="width:90%;background:linear-gradient(90deg,#ff3a3a,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#ff3a3a33;color:#ff3a3a">S级</span>
+    <span class="power-v" style="color:#ff3a3a">90</span>
+  </div>
+  <div class="stars">⭐ <b>姆巴佩(前锋) · 登贝莱(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Senegal')" style="border-top:3px solid #ffb700">
+  <div class="rank">FIFA #19</div>
+  <div class="name">塞内加尔</div>
+  <div class="name-en">Senegal</div>
+  <div class="power-bar"><div class="power-fill" style="width:76%;background:linear-gradient(90deg,#ffb700,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#ffb70033;color:#ffb700">B级</span>
+    <span class="power-v" style="color:#ffb700">76</span>
+  </div>
+  <div class="stars">⭐ <b>库利巴利(后卫) · 萨尔(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Iraq')" style="border-top:3px solid #7a8b99">
+  <div class="rank">FIFA #58</div>
+  <div class="name">伊拉克</div>
+  <div class="name-en">Iraq</div>
+  <div class="power-bar"><div class="power-fill" style="width:48%;background:linear-gradient(90deg,#7a8b99,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#7a8b9933;color:#7a8b99">E级</span>
+    <span class="power-v" style="color:#7a8b99">48</span>
+  </div>
+  <div class="stars">⭐ <b>侯赛因(前锋) · 阿里(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Norway')" style="border-top:3px solid #ffb700">
+  <div class="rank">FIFA #29</div>
+  <div class="name">挪威</div>
+  <div class="name-en">Norway</div>
+  <div class="power-bar"><div class="power-fill" style="width:77%;background:linear-gradient(90deg,#ffb700,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#ffb70033;color:#ffb700">B级</span>
+    <span class="power-v" style="color:#ffb700">77</span>
+  </div>
+  <div class="stars">⭐ <b>哈兰德(前锋) · 厄德高(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Argentina')" style="border-top:3px solid #ff3a3a">
+  <div class="rank">FIFA #1</div>
+  <div class="name">阿根廷</div>
+  <div class="name-en">Argentina</div>
+  <div class="power-bar"><div class="power-fill" style="width:93%;background:linear-gradient(90deg,#ff3a3a,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#ff3a3a33;color:#ff3a3a">S级</span>
+    <span class="power-v" style="color:#ff3a3a">93</span>
+  </div>
+  <div class="stars">⭐ <b>梅西(前锋) · 阿尔瓦雷斯(前锋)</b></div>
+</div><div class="team-card" onclick="showTeam('Algeria')" style="border-top:3px solid #2bbfd3">
+  <div class="rank">FIFA #35</div>
+  <div class="name">阿尔及利亚</div>
+  <div class="name-en">Algeria</div>
+  <div class="power-bar"><div class="power-fill" style="width:63%;background:linear-gradient(90deg,#2bbfd3,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#2bbfd333;color:#2bbfd3">D级</span>
+    <span class="power-v" style="color:#2bbfd3">63</span>
+  </div>
+  <div class="stars">⭐ <b>马赫雷斯(前锋) · 本纳赛尔(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Austria')" style="border-top:3px solid #3ec46d">
+  <div class="rank">FIFA #24</div>
+  <div class="name">奥地利</div>
+  <div class="name-en">Austria</div>
+  <div class="power-bar"><div class="power-fill" style="width:68%;background:linear-gradient(90deg,#3ec46d,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#3ec46d33;color:#3ec46d">C级</span>
+    <span class="power-v" style="color:#3ec46d">68</span>
+  </div>
+  <div class="stars">⭐ <b>阿拉巴(后卫) · 施拉格尔(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Jordan')" style="border-top:3px solid #7a8b99">
+  <div class="rank">FIFA #66</div>
+  <div class="name">约旦</div>
+  <div class="name-en">Jordan</div>
+  <div class="power-bar"><div class="power-fill" style="width:50%;background:linear-gradient(90deg,#7a8b99,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#7a8b9933;color:#7a8b99">E级</span>
+    <span class="power-v" style="color:#7a8b99">50</span>
+  </div>
+  <div class="stars">⭐ <b>奥尔万(前锋) · 阿卜杜勒(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Portugal')" style="border-top:3px solid #ff3a3a">
+  <div class="rank">FIFA #5</div>
+  <div class="name">葡萄牙</div>
+  <div class="name-en">Portugal</div>
+  <div class="power-bar"><div class="power-fill" style="width:88%;background:linear-gradient(90deg,#ff3a3a,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#ff3a3a33;color:#ff3a3a">S级</span>
+    <span class="power-v" style="color:#ff3a3a">88</span>
+  </div>
+  <div class="stars">⭐ <b>C罗(前锋,41) · B费(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Congo DR')" style="border-top:3px solid #7a8b99">
+  <div class="rank">FIFA #56</div>
+  <div class="name">刚果(金)</div>
+  <div class="name-en">Congo DR</div>
+  <div class="power-bar"><div class="power-fill" style="width:52%;background:linear-gradient(90deg,#7a8b99,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#7a8b9933;color:#7a8b99">E级</span>
+    <span class="power-v" style="color:#7a8b99">52</span>
+  </div>
+  <div class="stars">⭐ <b>维萨(中场) · 巴卡(前锋)</b></div>
+</div><div class="team-card" onclick="showTeam('Uzbekistan')" style="border-top:3px solid #2bbfd3">
+  <div class="rank">FIFA #50</div>
+  <div class="name">乌兹别克斯坦</div>
+  <div class="name-en">Uzbekistan</div>
+  <div class="power-bar"><div class="power-fill" style="width:60%;background:linear-gradient(90deg,#2bbfd3,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#2bbfd333;color:#2bbfd3">D级</span>
+    <span class="power-v" style="color:#2bbfd3">60</span>
+  </div>
+  <div class="stars">⭐ <b>马沙里波夫(中场) · 法伊拉祖耶夫(前锋)</b></div>
+</div><div class="team-card" onclick="showTeam('Colombia')" style="border-top:3px solid #ffb700">
+  <div class="rank">FIFA #13</div>
+  <div class="name">哥伦比亚</div>
+  <div class="name-en">Colombia</div>
+  <div class="power-bar"><div class="power-fill" style="width:78%;background:linear-gradient(90deg,#ffb700,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#ffb70033;color:#ffb700">B级</span>
+    <span class="power-v" style="color:#ffb700">78</span>
+  </div>
+  <div class="stars">⭐ <b>路易斯·迪亚斯(前锋) · J·罗德里格斯(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('England')" style="border-top:3px solid #ff3a3a">
+  <div class="rank">FIFA #4</div>
+  <div class="name">英格兰</div>
+  <div class="name-en">England</div>
+  <div class="power-bar"><div class="power-fill" style="width:88%;background:linear-gradient(90deg,#ff3a3a,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#ff3a3a33;color:#ff3a3a">S级</span>
+    <span class="power-v" style="color:#ff3a3a">88</span>
+  </div>
+  <div class="stars">⭐ <b>凯恩(前锋) · 贝林厄姆(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Croatia')" style="border-top:3px solid #ffb700">
+  <div class="rank">FIFA #10</div>
+  <div class="name">克罗地亚</div>
+  <div class="name-en">Croatia</div>
+  <div class="power-bar"><div class="power-fill" style="width:78%;background:linear-gradient(90deg,#ffb700,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#ffb70033;color:#ffb700">B级</span>
+    <span class="power-v" style="color:#ffb700">78</span>
+  </div>
+  <div class="stars">⭐ <b>莫德里奇(中场,40) · 佩里西奇(中场)</b></div>
+</div><div class="team-card" onclick="showTeam('Ghana')" style="border-top:3px solid #2bbfd3">
+  <div class="rank">FIFA #72</div>
+  <div class="name">加纳</div>
+  <div class="name-en">Ghana</div>
+  <div class="power-bar"><div class="power-fill" style="width:55%;background:linear-gradient(90deg,#2bbfd3,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#2bbfd333;color:#2bbfd3">D级</span>
+    <span class="power-v" style="color:#2bbfd3">55</span>
+  </div>
+  <div class="stars">⭐ <b>库杜斯(中场) · 阿尤兄弟(前锋)</b></div>
+</div><div class="team-card" onclick="showTeam('Panama')" style="border-top:3px solid #7a8b99">
+  <div class="rank">FIFA #30</div>
+  <div class="name">巴拿马</div>
+  <div class="name-en">Panama</div>
+  <div class="power-bar"><div class="power-fill" style="width:52%;background:linear-gradient(90deg,#7a8b99,#fff8)"></div></div>
+  <div class="power-meta">
+    <span class="tier" style="background:#7a8b9933;color:#7a8b99">E级</span>
+    <span class="power-v" style="color:#7a8b99">52</span>
+  </div>
+  <div class="stars">⭐ <b>戈麦斯(前锋) · 戴维斯(中场)</b></div>
+</div></div></div><div class="section" id="preview"><div class="section-title">🔮 淘汰赛预测 (32强晋级)</div><div class="power-rank"><div class="pr-row"><span class="nm">A1 vs B/C/D 3rd</span><span class="pwr" style="color:#ffb700">→ 墨西哥</span></div><div class="pr-row"><span class="nm">C1 vs F2/I3/J3</span><span class="pwr" style="color:#ffb700">→ 巴西</span></div><div class="pr-row"><span class="nm">E1 vs A/B/C/D 3rd</span><span class="pwr" style="color:#ffb700">→ 德国</span></div><div class="pr-row"><span class="nm">G1 vs H/J/K 3rd</span><span class="pwr" style="color:#ffb700">→ 比利时</span></div><div class="pr-row"><span class="nm">I1 vs D2/E3/F3</span><span class="pwr" style="color:#ffb700">→ 法国</span></div><div class="pr-row"><span class="nm">K1 vs B3/H3/L3</span><span class="pwr" style="color:#ffb700">→ 葡萄牙</span></div><div class="pr-row"><span class="nm">B1 vs A/C/D/F 3rd</span><span class="pwr" style="color:#ffb700">→ 加拿大</span></div><div class="pr-row"><span class="nm">D1 vs B/E/H 3rd</span><span class="pwr" style="color:#ffb700">→ 美国</span></div><div class="pr-row"><span class="nm">F1 vs C/E/I 3rd</span><span class="pwr" style="color:#ffb700">→ 荷兰</span></div><div class="pr-row"><span class="nm">H1 vs G2/K3/L3</span><span class="pwr" style="color:#ffb700">→ 西班牙</span></div><div class="pr-row"><span class="nm">J1 vs D3/F3/L3</span><span class="pwr" style="color:#ffb700">→ 阿根廷</span></div><div class="pr-row"><span class="nm">L1 vs H2/I3/K3</span><span class="pwr" style="color:#ffb700">→ 英格兰</span></div></div><div class="prediction" style="margin-top:14px">💡 注: 基于各组前2名+8个最佳第3名晋级; 预测由小组赛表现+武力值综合得出,实际对阵将随抽签而定。</div></div></div><div class="modal" id="m-Mexico">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Mexico')">×</button>
+    <h2>墨西哥 <small>Mexico · FIFA #14 · T1档</small></h2>
+    <div class="power-big" style="color:#ffb700">武力值 74 <span style="font-size:14px;color:#8aa3bd">/ 100 · B级</span></div>
+    <div class="row"><span>所属分组</span><b>A组</b></div>
+    <div class="row"><span>分档</span><b>第1档</b></div>
+    <div class="row"><span>主教练</span><b>海因策(阿)</b></div>
+    <div class="row"><span>队长</span><b>瓜尔达多</b></div>
+    <div class="row"><span>平均年龄</span><b>28.2 岁</b></div>
+    <div class="row"><span>战术风格</span><b>主场作战+技术型</b></div>
+    <div class="row"><span>历史最佳</span><b>3次8强(1970/1986已无)</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>洛萨诺(前锋)</b></div><div class="item">★ <b>埃德松·阿尔瓦雷斯(中场)</b></div><div class="item">★ <b>奥乔亚(门将)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>东道主首战气氛</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>锋线把握能力</p></div>
+  </div>
+</div><div class="modal" id="m-South Africa">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('South Africa')">×</button>
+    <h2>南非 <small>South Africa · FIFA #60 · T4档</small></h2>
+    <div class="power-big" style="color:#7a8b99">武力值 52 <span style="font-size:14px;color:#8aa3bd">/ 100 · E级</span></div>
+    <div class="row"><span>所属分组</span><b>A组</b></div>
+    <div class="row"><span>分档</span><b>第4档</b></div>
+    <div class="row"><span>主教练</span><b>埃勒曼德</b></div>
+    <div class="row"><span>队长</span><b>莫科纳</b></div>
+    <div class="row"><span>平均年龄</span><b>27.5 岁</b></div>
+    <div class="row"><span>战术风格</span><b>防守反击</b></div>
+    <div class="row"><span>历史最佳</span><b>2010东道主曾小组出线</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>莫科纳(中场)</b></div><div class="item">★ <b>勒特罗特罗夫(前锋)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>身体对抗</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>大赛经验不足</p></div>
+  </div>
+</div><div class="modal" id="m-South Korea">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('South Korea')">×</button>
+    <h2>韩国 <small>South Korea · FIFA #22 · T2档</small></h2>
+    <div class="power-big" style="color:#3ec46d">武力值 71 <span style="font-size:14px;color:#8aa3bd">/ 100 · C级</span></div>
+    <div class="row"><span>所属分组</span><b>A组</b></div>
+    <div class="row"><span>分档</span><b>第2档</b></div>
+    <div class="row"><span>主教练</span><b>洪明甫</b></div>
+    <div class="row"><span>队长</span><b>孙兴慜</b></div>
+    <div class="row"><span>平均年龄</span><b>27.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>高位逼抢+快速反击</b></div>
+    <div class="row"><span>历史最佳</span><b>2002四强</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>孙兴慜(前锋)</b></div><div class="item">★ <b>李刚仁(中场)</b></div><div class="item">★ <b>金玟哉(后卫)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>孙兴慜状态</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>对抗欧洲球队</p></div>
+  </div>
+</div><div class="modal" id="m-Czech">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Czech')">×</button>
+    <h2>捷克 <small>Czech · FIFA #44 · T3档</small></h2>
+    <div class="power-big" style="color:#2bbfd3">武力值 63 <span style="font-size:14px;color:#8aa3bd">/ 100 · D级</span></div>
+    <div class="row"><span>所属分组</span><b>A组</b></div>
+    <div class="row"><span>分档</span><b>第3档</b></div>
+    <div class="row"><span>主教练</span><b>希尔绍夫斯基</b></div>
+    <div class="row"><span>队长</span><b>达里达</b></div>
+    <div class="row"><span>平均年龄</span><b>27.8 岁</b></div>
+    <div class="row"><span>战术风格</span><b>传控+定位球</b></div>
+    <div class="row"><span>历史最佳</span><b>曾获2004欧洲杯亚军</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>希克(前锋)</b></div><div class="item">★ <b>曹法尔(后卫)</b></div><div class="item">★ <b>弗拉塞克(中场)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>希克回勇</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>缺少绝对核心</p></div>
+  </div>
+</div><div class="modal" id="m-Canada">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Canada')">×</button>
+    <h2>加拿大 <small>Canada · FIFA #30 · T1档</small></h2>
+    <div class="power-big" style="color:#3ec46d">武力值 69 <span style="font-size:14px;color:#8aa3bd">/ 100 · C级</span></div>
+    <div class="row"><span>所属分组</span><b>B组</b></div>
+    <div class="row"><span>分档</span><b>第1档</b></div>
+    <div class="row"><span>主教练</span><b>马什</b></div>
+    <div class="row"><span>队长</span><b>哈钦森</b></div>
+    <div class="row"><span>平均年龄</span><b>26.4 岁</b></div>
+    <div class="row"><span>战术风格</span><b>身体+速度型</b></div>
+    <div class="row"><span>历史最佳</span><b>1986/2022参赛</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>戴维(前锋)</b></div><div class="item">★ <b>拉林(中场)</b></div><div class="item">★ <b>阿迪尔伯特(后卫)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>戴维火力</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>大赛经验少</p></div>
+  </div>
+</div><div class="modal" id="m-Bosnia">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Bosnia')">×</button>
+    <h2>波黑 <small>Bosnia · FIFA #64 · T4档</small></h2>
+    <div class="power-big" style="color:#2bbfd3">武力值 55 <span style="font-size:14px;color:#8aa3bd">/ 100 · D级</span></div>
+    <div class="row"><span>所属分组</span><b>B组</b></div>
+    <div class="row"><span>分档</span><b>第4档</b></div>
+    <div class="row"><span>主教练</span><b>巴巴雷茨</b></div>
+    <div class="row"><span>队长</span><b>哲科</b></div>
+    <div class="row"><span>平均年龄</span><b>27.6 岁</b></div>
+    <div class="row"><span>战术风格</span><b>个人能力+定位球</b></div>
+    <div class="row"><span>历史最佳</span><b>2014首次小组出线</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>哲科(前锋,39岁)</b></div><div class="item">★ <b>克鲁尼奇(中场)</b></div><div class="item">★ <b>科拉希纳茨(后卫)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>哲科经验</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>老化</p></div>
+  </div>
+</div><div class="modal" id="m-Qatar">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Qatar')">×</button>
+    <h2>卡塔尔 <small>Qatar · FIFA #51 · T3档</small></h2>
+    <div class="power-big" style="color:#2bbfd3">武力值 56 <span style="font-size:14px;color:#8aa3bd">/ 100 · D级</span></div>
+    <div class="row"><span>所属分组</span><b>B组</b></div>
+    <div class="row"><span>分档</span><b>第3档</b></div>
+    <div class="row"><span>主教练</span><b>洛佩兹(西)</b></div>
+    <div class="row"><span>队长</span><b>海多斯</b></div>
+    <div class="row"><span>平均年龄</span><b>26.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>整体防守+反击</b></div>
+    <div class="row"><span>历史最佳</span><b>2022东道主</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>阿菲夫(前锋)</b></div><div class="item">★ <b>海多斯(中场)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>主场氛围减弱</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>对抗顶级队</p></div>
+  </div>
+</div><div class="modal" id="m-Switzerland">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Switzerland')">×</button>
+    <h2>瑞士 <small>Switzerland · FIFA #17 · T2档</small></h2>
+    <div class="power-big" style="color:#ffb700">武力值 75 <span style="font-size:14px;color:#8aa3bd">/ 100 · B级</span></div>
+    <div class="row"><span>所属分组</span><b>B组</b></div>
+    <div class="row"><span>分档</span><b>第2档</b></div>
+    <div class="row"><span>主教练</span><b>雅金</b></div>
+    <div class="row"><span>队长</span><b>扎卡</b></div>
+    <div class="row"><span>平均年龄</span><b>27.5 岁</b></div>
+    <div class="row"><span>战术风格</span><b>整体+纪律性</b></div>
+    <div class="row"><span>历史最佳</span><b>3届16强</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>扎卡(中场)</b></div><div class="item">★ <b>恩博洛(前锋)</b></div><div class="item">★ <b>阿坎吉(后卫)</b></div><div class="item">★ <b>索默(门将)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>扎卡组织</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>缺少超级球星</p></div>
+  </div>
+</div><div class="modal" id="m-Brazil">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Brazil')">×</button>
+    <h2>巴西 <small>Brazil · FIFA #5 · T1档</small></h2>
+    <div class="power-big" style="color:#ff3a3a">武力值 92 <span style="font-size:14px;color:#8aa3bd">/ 100 · S级</span></div>
+    <div class="row"><span>所属分组</span><b>C组</b></div>
+    <div class="row"><span>分档</span><b>第1档</b></div>
+    <div class="row"><span>主教练</span><b>多里瓦尔</b></div>
+    <div class="row"><span>队长</span><b>维尼修斯</b></div>
+    <div class="row"><span>平均年龄</span><b>27.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>华丽进攻</b></div>
+    <div class="row"><span>历史最佳</span><b>5次冠军(最近2002)</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>维尼修斯(前锋)</b></div><div class="item">★ <b>罗德里戈(前锋)</b></div><div class="item">★ <b>库尼亚(前锋)</b></div><div class="item">★ <b>米利唐(后卫)</b></div><div class="item">★ <b>阿利森(门将)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>锋线群</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>中场硬度</p></div>
+  </div>
+</div><div class="modal" id="m-Morocco">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Morocco')">×</button>
+    <h2>摩洛哥 <small>Morocco · FIFA #11 · T2档</small></h2>
+    <div class="power-big" style="color:#ff8a00">武力值 80 <span style="font-size:14px;color:#8aa3bd">/ 100 · A级</span></div>
+    <div class="row"><span>所属分组</span><b>C组</b></div>
+    <div class="row"><span>分档</span><b>第2档</b></div>
+    <div class="row"><span>主教练</span><b>雷格拉吉</b></div>
+    <div class="row"><span>队长</span><b>赛斯</b></div>
+    <div class="row"><span>平均年龄</span><b>27.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>防守+反击</b></div>
+    <div class="row"><span>历史最佳</span><b>2022四强</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>阿什拉夫(后卫)</b></div><div class="item">★ <b>塞巴里(中场)</b></div><div class="item">★ <b>恩内斯里(前锋)</b></div><div class="item">★ <b>布努(门将)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>门将+整体</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>锋线把握</p></div>
+  </div>
+</div><div class="modal" id="m-Haiti">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Haiti')">×</button>
+    <h2>海地 <small>Haiti · FIFA #84 · T4档</small></h2>
+    <div class="power-big" style="color:#4a5158">武力值 42 <span style="font-size:14px;color:#8aa3bd">/ 100 · F级</span></div>
+    <div class="row"><span>所属分组</span><b>C组</b></div>
+    <div class="row"><span>分档</span><b>第4档</b></div>
+    <div class="row"><span>主教练</span><b>扎卡尼安</b></div>
+    <div class="row"><span>队长</span><b>杰罗姆</b></div>
+    <div class="row"><span>平均年龄</span><b>25.9 岁</b></div>
+    <div class="row"><span>战术风格</span><b>防守+速度</b></div>
+    <div class="row"><span>历史最佳</span><b>1974后首次回归</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>皮埃尔(中场)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>团结+冲击力</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>阵容深度</p></div>
+  </div>
+</div><div class="modal" id="m-Scotland">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Scotland')">×</button>
+    <h2>苏格兰 <small>Scotland · FIFA #36 · T3档</small></h2>
+    <div class="power-big" style="color:#3ec46d">武力值 68 <span style="font-size:14px;color:#8aa3bd">/ 100 · C级</span></div>
+    <div class="row"><span>所属分组</span><b>C组</b></div>
+    <div class="row"><span>分档</span><b>第3档</b></div>
+    <div class="row"><span>主教练</span><b>克拉克</b></div>
+    <div class="row"><span>队长</span><b>罗伯逊</b></div>
+    <div class="row"><span>平均年龄</span><b>27.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>整体+对抗</b></div>
+    <div class="row"><span>历史最佳</span><b>1998后首次回归</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>罗伯逊(后卫)</b></div><div class="item">★ <b>麦克托米奈(中场)</b></div><div class="item">★ <b>麦金(中场)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>团队精神</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>缺少明星前锋</p></div>
+  </div>
+</div><div class="modal" id="m-USA">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('USA')">×</button>
+    <h2>美国 <small>USA · FIFA #17 · T1档</small></h2>
+    <div class="power-big" style="color:#ffb700">武力值 75 <span style="font-size:14px;color:#8aa3bd">/ 100 · B级</span></div>
+    <div class="row"><span>所属分组</span><b>D组</b></div>
+    <div class="row"><span>分档</span><b>第1档</b></div>
+    <div class="row"><span>主教练</span><b>波切蒂诺</b></div>
+    <div class="row"><span>队长</span><b>普利西奇</b></div>
+    <div class="row"><span>平均年龄</span><b>25.5 岁</b></div>
+    <div class="row"><span>战术风格</span><b>身体+青春风暴</b></div>
+    <div class="row"><span>历史最佳</span><b>多次16强</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>普利西奇(前锋)</b></div><div class="item">★ <b>巴洛贡(前锋)</b></div><div class="item">★ <b>雷纳(中场)</b></div><div class="item">★ <b>亚当斯(中场)</b></div><div class="item">★ <b>罗宾逊(门将)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>主场+年轻</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>大赛经验</p></div>
+  </div>
+</div><div class="modal" id="m-Paraguay">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Paraguay')">×</button>
+    <h2>巴拉圭 <small>Paraguay · FIFA #39 · T3档</small></h2>
+    <div class="power-big" style="color:#2bbfd3">武力值 64 <span style="font-size:14px;color:#8aa3bd">/ 100 · D级</span></div>
+    <div class="row"><span>所属分组</span><b>D组</b></div>
+    <div class="row"><span>分档</span><b>第3档</b></div>
+    <div class="row"><span>主教练</span><b>阿尔法罗</b></div>
+    <div class="row"><span>队长</span><b>阿尔米隆</b></div>
+    <div class="row"><span>平均年龄</span><b>27.5 岁</b></div>
+    <div class="row"><span>战术风格</span><b>防守+反击</b></div>
+    <div class="row"><span>历史最佳</span><b>2010八强</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>阿尔米隆(前锋)</b></div><div class="item">★ <b>加马拉(中场)</b></div><div class="item">★ <b>阿尔德雷特(后卫)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>整体防守</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>锋线乏力</p></div>
+  </div>
+</div><div class="modal" id="m-Australia">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Australia')">×</button>
+    <h2>澳大利亚 <small>Australia · FIFA #26 · T3档</small></h2>
+    <div class="power-big" style="color:#2bbfd3">武力值 64 <span style="font-size:14px;color:#8aa3bd">/ 100 · D级</span></div>
+    <div class="row"><span>所属分组</span><b>D组</b></div>
+    <div class="row"><span>分档</span><b>第3档</b></div>
+    <div class="row"><span>主教练</span><b>波波维奇</b></div>
+    <div class="row"><span>队长</span><b>罗吉奇</b></div>
+    <div class="row"><span>平均年龄</span><b>26.5 岁</b></div>
+    <div class="row"><span>战术风格</span><b>身体+冲击</b></div>
+    <div class="row"><span>历史最佳</span><b>2006十六强</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>苏塔尔(后卫)</b></div><div class="item">★ <b>莱基(前锋)</b></div><div class="item">★ <b>欧文(前锋)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>定位球+身体</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>技术细腻度</p></div>
+  </div>
+</div><div class="modal" id="m-Turkey">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Turkey')">×</button>
+    <h2>土耳其 <small>Turkey · FIFA #25 · T3档</small></h2>
+    <div class="power-big" style="color:#3ec46d">武力值 68 <span style="font-size:14px;color:#8aa3bd">/ 100 · C级</span></div>
+    <div class="row"><span>所属分组</span><b>D组</b></div>
+    <div class="row"><span>分档</span><b>第4档</b></div>
+    <div class="row"><span>主教练</span><b>蒙特拉</b></div>
+    <div class="row"><span>队长</span><b>恰尔汗奥卢</b></div>
+    <div class="row"><span>平均年龄</span><b>26.8 岁</b></div>
+    <div class="row"><span>战术风格</span><b>技术+对抗</b></div>
+    <div class="row"><span>历史最佳</span><b>2002/2008四强</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>恰尔汗奥卢(中场)</b></div><div class="item">★ <b>伊尔迪兹(前锋)</b></div><div class="item">★ <b>居莱尔(中场)</b></div><div class="item">★ <b>德米拉尔(后卫)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>恰尔汗+伊尔迪兹</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>防线不稳</p></div>
+  </div>
+</div><div class="modal" id="m-Germany">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Germany')">×</button>
+    <h2>德国 <small>Germany · FIFA #9 · T1档</small></h2>
+    <div class="power-big" style="color:#ff3a3a">武力值 88 <span style="font-size:14px;color:#8aa3bd">/ 100 · S级</span></div>
+    <div class="row"><span>所属分组</span><b>E组</b></div>
+    <div class="row"><span>分档</span><b>第1档</b></div>
+    <div class="row"><span>主教练</span><b>纳格尔斯曼</b></div>
+    <div class="row"><span>队长</span><b>京多安</b></div>
+    <div class="row"><span>平均年龄</span><b>26.4 岁</b></div>
+    <div class="row"><span>战术风格</span><b>高位逼抢+整体</b></div>
+    <div class="row"><span>历史最佳</span><b>4次冠军</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>穆西亚拉(中场)</b></div><div class="item">★ <b>哈弗茨(前锋)</b></div><div class="item">★ <b>维尔茨(中场)</b></div><div class="item">★ <b>吕迪格(后卫)</b></div><div class="item">★ <b>诺伊尔(门将)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>穆西亚拉+维尔茨</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>中锋缺乏</p></div>
+  </div>
+</div><div class="modal" id="m-Curacao">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Curacao')">×</button>
+    <h2>库拉索 <small>Curacao · FIFA #82 · T4档</small></h2>
+    <div class="power-big" style="color:#4a5158">武力值 35 <span style="font-size:14px;color:#8aa3bd">/ 100 · F级</span></div>
+    <div class="row"><span>所属分组</span><b>E组</b></div>
+    <div class="row"><span>分档</span><b>第4档</b></div>
+    <div class="row"><span>主教练</span><b>艾德沃卡特</b></div>
+    <div class="row"><span>队长</span><b>巴克</b></div>
+    <div class="row"><span>平均年龄</span><b>27.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>防守+反击</b></div>
+    <div class="row"><span>历史最佳</span><b>首次参赛</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>巴克(中场)</b></div><div class="item">★ <b>马蒂纳(前锋)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>归化球员</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>实力差距</p></div>
+  </div>
+</div><div class="modal" id="m-Ivory Coast">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Ivory Coast')">×</button>
+    <h2>科特迪瓦 <small>Ivory Coast · FIFA #42 · T3档</small></h2>
+    <div class="power-big" style="color:#3ec46d">武力值 67 <span style="font-size:14px;color:#8aa3bd">/ 100 · C级</span></div>
+    <div class="row"><span>所属分组</span><b>E组</b></div>
+    <div class="row"><span>分档</span><b>第3档</b></div>
+    <div class="row"><span>主教练</span><b>法耶</b></div>
+    <div class="row"><span>队长</span><b>凯西</b></div>
+    <div class="row"><span>平均年龄</span><b>26.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>身体+个人</b></div>
+    <div class="row"><span>历史最佳</span><b>2006曾参赛</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>凯西(中场)</b></div><div class="item">★ <b>佩佩(前锋)</b></div><div class="item">★ <b>拜利(后卫)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>凯西中场</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>稳定性</p></div>
+  </div>
+</div><div class="modal" id="m-Ecuador">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Ecuador')">×</button>
+    <h2>厄瓜多尔 <small>Ecuador · FIFA #23 · T2档</small></h2>
+    <div class="power-big" style="color:#3ec46d">武力值 68 <span style="font-size:14px;color:#8aa3bd">/ 100 · C级</span></div>
+    <div class="row"><span>所属分组</span><b>E组</b></div>
+    <div class="row"><span>分档</span><b>第2档</b></div>
+    <div class="row"><span>主教练</span><b>阿尔法罗</b></div>
+    <div class="row"><span>队长</span><b>恩纳·瓦伦西亚</b></div>
+    <div class="row"><span>平均年龄</span><b>26.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>高原+速度</b></div>
+    <div class="row"><span>历史最佳</span><b>2006十六强</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>恩纳·瓦伦西亚(前锋)</b></div><div class="item">★ <b>普雷西亚多(中场)</b></div><div class="item">★ <b>埃斯皮诺萨(后卫)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>锋线核心</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>高原优势不再</p></div>
+  </div>
+</div><div class="modal" id="m-Netherlands">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Netherlands')">×</button>
+    <h2>荷兰 <small>Netherlands · FIFA #7 · T1档</small></h2>
+    <div class="power-big" style="color:#ff8a00">武力值 86 <span style="font-size:14px;color:#8aa3bd">/ 100 · A级</span></div>
+    <div class="row"><span>所属分组</span><b>F组</b></div>
+    <div class="row"><span>分档</span><b>第1档</b></div>
+    <div class="row"><span>主教练</span><b>科曼</b></div>
+    <div class="row"><span>队长</span><b>范戴克</b></div>
+    <div class="row"><span>平均年龄</span><b>27.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>全攻全守</b></div>
+    <div class="row"><span>历史最佳</span><b>3次亚军</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>范戴克(后卫)</b></div><div class="item">★ <b>德容(中场)</b></div><div class="item">★ <b>加克波(前锋)</b></div><div class="item">★ <b>邓弗里斯(后卫)</b></div><div class="item">★ <b>德佩(前锋)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>范戴克+德容</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>锋线老化</p></div>
+  </div>
+</div><div class="modal" id="m-Japan">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Japan')">×</button>
+    <h2>日本 <small>Japan · FIFA #18 · T2档</small></h2>
+    <div class="power-big" style="color:#ffb700">武力值 78 <span style="font-size:14px;color:#8aa3bd">/ 100 · B级</span></div>
+    <div class="row"><span>所属分组</span><b>F组</b></div>
+    <div class="row"><span>分档</span><b>第2档</b></div>
+    <div class="row"><span>主教练</span><b>森保一</b></div>
+    <div class="row"><span>队长</span><b>远藤航</b></div>
+    <div class="row"><span>平均年龄</span><b>27.5 岁</b></div>
+    <div class="row"><span>战术风格</span><b>技术+速度</b></div>
+    <div class="row"><span>历史最佳</span><b>2002/2010/2018十六强</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>久保建英(中场)</b></div><div class="item">★ <b>三笘薰(前锋)</b></div><div class="item">★ <b>远藤航(中场)</b></div><div class="item">★ <b>富安健洋(后卫)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>旅欧球员群</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>身体对抗</p></div>
+  </div>
+</div><div class="modal" id="m-Sweden">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Sweden')">×</button>
+    <h2>瑞典 <small>Sweden · FIFA #43 · T3档</small></h2>
+    <div class="power-big" style="color:#3ec46d">武力值 70 <span style="font-size:14px;color:#8aa3bd">/ 100 · C级</span></div>
+    <div class="row"><span>所属分组</span><b>F组</b></div>
+    <div class="row"><span>分档</span><b>第3档</b></div>
+    <div class="row"><span>主教练</span><b>托马森</b></div>
+    <div class="row"><span>队长</span><b>埃克达尔</b></div>
+    <div class="row"><span>平均年龄</span><b>27.5 岁</b></div>
+    <div class="row"><span>战术风格</span><b>高大+定位球</b></div>
+    <div class="row"><span>历史最佳</span><b>1958亚军/1994季军</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>伊萨克(前锋)</b></div><div class="item">★ <b>哲凯赖什(前锋)</b></div><div class="item">★ <b>福斯贝里(中场)</b></div><div class="item">★ <b>林德洛夫(后卫)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>锋线双塔</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>中场创造</p></div>
+  </div>
+</div><div class="modal" id="m-Tunisia">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Tunisia')">×</button>
+    <h2>突尼斯 <small>Tunisia · FIFA #40 · T3档</small></h2>
+    <div class="power-big" style="color:#2bbfd3">武力值 60 <span style="font-size:14px;color:#8aa3bd">/ 100 · D级</span></div>
+    <div class="row"><span>所属分组</span><b>F组</b></div>
+    <div class="row"><span>分档</span><b>第3档</b></div>
+    <div class="row"><span>主教练</span><b>卡兹里</b></div>
+    <div class="row"><span>队长</span><b>姆萨克尼</b></div>
+    <div class="row"><span>平均年龄</span><b>27.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>整体防守</b></div>
+    <div class="row"><span>历史最佳</span><b>1978/1998/2002/2006</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>姆萨克尼(中场)</b></div><div class="item">★ <b>杰巴利(前锋)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>防守组织</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>进攻乏力</p></div>
+  </div>
+</div><div class="modal" id="m-Belgium">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Belgium')">×</button>
+    <h2>比利时 <small>Belgium · FIFA #8 · T1档</small></h2>
+    <div class="power-big" style="color:#ff8a00">武力值 83 <span style="font-size:14px;color:#8aa3bd">/ 100 · A级</span></div>
+    <div class="row"><span>所属分组</span><b>G组</b></div>
+    <div class="row"><span>分档</span><b>第1档</b></div>
+    <div class="row"><span>主教练</span><b>特德斯科</b></div>
+    <div class="row"><span>队长</span><b>德布劳内</b></div>
+    <div class="row"><span>平均年龄</span><b>28.5 岁</b></div>
+    <div class="row"><span>战术风格</span><b>反击+球星</b></div>
+    <div class="row"><span>历史最佳</span><b>2018季军/2022小组出局</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>德布劳内(中场)</b></div><div class="item">★ <b>卢卡库(前锋)</b></div><div class="item">★ <b>库尔图瓦(门将)</b></div><div class="item">★ <b>阿扎尔(中场)</b></div><div class="item">★ <b>蒂勒曼斯(中场)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>德布劳内爆发</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>黄金一代末期</p></div>
+  </div>
+</div><div class="modal" id="m-Egypt">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Egypt')">×</button>
+    <h2>埃及 <small>Egypt · FIFA #34 · T3档</small></h2>
+    <div class="power-big" style="color:#3ec46d">武力值 65 <span style="font-size:14px;color:#8aa3bd">/ 100 · C级</span></div>
+    <div class="row"><span>所属分组</span><b>G组</b></div>
+    <div class="row"><span>分档</span><b>第3档</b></div>
+    <div class="row"><span>主教练</span><b>胡斯因</b></div>
+    <div class="row"><span>队长</span><b>萨拉赫</b></div>
+    <div class="row"><span>平均年龄</span><b>27.5 岁</b></div>
+    <div class="row"><span>战术风格</span><b>防守+反击</b></div>
+    <div class="row"><span>历史最佳</span><b>1934/1990</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>萨拉赫(前锋)</b></div><div class="item">★ <b>埃尔内尼(中场)</b></div><div class="item">★ <b>加布尔(后卫)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>萨拉赫一锤定音</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>整体深度</p></div>
+  </div>
+</div><div class="modal" id="m-Iran">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Iran')">×</button>
+    <h2>伊朗 <small>Iran · FIFA #20 · T2档</small></h2>
+    <div class="power-big" style="color:#3ec46d">武力值 69 <span style="font-size:14px;color:#8aa3bd">/ 100 · C级</span></div>
+    <div class="row"><span>所属分组</span><b>G组</b></div>
+    <div class="row"><span>分档</span><b>第2档</b></div>
+    <div class="row"><span>主教练</span><b>加埃迪</b></div>
+    <div class="row"><span>队长</span><b>阿兹蒙</b></div>
+    <div class="row"><span>平均年龄</span><b>27.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>高位逼抢+身体</b></div>
+    <div class="row"><span>历史最佳</span><b>连续多届参赛</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>阿兹蒙(前锋)</b></div><div class="item">★ <b>塔雷米(前锋)</b></div><div class="item">★ <b>贾汉巴赫什(中场)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>锋线双煞</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>大赛心理</p></div>
+  </div>
+</div><div class="modal" id="m-New Zealand">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('New Zealand')">×</button>
+    <h2>新西兰 <small>New Zealand · FIFA #86 · T4档</small></h2>
+    <div class="power-big" style="color:#7a8b99">武力值 45 <span style="font-size:14px;color:#8aa3bd">/ 100 · E级</span></div>
+    <div class="row"><span>所属分组</span><b>G组</b></div>
+    <div class="row"><span>分档</span><b>第4档</b></div>
+    <div class="row"><span>主教练</span><b>海耶斯</b></div>
+    <div class="row"><span>队长</span><b>托马斯</b></div>
+    <div class="row"><span>平均年龄</span><b>27.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>防守+定位球</b></div>
+    <div class="row"><span>历史最佳</span><b>2010曾小组赛</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>伍德(前锋,28)</b></div><div class="item">★ <b>托马斯(中场)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>英联邦体系</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>对抗顶级强队</p></div>
+  </div>
+</div><div class="modal" id="m-Spain">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Spain')">×</button>
+    <h2>西班牙 <small>Spain · FIFA #2 · T1档</small></h2>
+    <div class="power-big" style="color:#ff3a3a">武力值 91 <span style="font-size:14px;color:#8aa3bd">/ 100 · S级</span></div>
+    <div class="row"><span>所属分组</span><b>H组</b></div>
+    <div class="row"><span>分档</span><b>第1档</b></div>
+    <div class="row"><span>主教练</span><b>德拉富恩特</b></div>
+    <div class="row"><span>队长</span><b>莫拉塔</b></div>
+    <div class="row"><span>平均年龄</span><b>26.5 岁</b></div>
+    <div class="row"><span>战术风格</span><b>极致传控</b></div>
+    <div class="row"><span>历史最佳</span><b>2010冠军</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>罗德里(中场)</b></div><div class="item">★ <b>佩德里(中场)</b></div><div class="item">★ <b>加维(中场)</b></div><div class="item">★ <b>尼科·威廉姆斯(前锋)</b></div><div class="item">★ <b>亚马尔(前锋,17)</b></div><div class="item">★ <b>乌奈·西蒙(门将)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>中场厚度</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>中锋乏力</p></div>
+  </div>
+</div><div class="modal" id="m-Cabo Verde">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Cabo Verde')">×</button>
+    <h2>佛得角 <small>Cabo Verde · FIFA #68 · T4档</small></h2>
+    <div class="power-big" style="color:#7a8b99">武力值 50 <span style="font-size:14px;color:#8aa3bd">/ 100 · E级</span></div>
+    <div class="row"><span>所属分组</span><b>H组</b></div>
+    <div class="row"><span>分档</span><b>第4档</b></div>
+    <div class="row"><span>主教练</span><b>佩德罗</b></div>
+    <div class="row"><span>队长</span><b>丰特斯</b></div>
+    <div class="row"><span>平均年龄</span><b>27.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>整体防守+反击</b></div>
+    <div class="row"><span>历史最佳</span><b>首次参赛</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>罗德里格斯(中场)</b></div><div class="item">★ <b>丰特斯(后卫)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>归化球员</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>实力差距</p></div>
+  </div>
+</div><div class="modal" id="m-Saudi Arabia">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Saudi Arabia')">×</button>
+    <h2>沙特阿拉伯 <small>Saudi Arabia · FIFA #60 · T3档</small></h2>
+    <div class="power-big" style="color:#2bbfd3">武力值 58 <span style="font-size:14px;color:#8aa3bd">/ 100 · D级</span></div>
+    <div class="row"><span>所属分组</span><b>H组</b></div>
+    <div class="row"><span>分档</span><b>第3档</b></div>
+    <div class="row"><span>主教练</span><b>勒纳尔(法)</b></div>
+    <div class="row"><span>队长</span><b>法拉吉</b></div>
+    <div class="row"><span>平均年龄</span><b>26.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>技术+速度</b></div>
+    <div class="row"><span>历史最佳</span><b>1994十六强/2002胜多支强队</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>萨利姆·多萨里(前锋)</b></div><div class="item">★ <b>布莱希(后卫)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>主场氛围类似</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>整体实力</p></div>
+  </div>
+</div><div class="modal" id="m-Uruguay">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Uruguay')">×</button>
+    <h2>乌拉圭 <small>Uruguay · FIFA #16 · T2档</small></h2>
+    <div class="power-big" style="color:#ff8a00">武力值 81 <span style="font-size:14px;color:#8aa3bd">/ 100 · A级</span></div>
+    <div class="row"><span>所属分组</span><b>H组</b></div>
+    <div class="row"><span>分档</span><b>第2档</b></div>
+    <div class="row"><span>主教练</span><b>比埃尔萨</b></div>
+    <div class="row"><span>队长</span><b>戈丁</b></div>
+    <div class="row"><span>平均年龄</span><b>27.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>拼抢+进攻</b></div>
+    <div class="row"><span>历史最佳</span><b>2次冠军(1930/1950)</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>苏亚雷斯(前锋,39)</b></div><div class="item">★ <b>努涅斯(前锋)</b></div><div class="item">★ <b>巴尔韦德(中场)</b></div><div class="item">★ <b>阿劳霍(后卫)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>苏牙+努涅斯</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>苏牙老化</p></div>
+  </div>
+</div><div class="modal" id="m-France">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('France')">×</button>
+    <h2>法国 <small>France · FIFA #3 · T1档</small></h2>
+    <div class="power-big" style="color:#ff3a3a">武力值 90 <span style="font-size:14px;color:#8aa3bd">/ 100 · S级</span></div>
+    <div class="row"><span>所属分组</span><b>I组</b></div>
+    <div class="row"><span>分档</span><b>第1档</b></div>
+    <div class="row"><span>主教练</span><b>德尚</b></div>
+    <div class="row"><span>队长</span><b>姆巴佩</b></div>
+    <div class="row"><span>平均年龄</span><b>26.5 岁</b></div>
+    <div class="row"><span>战术风格</span><b>反击+技术</b></div>
+    <div class="row"><span>历史最佳</span><b>2018冠军/2022亚军</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>姆巴佩(前锋)</b></div><div class="item">★ <b>登贝莱(中场)</b></div><div class="item">★ <b>格列兹曼(中场)</b></div><div class="item">★ <b>楚阿梅尼(中场)</b></div><div class="item">★ <b>萨利巴(后卫)</b></div><div class="item">★ <b>迈尼昂(门将)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>姆巴佩冲击</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>锋线替补</p></div>
+  </div>
+</div><div class="modal" id="m-Senegal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Senegal')">×</button>
+    <h2>塞内加尔 <small>Senegal · FIFA #19 · T2档</small></h2>
+    <div class="power-big" style="color:#ffb700">武力值 76 <span style="font-size:14px;color:#8aa3bd">/ 100 · B级</span></div>
+    <div class="row"><span>所属分组</span><b>I组</b></div>
+    <div class="row"><span>分档</span><b>第2档</b></div>
+    <div class="row"><span>主教练</span><b>西塞</b></div>
+    <div class="row"><span>队长</span><b>库利巴利</b></div>
+    <div class="row"><span>平均年龄</span><b>27.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>身体+速度</b></div>
+    <div class="row"><span>历史最佳</span><b>2002八强/2022十六强</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>库利巴利(后卫)</b></div><div class="item">★ <b>萨尔(中场)</b></div><div class="item">★ <b>马内(前锋)</b></div><div class="item">★ <b>门迪(门将)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>团队精神</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>马内老化</p></div>
+  </div>
+</div><div class="modal" id="m-Iraq">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Iraq')">×</button>
+    <h2>伊拉克 <small>Iraq · FIFA #58 · T4档</small></h2>
+    <div class="power-big" style="color:#7a8b99">武力值 48 <span style="font-size:14px;color:#8aa3bd">/ 100 · E级</span></div>
+    <div class="row"><span>所属分组</span><b>I组</b></div>
+    <div class="row"><span>分档</span><b>第4档</b></div>
+    <div class="row"><span>主教练</span><b>卡萨斯</b></div>
+    <div class="row"><span>队长</span><b>侯赛因</b></div>
+    <div class="row"><span>平均年龄</span><b>26.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>防守+反击</b></div>
+    <div class="row"><span>历史最佳</span><b>2007亚洲杯冠军</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>侯赛因(前锋)</b></div><div class="item">★ <b>阿里(中场)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>主场球迷</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>绝对实力</p></div>
+  </div>
+</div><div class="modal" id="m-Norway">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Norway')">×</button>
+    <h2>挪威 <small>Norway · FIFA #29 · T2档</small></h2>
+    <div class="power-big" style="color:#ffb700">武力值 77 <span style="font-size:14px;color:#8aa3bd">/ 100 · B级</span></div>
+    <div class="row"><span>所属分组</span><b>I组</b></div>
+    <div class="row"><span>分档</span><b>第3档</b></div>
+    <div class="row"><span>主教练</span><b>索尔巴肯</b></div>
+    <div class="row"><span>队长</span><b>厄斯蒂高</b></div>
+    <div class="row"><span>平均年龄</span><b>26.5 岁</b></div>
+    <div class="row"><span>战术风格</span><b>反击+球星</b></div>
+    <div class="row"><span>历史最佳</span><b>1998小组赛/2000后回归</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>哈兰德(前锋)</b></div><div class="item">★ <b>厄德高(中场)</b></div><div class="item">★ <b>厄斯蒂高(后卫)</b></div><div class="item">★ <b>阿热(中场)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>哈兰德+厄德高</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>大赛经验少</p></div>
+  </div>
+</div><div class="modal" id="m-Argentina">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Argentina')">×</button>
+    <h2>阿根廷 <small>Argentina · FIFA #1 · T1档</small></h2>
+    <div class="power-big" style="color:#ff3a3a">武力值 93 <span style="font-size:14px;color:#8aa3bd">/ 100 · S级</span></div>
+    <div class="row"><span>所属分组</span><b>J组</b></div>
+    <div class="row"><span>分档</span><b>第1档</b></div>
+    <div class="row"><span>主教练</span><b>斯卡洛尼</b></div>
+    <div class="row"><span>队长</span><b>梅西</b></div>
+    <div class="row"><span>平均年龄</span><b>28.5 岁</b></div>
+    <div class="row"><span>战术风格</span><b>控制+反击</b></div>
+    <div class="row"><span>历史最佳</span><b>3次冠军(最近2022)</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>梅西(前锋)</b></div><div class="item">★ <b>阿尔瓦雷斯(前锋)</b></div><div class="item">★ <b>迪马利亚(中场)</b></div><div class="item">★ <b>德保罗(中场)</b></div><div class="item">★ <b>罗梅罗(后卫)</b></div><div class="item">★ <b>马丁内斯(门将)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>梅西最后一舞</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>后防轮换</p></div>
+  </div>
+</div><div class="modal" id="m-Algeria">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Algeria')">×</button>
+    <h2>阿尔及利亚 <small>Algeria · FIFA #35 · T3档</small></h2>
+    <div class="power-big" style="color:#2bbfd3">武力值 63 <span style="font-size:14px;color:#8aa3bd">/ 100 · D级</span></div>
+    <div class="row"><span>所属分组</span><b>J组</b></div>
+    <div class="row"><span>分档</span><b>第3档</b></div>
+    <div class="row"><span>主教练</span><b>贝勒米迪</b></div>
+    <div class="row"><span>队长</span><b>马赫雷斯</b></div>
+    <div class="row"><span>平均年龄</span><b>27.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>整体+纪律</b></div>
+    <div class="row"><span>历史最佳</span><b>2014十六强/2019非洲杯冠军</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>马赫雷斯(前锋)</b></div><div class="item">★ <b>本纳赛尔(中场)</b></div><div class="item">★ <b>曼迪(后卫)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>马赫雷斯状态</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>深度有限</p></div>
+  </div>
+</div><div class="modal" id="m-Austria">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Austria')">×</button>
+    <h2>奥地利 <small>Austria · FIFA #24 · T2档</small></h2>
+    <div class="power-big" style="color:#3ec46d">武力值 68 <span style="font-size:14px;color:#8aa3bd">/ 100 · C级</span></div>
+    <div class="row"><span>所属分组</span><b>J组</b></div>
+    <div class="row"><span>分档</span><b>第2档</b></div>
+    <div class="row"><span>主教练</span><b>朗尼克</b></div>
+    <div class="row"><span>队长</span><b>阿拉巴</b></div>
+    <div class="row"><span>平均年龄</span><b>27.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>高位逼抢+整体</b></div>
+    <div class="row"><span>历史最佳</span><b>多次参赛</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>阿拉巴(后卫)</b></div><div class="item">★ <b>施拉格尔(中场)</b></div><div class="item">★ <b>阿瑙托维奇(前锋)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>整体性</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>缺少头牌</p></div>
+  </div>
+</div><div class="modal" id="m-Jordan">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Jordan')">×</button>
+    <h2>约旦 <small>Jordan · FIFA #66 · T4档</small></h2>
+    <div class="power-big" style="color:#7a8b99">武力值 50 <span style="font-size:14px;color:#8aa3bd">/ 100 · E级</span></div>
+    <div class="row"><span>所属分组</span><b>J组</b></div>
+    <div class="row"><span>分档</span><b>第4档</b></div>
+    <div class="row"><span>主教练</span><b>阿姆马塔</b></div>
+    <div class="row"><span>队长</span><b>阿卜杜勒</b></div>
+    <div class="row"><span>平均年龄</span><b>26.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>防守+反击</b></div>
+    <div class="row"><span>历史最佳</span><b>首次参赛</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>奥尔万(前锋)</b></div><div class="item">★ <b>阿卜杜勒(中场)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>首次大赛经验</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>实力差距</p></div>
+  </div>
+</div><div class="modal" id="m-Portugal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Portugal')">×</button>
+    <h2>葡萄牙 <small>Portugal · FIFA #5 · T1档</small></h2>
+    <div class="power-big" style="color:#ff3a3a">武力值 88 <span style="font-size:14px;color:#8aa3bd">/ 100 · S级</span></div>
+    <div class="row"><span>所属分组</span><b>K组</b></div>
+    <div class="row"><span>分档</span><b>第1档</b></div>
+    <div class="row"><span>主教练</span><b>马丁内斯</b></div>
+    <div class="row"><span>队长</span><b>C罗</b></div>
+    <div class="row"><span>平均年龄</span><b>27.5 岁</b></div>
+    <div class="row"><span>战术风格</span><b>反击+球星</b></div>
+    <div class="row"><span>历史最佳</span><b>2016冠军</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>C罗(前锋,41)</b></div><div class="item">★ <b>B费(中场)</b></div><div class="item">★ <b>B席(中场)</b></div><div class="item">★ <b>菲利克斯(前锋)</b></div><div class="item">★ <b>迪亚斯(后卫)</b></div><div class="item">★ <b>科斯塔(门将)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>C罗最后一战</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>C罗状态</p></div>
+  </div>
+</div><div class="modal" id="m-Congo DR">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Congo DR')">×</button>
+    <h2>刚果(金) <small>Congo DR · FIFA #56 · T4档</small></h2>
+    <div class="power-big" style="color:#7a8b99">武力值 52 <span style="font-size:14px;color:#8aa3bd">/ 100 · E级</span></div>
+    <div class="row"><span>所属分组</span><b>K组</b></div>
+    <div class="row"><span>分档</span><b>第4档</b></div>
+    <div class="row"><span>主教练</span><b>恩孔科</b></div>
+    <div class="row"><span>队长</span><b>博苏</b></div>
+    <div class="row"><span>平均年龄</span><b>26.5 岁</b></div>
+    <div class="row"><span>战术风格</span><b>身体+速度</b></div>
+    <div class="row"><span>历史最佳</span><b>1974后回归</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>维萨(中场)</b></div><div class="item">★ <b>巴卡(前锋)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>反击速度</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>大赛经验</p></div>
+  </div>
+</div><div class="modal" id="m-Uzbekistan">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Uzbekistan')">×</button>
+    <h2>乌兹别克斯坦 <small>Uzbekistan · FIFA #50 · T3档</small></h2>
+    <div class="power-big" style="color:#2bbfd3">武力值 60 <span style="font-size:14px;color:#8aa3bd">/ 100 · D级</span></div>
+    <div class="row"><span>所属分组</span><b>K组</b></div>
+    <div class="row"><span>分档</span><b>第3档</b></div>
+    <div class="row"><span>主教练</span><b>卡西莫夫</b></div>
+    <div class="row"><span>队长</span><b>绍伊穆罗多夫</b></div>
+    <div class="row"><span>平均年龄</span><b>26.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>整体防守</b></div>
+    <div class="row"><span>历史最佳</span><b>首次参赛</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>马沙里波夫(中场)</b></div><div class="item">★ <b>法伊拉祖耶夫(前锋)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>首次机会</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>绝对实力</p></div>
+  </div>
+</div><div class="modal" id="m-Colombia">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Colombia')">×</button>
+    <h2>哥伦比亚 <small>Colombia · FIFA #13 · T2档</small></h2>
+    <div class="power-big" style="color:#ffb700">武力值 78 <span style="font-size:14px;color:#8aa3bd">/ 100 · B级</span></div>
+    <div class="row"><span>所属分组</span><b>K组</b></div>
+    <div class="row"><span>分档</span><b>第2档</b></div>
+    <div class="row"><span>主教练</span><b>洛伦索</b></div>
+    <div class="row"><span>队长</span><b>萨帕塔</b></div>
+    <div class="row"><span>平均年龄</span><b>27.5 岁</b></div>
+    <div class="row"><span>战术风格</span><b>技术+身体</b></div>
+    <div class="row"><span>历史最佳</span><b>2014八强</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>路易斯·迪亚斯(前锋)</b></div><div class="item">★ <b>J·罗德里格斯(中场)</b></div><div class="item">★ <b>奥斯皮纳(门将)</b></div><div class="item">★ <b>米纳(后卫)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>J罗+迪亚斯</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>后防老化</p></div>
+  </div>
+</div><div class="modal" id="m-England">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('England')">×</button>
+    <h2>英格兰 <small>England · FIFA #4 · T1档</small></h2>
+    <div class="power-big" style="color:#ff3a3a">武力值 88 <span style="font-size:14px;color:#8aa3bd">/ 100 · S级</span></div>
+    <div class="row"><span>所属分组</span><b>L组</b></div>
+    <div class="row"><span>分档</span><b>第1档</b></div>
+    <div class="row"><span>主教练</span><b>图赫尔(德)</b></div>
+    <div class="row"><span>队长</span><b>凯恩</b></div>
+    <div class="row"><span>平均年龄</span><b>26.5 岁</b></div>
+    <div class="row"><span>战术风格</span><b>传控+反击</b></div>
+    <div class="row"><span>历史最佳</span><b>1966冠军</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>凯恩(前锋)</b></div><div class="item">★ <b>贝林厄姆(中场)</b></div><div class="item">★ <b>萨卡(前锋)</b></div><div class="item">★ <b>赖斯(中场)</b></div><div class="item">★ <b>斯通斯(后卫)</b></div><div class="item">★ <b>拉姆斯代尔(门将)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>凯恩+贝林厄姆</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>中卫深度</p></div>
+  </div>
+</div><div class="modal" id="m-Croatia">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Croatia')">×</button>
+    <h2>克罗地亚 <small>Croatia · FIFA #10 · T2档</small></h2>
+    <div class="power-big" style="color:#ffb700">武力值 78 <span style="font-size:14px;color:#8aa3bd">/ 100 · B级</span></div>
+    <div class="row"><span>所属分组</span><b>L组</b></div>
+    <div class="row"><span>分档</span><b>第2档</b></div>
+    <div class="row"><span>主教练</span><b>达利奇</b></div>
+    <div class="row"><span>队长</span><b>莫德里奇</b></div>
+    <div class="row"><span>平均年龄</span><b>28.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>中场控制</b></div>
+    <div class="row"><span>历史最佳</span><b>2018亚军/2022季军</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>莫德里奇(中场,40)</b></div><div class="item">★ <b>佩里西奇(中场)</b></div><div class="item">★ <b>科瓦西奇(中场)</b></div><div class="item">★ <b>格瓦迪奥尔(后卫)</b></div><div class="item">★ <b>利瓦科维奇(门将)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>魔笛最后一战</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>锋线换代</p></div>
+  </div>
+</div><div class="modal" id="m-Ghana">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Ghana')">×</button>
+    <h2>加纳 <small>Ghana · FIFA #72 · T4档</small></h2>
+    <div class="power-big" style="color:#2bbfd3">武力值 55 <span style="font-size:14px;color:#8aa3bd">/ 100 · D级</span></div>
+    <div class="row"><span>所属分组</span><b>L组</b></div>
+    <div class="row"><span>分档</span><b>第4档</b></div>
+    <div class="row"><span>主教练</span><b>奥托·阿多</b></div>
+    <div class="row"><span>队长</span><b>安德烈·阿尤</b></div>
+    <div class="row"><span>平均年龄</span><b>26.5 岁</b></div>
+    <div class="row"><span>战术风格</span><b>身体+速度</b></div>
+    <div class="row"><span>历史最佳</span><b>2010八强/2022小组出局</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>库杜斯(中场)</b></div><div class="item">★ <b>阿尤兄弟(前锋)</b></div><div class="item">★ <b>萨利苏(后卫)</b></div><div class="item">★ <b>阿蒂·齐吉(门将)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>库杜斯+阿尤</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>大赛稳定性</p></div>
+  </div>
+</div><div class="modal" id="m-Panama">
+  <div class="modal-content">
+    <button class="modal-close" onclick="hideTeam('Panama')">×</button>
+    <h2>巴拿马 <small>Panama · FIFA #30 · T3档</small></h2>
+    <div class="power-big" style="color:#7a8b99">武力值 52 <span style="font-size:14px;color:#8aa3bd">/ 100 · E级</span></div>
+    <div class="row"><span>所属分组</span><b>L组</b></div>
+    <div class="row"><span>分档</span><b>第3档</b></div>
+    <div class="row"><span>主教练</span><b>洛萨诺</b></div>
+    <div class="row"><span>队长</span><b>戈麦斯</b></div>
+    <div class="row"><span>平均年龄</span><b>27.0 岁</b></div>
+    <div class="row"><span>战术风格</span><b>防守+反击</b></div>
+    <div class="row"><span>历史最佳</span><b>2018首次参赛</b></div>
+    <div class="stars-list">
+      <div style="font-size:12px;color:#8aa3bd;margin-bottom:6px">核心球员</div>
+      <div class="item">★ <b>戈麦斯(前锋)</b></div><div class="item">★ <b>戴维斯(中场)</b></div>
+    </div>
+    <div class="section-mini"><h4>🟢 优势</h4><p>团结</p></div>
+    <div class="section-mini"><h4>🔴 短板</h4><p>实力差距</p></div>
+  </div>
+</div><script>
+function goTo(id){
+  const el=document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:"smooth",block:"start"});
+  document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+  event.target.classList.add("active");
+}
+function showTeam(en){document.getElementById("m-"+en).classList.add("active");document.body.style.overflow="hidden";}
+function hideTeam(en){document.getElementById("m-"+en).classList.remove("active");document.body.style.overflow="";}
+document.querySelectorAll(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m){m.classList.remove("active");document.body.style.overflow="";}}));
+</script>
 <footer>
-  ⚔ 武力值为综合评估(阵容深度/球星/年龄/状态/历史) · 非官方 · 仅供娱乐<br>
-  🏆 Made by Codex · 数据来源：FIFA官方
+📚 数据来源: 维基百科 2026 FIFA World Cup · FIFA官方 · 各大球队主页<br>
+⚔ 武力值为综合评估(阵容深度/球星/年龄/状态/历史),非官方 · 仅供娱乐参考<br>
+🏆 Made with ❤️ by Codex · 离线可用 · 推到GIT随时查看
 </footer>
-</body>
-</html>
+</body></html>
