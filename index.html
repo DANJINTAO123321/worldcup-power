@@ -246,7 +246,7 @@
             <p class="subtitle">综合FIFA排名 · 比赛表现 · PELE模型 · 专家预测</p>
             <div class="stats-bar">
                 <span class="stat">🏆 共48支球队</span>
-                <span class="stat">📅 更新：2026.06.21 20:02</span>
+                <span class="stat">📅 更新：2026.06.22 06:15</span>
                 <span class="stat">🤖 数据源：Nate Silver PELE · CleverScores · The Stat Bible</span>
             </div>
         </header>
@@ -296,7 +296,7 @@
             <div class="openclaw-title">🤖 新加坡虾米 OpenClaw 分析（MiniMax-M3）</div>
             <div class="openclaw-content">
                 <div class="match-analysis hot-match">
-                    <div class="match-time">📅 今晚至明早重点比赛（6月22日凌晨）</div>
+                    <div class="match-time">📅 今晚至明早重点比赛（6月23日凌晨）</div>
                     <div class="match-teams">🇪🇸 西班牙 vs 🇸🇦 沙特阿拉伯 | ⏰ 约09:30 北京时间</div>
                     <div class="match-prediction">🔮 主推：西班牙 3-0 大胜 | 🏆 次选：2-0 | 信心度：85%</div>
                     <div class="match-odds">📊 v3.0模型：西班牙主场优势明显，大胜补偿触发（武力差39）</div>
@@ -327,12 +327,8 @@
             <div style="margin-top:15px;padding:10px;background:rgba(0,0,0,0.2);border-radius:8px;">
                 <div style="color:#ffd700;font-size:0.9em;margin-bottom:8px;">📋 今晚投注建议（3串1）</div>
                 <div style="color:#aaa;font-size:0.85em;">
-                    <b>稳健型：</b>西班牙 3-0(3.5) + 比利时 3-0(5.0) + 乌拉圭 2-0(3.5)<br>
-                    综合赔率 ≈ <span style="color:#2ed573;font-weight:bold;">61倍</span> | 投入100元可中6100元
-                </div>
-                <div style="color:#aaa;font-size:0.85em;margin-top:8px;">
-                    <b>搏冷高赔：</b>新西兰 0-0(6.5) + 佛得角 0-0(8.0) + 比利时 3-0(5.0)<br>
-                    综合赔率 ≈ <span style="color:#ffa502;font-weight:bold;">260倍</span> | 投入100元可中26000元
+                    <b>已结束：</b>西班牙 4-0(预测3-0 ❌) | 比利时 0-0(预测3-0 ❌大冷门)<br>
+                    今晚待赛：乌拉圭vs佛得角、新西兰vs埃及（等比分更新）
                 </div>
             </div>
         </div>
@@ -395,7 +391,7 @@
         </div>
 
         <footer>
-            <p class="update-time">最后更新：2026年6月22日 01:04（v3.0比分预测模型已更新）</p>
+            <p class="update-time">最后更新：2026年6月22日 06:15（武力值已更新：西班牙100、比利时-2、伊朗+2、沙特-3）</p>
             <p>新加坡虾米出品 | 模型版本：MiniMax-M3</p>
             <p style="margin-top:8px;font-size:0.85em;color:#666;">武力值说明：综合FIFA排名(40%) + 比赛表现(30%) + PELE模型(20%) + 球员配置(10%)</p>
         </footer>
@@ -404,7 +400,7 @@
     <script>
         const teams = [
             // === SS级 (90-100) ===
-            {name:"西班牙", flag:"🇪🇸", group:"H", power:95, fifa:1, note:"欧洲冠军+FIFA第1", analysis:"🇪🇸 西班牙是本届世界杯最大热门，PELE模型预测冠军概率最高。球队拥有佩德里、威廉姆斯等新生代球星，中场控制力世界第一。近期7-0大胜土耳其，进攻火力恐怖。弱点：缺乏传统中锋，关键时刻终结能力存疑。"},
+            {name:"西班牙", flag:"🇪🇸", group:"H", power:100, fifa:1, note:"4-0沙特🔥大胜升级", analysis:"🇪🇸 西班牙4-0大胜沙特！亚马尔首发即首球，18岁斩获世界杯首球！奥亚萨瓦尔梅开二度，进攻火力全开。升级至SS级巅峰！弱点：无明显弱点。",
             {name:"法国", flag:"🇫🇷", group:"I", power:94, fifa:2, note:"世界杯亚军+姆巴佩", analysis:"🇫🇷 法国队史身价最高，姆巴佩+登贝莱+图拉姆三叉戟火力凶猛。PELE模型显示法国晋级决赛概率超40%。近期4-0横扫弱旅，状态出色。弱点：坎特缺阵后腰位置防守下滑，本届已有2粒丢球。"},
             {name:"英格兰", flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿", group:"L", power:93, fifa:3, note:"100%状态+哈利凯恩", analysis:"🏴󠁧󠁢󠁥󠁮󠁧󠁿 英格兰本届唯一100%胜率球队，5场全胜且0丢球。哈利凯恩5场7球领跑射手榜。PELE模型显示英格兰是巴西之外最被低估的球队。弱点：客场作战可能影响发挥。"},
             {name:"巴西", flag:"🇧🇷", group:"C", power:92, fifa:4, note:"5星巴西+维尼修斯", analysis:"🇧🇷 巴西5次夺冠历史最多，本届阵容攻守均衡。维尼修斯+罗德里戈的双子星组合威胁极大。近期4-0大胜，进攻犀利。弱点：蒂特战术保守，中场创造力不足。"},
@@ -414,7 +410,7 @@
             {name:"德国", flag:"🇩🇪", group:"E", power:90, fifa:6, note:"7-1库拉索+复兴", analysis:"🇩🇪 德国7-1屠杀库拉索震惊世界，攻击力排名本届前3。哈弗茨+维尔茨的年轻组合威力十足。弱点：后防线的空中争顶成功率仅62%，定位球失分隐患大。"},
             {name:"葡萄牙", flag:"🇵🇹", group:"K", power:86, fifa:7, note:"C罗最后一届", analysis:"🇵🇹 C罗最后一届世界杯，全队希望为他圆梦。B费+贝尔纳多+菲利克斯的中前场配置顶级。弱点：C罗把握机会能力下降，B席和B费同时上场时防守存在漏洞。"},
             {name:"荷兰", flag:"🇳🇱", group:"F", power:85, fifa:8, note:"范戴克领衔防线", analysis:"🇳🇱 荷兰防守数据本届最佳，5场仅丢1球。范戴克领衔的这条防线几乎无懈可击。进攻端：加克波状态火热。弱点：德容伤缺影响中场组织，关键比赛进攻便秘。"},
-            {name:"比利时", flag:"🇧🇪", group:"G", power:83, fifa:9, note:"黄金一代最后一搏", analysis:"🇧🇪 比利时黄金一代可能是最后一届。德布劳内+卢卡库的组合仍是世界级。弱点：比利时本届已输2场，后防线老化严重。平均年龄30+是所有强队中最大的。"},
+            {name:"比利时", flag:"🇧🇪", group:"G", power:81, fifa:9, note:"0-0伊朗+红牌崩盘", analysis:"🇧🇪 比利时0-0被伊朗逼平！还吃到红牌，进攻完全哑火。德布劳内+卢卡库组合毫无威胁。黄金一代彻底衰落。弱点：防线老化+进攻便秘，本届表现令人失望。",
             {name:"摩洛哥", flag:"🇲🇦", group:"C", power:82, fifa:10, note:"2022世界杯4强", analysis:"🇲🇦 摩洛哥是本届最大黑马，2022年杀入4强震惊世界。防守顽强，反击犀利。弱点：齐耶赫+马兹拉维与主帅有矛盾，可能缺席关键战。"},
             {name:"乌拉圭", flag:"🇺🇾", group:"H", power:82, fifa:13, note:"南美劲旅", analysis:"🇺🇾 乌拉圭是南美传统劲旅，努涅斯+巴尔文组合威胁大。防守强硬，1-0主义。弱点：经验不足，大赛关键时刻容易崩盘。"},
             {name:"克罗地亚", flag:"🇭🇷", group:"L", power:80, fifa:11, note:"上届亚军班底", analysis:"🇭🇷 克罗地亚2022年杀入4强，虽莫德里奇年龄增大但仍是顶级中场。佩特科维奇是本届最大发现。弱点：平均年龄偏高，体能可能是问题。"},
@@ -435,13 +431,13 @@
             {name:"波兰", flag:"🇵🇱", group:"F", power:70, fifa:21, note:"莱万领军", analysis:"🇵🇱 莱万是波兰绝对核心，但本届仅1球效率下滑。防守采用低位防守战术。弱点：一旦莱万被冻结全队进攻瘫痪，中场创造力几乎为零。"},
             {name:"澳大利亚", flag:"🇦🇺", group:"D", power:70, fifa:22, note:"2-0土耳其", analysis:"🇦🇺 澳大利亚2-0完胜土耳其，防守反击战术执行到位。古德温+马修莱基速度优势明显。弱点：整体实力有限，面对强队进攻办法不多。"},
             {name:"埃及", flag:"🇪🇬", group:"G", power:68, fifa:39, note:"萨拉赫", analysis:"🇪🇬 埃及核心是萨拉赫，状态火热已有3球2助攻。防守采用保守阵型。弱点：萨拉赫被重点盯防效率下降，进攻点太少是致命问题。"},
-            {name:"伊朗", flag:"🇮🇷", group:"G", power:67, fifa:21, note:"亚洲强队", analysis:"🇮🇷 伊朗是亚洲传统强队，身体对抗能力强。防守凶猛，反击有速度。弱点：进攻套路单一，一旦落后难以逆转。"},
+            {name:"伊朗", flag:"🇮🇷", group:"G", power:69, fifa:21, note:"0-0逼平比利时", analysis:"🇮🇷 伊朗0-0逼平比利时！连续逼平强敌，防线固若金汤。波斯铁骑本届表现超出预期，亚洲之光！弱点：进攻仍需加强。",
             {name:"厄瓜多尔", flag:"🇪🇨", group:"E", power:66, fifa:31, note:"高原优势", analysis:"🇪🇨 厄瓜多尔高原主场优势明显，巴伦西亚+恩纳瓦伦西亚组合表现出色。弱点：离开高原后表现下滑明显，本届客场2场不胜。"},
             {name:"捷克", flag:"🇨🇿", group:"A", power:67, fifa:28, note:"1-1南非展现代届调整能力", analysis:"🇨🇿 捷克连续两场1-1展现顽强调整能力，进攻效率有所提升。萨迪莱克表现出色。弱点：赢球能力不足，平局过多影响出线形势。"},
             {name:"苏格兰", flag:"🏴󠁧󠁢󠁳󠁣󠁴󠁿", group:"C", power:65, fifa:42, note:"1-0海地", analysis:"🏴󠁧󠁢󠁳󠁣󠁴󠁿 苏格兰1-0小胜海地，迪克斯+罗伯逊的边路进攻犀利。弱点：整体实力有限，进攻威胁不足，大赛经验欠缺。"},
             {name:"科特迪瓦", flag:"🇨🇮", group:"E", power:64, fifa:43, note:"1-0厄瓜多尔", analysis:"🇨🇮 科特迪瓦是非洲新生力量，防守凶悍。进攻依赖个人能力。弱点：配合生疏，5场仅4球，效率偏低。"},
             {name:"加拿大", flag:"🇨🇦", group:"B", power:63, fifa:25, note:"主场+阿方索", analysis:"🇨🇦 加拿大主场强势，阿方索+戴维组合威胁大。弱点：后防线经验不足，面对强队容易崩盘。本届已输3场。"},
-            {name:"沙特阿拉伯", flag:"🇸🇦", group:"H", power:62, fifa:56, note:"1-1乌拉圭", analysis:"🇸🇦 沙特1-1逼平乌拉圭表现超出预期，多萨里状态出色。弱点：身体对抗差，面对欧洲队处于劣势，2022年1-2爆冷输墨西哥。"},
+            {name:"沙特阿拉伯", flag:"🇸🇦", group:"H", power:59, fifa:56, note:"0-4西班牙惨败", analysis:"🇸🇦 沙特0-4惨败西班牙，防线被打爆。进攻几乎没有威胁，状态低迷。弱点：后防空虚，面对强队毫无抵抗能力。",
             {name:"巴拉圭", flag:"🇵🇾", group:"D", power:61, fifa:58, note:"南美防守", analysis:"🇵🇾 巴拉圭是南美防守强队，5场仅丢5球。进攻依赖戈麦斯+阿尔米隆个人能力。弱点：进攻套路少，一旦落后难以翻盘。"},
             {name:"突尼斯", flag:"🇹🇳", group:"F", power:60, fifa:41, note:"防守一般", analysis:"🇹🇳 突尼斯非洲中游球队，防守一般5场丢7球。进攻没有亮点。弱点：整体实力有限，大赛缺乏竞争力。"},
             {name:"塞尔维亚", flag:"🇷🇸", group:"F", power:60, fifa:32, note:"身体对抗强", analysis:"🇷🇸 塞尔维亚身体对抗能力强，米特罗维奇+弗拉霍维奇双中锋组合。弱点：战术单一，防守定位球失分严重。"},
