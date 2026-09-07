@@ -6,71 +6,226 @@
 <title>涛哥 BGM 下载站</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, "Microsoft YaHei", sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; color: #333; }
-  .container { max-width: 900px; margin: 0 auto; background: #fff; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,.3); overflow: hidden; }
-  .header { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 40px; color: #fff; text-align: center; }
-  h1 { font-size: 32px; margin-bottom: 10px; }
-  .subtitle { opacity: .9; font-size: 14px; }
-  .search-bar { padding: 30px 40px; display: flex; gap: 10px; border-bottom: 1px solid #eee; }
-  input { flex: 1; padding: 16px 22px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; transition: border .2s; }
-  input:focus { outline: none; border-color: #667eea; }
-  button { padding: 16px 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: 600; }
-  button:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(102,126,234,.4); }
-  button:disabled { opacity: .6; cursor: not-allowed; }
-  .results { padding: 20px 40px 40px; }
-  .status { text-align: center; color: #888; padding: 30px; font-size: 15px; }
-  .empty { text-align: center; color: #999; padding: 60px 20px; }
-  .result { padding: 18px; border: 1px solid #e8e8e8; border-radius: 10px; margin-bottom: 12px; display: flex; align-items: center; gap: 16px; transition: all .2s; background: #fafafa; }
-  .result:hover { border-color: #667eea; box-shadow: 0 4px 12px rgba(0,0,0,.06); background: #fff; }
+  body {
+    font-family: -apple-system, "Microsoft YaHei", sans-serif;
+    background: #02030a;
+    min-height: 100vh; padding: 0; color: #f5f6ff;
+    background:
+      radial-gradient(circle at 10% 0%, #1b2340 0%, transparent 55%),
+      radial-gradient(circle at 90% 100%, #211a38 0%, transparent 60%),
+      #02030a;
+  }
+
+  .app {
+    max-width: 900px; margin: 44px auto;
+    border: 1px solid rgba(255,255,255,0.14);
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(14px);
+    border-radius: 24px;
+    box-shadow: 0 0 40px rgba(0,0,0,0.9), 0 0 120px rgba(136,196,255,0.25);
+    padding: 32px 40px 40px;
+    min-height: 60vh;
+  }
+  @media (max-width: 700px) { .app { margin: 16px; padding: 20px; } }
+
+  .header { text-align: center; margin-bottom: 28px; }
+  h1 {
+    font-size: 32px;
+    background: linear-gradient(120deg, #f5c84c 0%, #ff7bb0 50%, #4ac8ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 8px;
+  }
+  .subtitle { opacity: .7; font-size: 13px; color: #a1a6d0; }
+
+  .search-bar { display: flex; gap: 10px; margin-bottom: 24px; }
+  input {
+    flex: 1; padding: 16px 22px;
+    background: rgba(8,10,26,0.6);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 12px; color: #f5f6ff; font-size: 16px;
+    transition: border .2s;
+  }
+  input::placeholder { color: #a1a6d0; }
+  input:focus { outline: none; border-color: #4ac8ff; }
+
+  button {
+    padding: 16px 28px;
+    background: linear-gradient(120deg, #f5c84c 0%, #ff7bb0 100%);
+    color: #02030a; border: none; border-radius: 12px;
+    font-size: 16px; cursor: pointer; font-weight: 700;
+    transition: transform .2s, box-shadow .2s;
+    min-width: 100px;
+  }
+  button:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(245,200,76,.35); }
+  button:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  .search-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; min-height: 24px; }
+  .source-list { display: flex; gap: 6px; flex-wrap: wrap; }
+  .source-chip {
+    padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;
+    background: rgba(255,255,255,0.06); color: #a1a6d0;
+  }
+  .source-chip.done { color: #65f7c4; }
+  .source-chip.loading { color: #4ac8ff; animation: pulse 1.2s infinite; }
+  .source-chip.error { color: #ff5c7a; }
+  @keyframes pulse { 50% { opacity: .4; } }
+
+  .timer { color: #a1a6d0; font-size: 12px; font-variant-numeric: tabular-nums; }
+
+  .results { min-height: 200px; }
+  .empty { text-align: center; color: #a1a6d0; padding: 60px 20px; font-size: 15px; }
+  .error { text-align: center; color: #ff5c7a; padding: 40px 20px; }
+  .placeholder { text-align: center; padding: 80px 20px; color: #a1a6d0; }
+  .placeholder .emoji { font-size: 64px; margin-bottom: 16px; opacity: .4; }
+
+  .result {
+    padding: 16px 18px;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 14px; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 14px;
+    background: rgba(255,255,255,0.03);
+    transition: all .15s;
+    animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .result:hover { border-color: rgba(74,200,255,0.4); background: rgba(255,255,255,0.06); }
+
   .info { flex: 1; min-width: 0; }
-  .song-name { font-weight: 600; font-size: 17px; margin-bottom: 6px; color: #2d3748; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .meta { color: #888; font-size: 13px; }
-  .source-tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; margin-right: 8px; font-weight: 500; }
-  .tag-netease { background: #fee; color: #c33; }
-  .tag-qq { background: #e6f7ff; color: #1890ff; }
-  .tag-migu { background: #f6ffed; color: #52c41a; }
-  .download-btn { padding: 10px 20px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; text-decoration: none; display: inline-block; }
-  .download-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(67,233,123,.4); }
-  .footer { text-align: center; padding: 20px; color: #999; font-size: 13px; background: #f9f9f9; }
-  .footer a { color: #667eea; text-decoration: none; }
+  .song-name {
+    font-weight: 600; font-size: 16px; margin-bottom: 6px; color: #f5f6ff;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .meta { color: #a1a6d0; font-size: 13px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .src {
+    display: inline-block; padding: 2px 8px; border-radius: 8px; font-size: 11px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .src-netease { background: rgba(255,92,122,.15); color: #ff5c7a; }
+  .src-qq { background: rgba(74,200,255,.15); color: #4ac8ff; }
+  .src-migu { background: rgba(101,247,196,.15); color: #65f7c4; }
+
+  .download-btn {
+    padding: 8px 18px; border-radius: 10px;
+    background: linear-gradient(120deg, #65f7c4 0%, #4ac8ff 100%);
+    color: #02030a; border: none; cursor: pointer; font-size: 14px; font-weight: 700;
+    text-decoration: none; display: inline-block;
+    transition: transform .15s;
+    flex-shrink: 0;
+  }
+  .download-btn:hover { transform: translateY(-1px); }
+  .download-btn.copied { background: #f5c84c; }
+
+  .toast {
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+    background: rgba(8,10,26,0.95); border: 1px solid rgba(101,247,196,0.5);
+    color: #65f7c4; padding: 12px 24px; border-radius: 10px; font-size: 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 999;
+  }
+  .toast.show { opacity: 1; }
 </style>
 </head>
 <body>
-<div class="container">
+<div class="app">
   <div class="header">
     <h1>🎵 涛哥 BGM 下载站</h1>
-    <div class="subtitle">搜歌 → 点链接 → 直接下载 MP3/FLAC（网易云 / QQ / 咪咕）</div>
+    <div class="subtitle">搜歌 · 选歌 · 一键下载（网易云 / QQ / 咪咕）</div>
   </div>
+
   <div class="search-bar">
-    <input id="q" placeholder="输入歌名，例如：精卫 / 二拜天地 / FAKE LOVE" autofocus>
-    <button onclick="search()">搜索</button>
+    <input id="q" placeholder="输入歌名：精卫 / 二拜天地 / FAKE LOVE" autofocus>
+    <button id="btn" onclick="search()">搜索</button>
   </div>
+
+  <div class="search-meta">
+    <div class="source-list">
+      <span class="source-chip" id="chip-netease">网易云</span>
+      <span class="source-chip" id="chip-qq">QQ 音乐</span>
+      <span class="source-chip" id="chip-migu">咪咕</span>
+    </div>
+    <div class="timer" id="timer"></div>
+  </div>
+
   <div class="results" id="results">
-    <div class="empty">输入歌名开始搜索 👆</div>
-  </div>
-  <div class="footer">
-    Powered by musicdl · 后端跑在新加坡 VPS · 任何地方可访问
+    <div class="placeholder">
+      <div class="emoji">🎧</div>
+      <div>输入歌名开始搜索</div>
+    </div>
   </div>
 </div>
 
+<div class="toast" id="toast">链接已复制，去浏览器粘贴下载</div>
+
 <script>
-// Cloudflare Tunnel 地址
-const API_BASE = 'https://screen-camp-turtle-stored.trycloudflare.com';
+const API = 'https://screen-camp-turtle-stored.trycloudflare.com';
+const SOURCES = ['netease', 'qq', 'migu'];
+const cache = new Map();  // 内存缓存：query -> {results, t}
+const CACHE_TTL = 30 * 60 * 1000;  // 30 分钟
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function setChip(name, status) {
+  const chip = document.getElementById('chip-' + name);
+  chip.className = 'source-chip ' + status;
+}
+
+function resetChips() {
+  SOURCES.forEach(s => setChip(s, ''));
+  document.getElementById('timer').textContent = '';
+}
 
 async function search() {
   const q = document.getElementById('q').value.trim();
   if (!q) return;
-  const btn = document.querySelector('button');
+  const btn = document.getElementById('btn');
   btn.disabled = true; btn.textContent = '搜索中...';
-  document.getElementById('results').innerHTML = '<div class="status">🔍 正在搜索：' + q + ' ...</div>';
+  resetChips();
+  SOURCES.forEach(s => setChip(s, 'loading'));
+  document.getElementById('results').innerHTML = '<div class="empty">🔍 正在搜索：' + q + ' ...</div>';
+  const t0 = Date.now();
+  const timer = setInterval(() => {
+    document.getElementById('timer').textContent = '⏱ ' + ((Date.now() - t0) / 1000).toFixed(1) + 's';
+  }, 100);
+
+  // 缓存检查
+  const cached = cache.get(q);
+  if (cached && Date.now() - cached.t < CACHE_TTL) {
+    clearInterval(timer);
+    SOURCES.forEach(s => setChip(s, 'done'));
+    document.getElementById('timer').textContent = '⚡ 来自缓存';
+    renderResults(cached.results, q);
+    btn.disabled = false; btn.textContent = '搜索';
+    return;
+  }
+
   try {
-    const resp = await fetch(API_BASE + '/search?q=' + encodeURIComponent(q));
+    const resp = await fetch(API + '/search?q=' + encodeURIComponent(q));
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     const data = await resp.json();
     if (data.error) throw new Error(data.error);
+
+    clearInterval(timer);
+    document.getElementById('timer').textContent = '✅ ' + ((Date.now() - t0) / 1000).toFixed(1) + 's · ' + data.results.length + ' 个结果';
+
+    // 标记完成的源
+    const foundSrcs = new Set(data.results.map(r => r.source.toLowerCase()));
+    SOURCES.forEach(s => {
+      setChip(s, foundSrcs.has(s) ? 'done' : 'error');
+    });
+
+    cache.set(q, { results: data.results, t: Date.now() });
     renderResults(data.results, q);
   } catch (e) {
-    document.getElementById('results').innerHTML = '<div class="status">❌ 搜索失败：' + e.message + '</div>';
+    clearInterval(timer);
+    SOURCES.forEach(s => setChip(s, 'error'));
+    document.getElementById('results').innerHTML = '<div class="error">❌ 搜索失败：' + e.message + '</div>';
   }
   btn.disabled = false; btn.textContent = '搜索';
 }
@@ -78,23 +233,24 @@ async function search() {
 function renderResults(results, q) {
   const div = document.getElementById('results');
   if (!results || results.length === 0) {
-    div.innerHTML = '<div class="empty">没找到「' + q + '」相关歌曲，换个关键词试试</div>';
+    div.innerHTML = '<div class="empty">没找到「' + q + '」相关歌曲</div>';
     return;
   }
-  let html = '<div class="status">找到 <b>' + results.length + '</b> 个结果，点击直接下载</div>';
-  results.forEach((r, i) => {
-    const tagClass = 'tag-' + r.source.toLowerCase();
+  let html = '';
+  results.forEach((r) => {
+    const tagClass = 'src-' + r.source.toLowerCase();
     const safeName = (r.song_name + ' - ' + r.singers).replace(/[<>"']/g, '');
     html += `
       <div class="result">
         <div class="info">
-          <div class="song-name">${r.song_name}</div>
+          <div class="song-name" title="${safeName}">${r.song_name}</div>
           <div class="meta">
-            <span class="source-tag ${tagClass}">${r.source}</span>
-            ${r.singers} · ${r.duration || ''}
+            <span class="src ${tagClass}">${r.source}</span>
+            ${r.singers}
+            ${r.duration ? '· ' + r.duration : ''}
           </div>
         </div>
-        <a class="download-btn" href="${r.download_url}" download target="_blank" rel="noopener">⬇ 下载</a>
+        <a class="download-btn" href="${r.download_url}" target="_blank" rel="noopener" download>⬇ 下载</a>
       </div>
     `;
   });
