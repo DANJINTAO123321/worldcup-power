@@ -2,356 +2,108 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2026世界杯比分预测</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>涛哥 BGM 下载站</title>
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; background:#111; color:#fff; min-height:100vh; }
-
-/* 头部 */
-.hero { background:linear-gradient(180deg,#1a1a2e,#111); padding:40px 20px 30px; text-align:center; border-bottom:1px solid #222; }
-.hero h1 { font-size:32px; font-weight:900; letter-spacing:4px; margin-bottom:8px; }
-.hero h1 span { color:#ffd700; }
-.hero p { color:#888; font-size:13px; letter-spacing:2px; }
-
-/* 预测区 */
-.predictions { padding:30px 20px; }
-.section-label { font-size:11px; color:#ffd700; letter-spacing:3px; margin-bottom:20px; text-align:center; }
-.predictions-grid { display:flex; flex-direction:column; gap:20px; max-width:700px; margin:0 auto; }
-
-/* 单场比赛 */
-.match { background:#1a1a1a; border-radius:16px; overflow:hidden; border:1px solid #333; }
-.match-header { padding:12px 16px; background:#222; display:flex; justify-content:space-between; align-items:center; }
-.match-time { color:#888; font-size:12px; }
-.match-tag { background:#ffd700; color:#111; font-size:10px; font-weight:700; padding:3px 10px; border-radius:10px; }
-
-.teams { display:flex; align-items:center; padding:20px; gap:15px; }
-.team-box { flex:1; text-align:center; }
-.team-flag { font-size:48px; line-height:1; }
-.team-name { font-size:18px; font-weight:700; margin-top:8px; }
-.team-power { font-size:11px; color:#888; margin-top:4px; }
-
-.vs-circle { width:40px; height:40px; background:#333; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#666; flex-shrink:0; }
-
-.scores-row { display:flex; padding:0 20px 20px; gap:10px; }
-.score-chip { flex:1; background:#222; border-radius:10px; padding:12px 8px; text-align:center; border:1px solid #333; }
-.score-chip.main { background:#2a2a1a; border-color:#ffd700; }
-.score-chip .num { font-size:24px; font-weight:900; color:#ffd700; }
-.score-chip.main .num { font-size:28px; }
-.score-chip .od { font-size:10px; color:#4a4; margin-top:4px; }
-.score-chip .lb { font-size:9px; color:#666; margin-top:2px; }
-
-.advice { margin:0 20px 20px; padding:10px 14px; background:#1a1a2e; border-radius:10px; font-size:12px; color:#ccc; text-align:center; border-left:3px solid #ffd700; }
-
-/* 武力榜 */
-.power-section { padding:30px 20px; background:#0a0a0a; border-top:1px solid #222; }
-.power-section .section-label { color:#ff6b6b; }
-
-.power-list { max-width:700px; margin:0 auto; display:flex; flex-direction:column; gap:8px; }
-
-.power-item { display:flex; align-items:center; gap:12px; padding:10px 14px; background:#1a1a1a; border-radius:10px; }
-.power-item.top { background:#1a1a2a; border:1px solid #ffd700; }
-.power-item .pos { font-size:14px; font-weight:700; color:#666; min-width:24px; }
-.power-item.top .pos { color:#ffd700; font-size:16px; }
-.power-item .flag { font-size:20px; }
-.power-item .name { font-size:14px; font-weight:600; flex:1; }
-.power-item .bar-wrap { flex:1; height:4px; background:#333; border-radius:2px; }
-.power-item .bar { height:4px; border-radius:2px; }
-.power-item .val { font-size:16px; font-weight:900; min-width:36px; text-align:right; }
-
-/* 底部 */
-footer { text-align:center; padding:30px; color:#444; font-size:11px; border-top:1px solid #222; margin-top:20px; }
-
-@media(max-width:500px) {
-  .team-flag { font-size:36px; }
-  .team-name { font-size:15px; }
-  .scores-row { flex-wrap:wrap; }
-  .score-chip { min-width:calc(50% - 5px); }
-}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Microsoft YaHei", sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; color: #333; }
+  .container { max-width: 900px; margin: 0 auto; background: #fff; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,.3); overflow: hidden; }
+  .header { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 40px; color: #fff; text-align: center; }
+  h1 { font-size: 32px; margin-bottom: 10px; }
+  .subtitle { opacity: .9; font-size: 14px; }
+  .search-bar { padding: 30px 40px; display: flex; gap: 10px; border-bottom: 1px solid #eee; }
+  input { flex: 1; padding: 16px 22px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; transition: border .2s; }
+  input:focus { outline: none; border-color: #667eea; }
+  button { padding: 16px 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: 600; }
+  button:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(102,126,234,.4); }
+  button:disabled { opacity: .6; cursor: not-allowed; }
+  .results { padding: 20px 40px 40px; }
+  .status { text-align: center; color: #888; padding: 30px; font-size: 15px; }
+  .empty { text-align: center; color: #999; padding: 60px 20px; }
+  .result { padding: 18px; border: 1px solid #e8e8e8; border-radius: 10px; margin-bottom: 12px; display: flex; align-items: center; gap: 16px; transition: all .2s; background: #fafafa; }
+  .result:hover { border-color: #667eea; box-shadow: 0 4px 12px rgba(0,0,0,.06); background: #fff; }
+  .info { flex: 1; min-width: 0; }
+  .song-name { font-weight: 600; font-size: 17px; margin-bottom: 6px; color: #2d3748; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .meta { color: #888; font-size: 13px; }
+  .source-tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; margin-right: 8px; font-weight: 500; }
+  .tag-netease { background: #fee; color: #c33; }
+  .tag-qq { background: #e6f7ff; color: #1890ff; }
+  .tag-migu { background: #f6ffed; color: #52c41a; }
+  .download-btn { padding: 10px 20px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; text-decoration: none; display: inline-block; }
+  .download-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(67,233,123,.4); }
+  .footer { text-align: center; padding: 20px; color: #999; font-size: 13px; background: #f9f9f9; }
+  .footer a { color: #667eea; text-decoration: none; }
 </style>
 </head>
 <body>
-<div class="hero">
-  <h1>🏆 <span>2026</span> 世界杯</h1>
-  <p>比分预测 · 武力值评估</p>
-</div>
-
-<!-- 4场预测 -->
-<div class="predictions">
-  <div class="section-label">⚽ 今日预测 · 北京时间 6月21日</div>
-  <div class="predictions-grid">
-
-    <!-- 荷兰 vs 瑞典 -->
-    <div class="match">
-      <div class="match-header">
-        <span class="match-time">🕐 01:00 · F组 · 休斯敦</span>
-        <span class="match-tag">主推 ×7.00</span>
-      </div>
-      <div class="teams">
-        <div class="team-box">
-          <div class="team-flag">🇳🇱</div>
-          <div class="team-name">荷兰</div>
-          <div class="team-power">武力 89</div>
-        </div>
-        <div class="vs-circle">VS</div>
-        <div class="team-box">
-          <div class="team-flag">🇸🇪</div>
-          <div class="team-name">瑞典</div>
-          <div class="team-power">武力 83</div>
-        </div>
-      </div>
-      <div class="scores-row">
-        <div class="score-chip main">
-          <div class="num">2-0</div>
-          <div class="od">×7.00</div>
-          <div class="lb">稳健推荐</div>
-        </div>
-        <div class="score-chip">
-          <div class="num">1-0</div>
-          <div class="od">×6.50</div>
-          <div class="lb">可能</div>
-        </div>
-        <div class="score-chip">
-          <div class="num">1-1</div>
-          <div class="od">×5.50</div>
-          <div class="lb">冷门</div>
-        </div>
-      </div>
-      <div class="advice">💡 荷兰不能再次丢分，防守稳健小胜过关</div>
-    </div>
-
-    <!-- 德国 vs 科特迪瓦 -->
-    <div class="match">
-      <div class="match-header">
-        <span class="match-time">🕐 04:00 · E组 · 多伦多</span>
-        <span class="match-tag">主推 ×8.00</span>
-      </div>
-      <div class="teams">
-        <div class="team-box">
-          <div class="team-flag">🇩🇪</div>
-          <div class="team-name">德国</div>
-          <div class="team-power">武力 92</div>
-        </div>
-        <div class="vs-circle">VS</div>
-        <div class="team-box">
-          <div class="team-flag">🇨🇮</div>
-          <div class="team-name">科特迪瓦</div>
-          <div class="team-power">武力 78</div>
-        </div>
-      </div>
-      <div class="scores-row">
-        <div class="score-chip main">
-          <div class="num">2-1</div>
-          <div class="od">×8.00</div>
-          <div class="lb">主推</div>
-        </div>
-        <div class="score-chip">
-          <div class="num">3-1</div>
-          <div class="od">×11.00</div>
-          <div class="lb">可能</div>
-        </div>
-        <div class="score-chip">
-          <div class="num">1-0</div>
-          <div class="od">×8.00</div>
-          <div class="lb">防冷</div>
-        </div>
-      </div>
-      <div class="advice">💡 德国进攻最强，科特迪瓦会进球（搏双方进球）</div>
-    </div>
-
-    <!-- 厄瓜多尔 vs 库拉索 -->
-    <div class="match">
-      <div class="match-header">
-        <span class="match-time">🕐 08:00 · E组 · 堪萨斯城</span>
-        <span class="match-tag">主推 ×6.50</span>
-      </div>
-      <div class="teams">
-        <div class="team-box">
-          <div class="team-flag">🇪🇨</div>
-          <div class="team-name">厄瓜多尔</div>
-          <div class="team-power">武力 82</div>
-        </div>
-        <div class="vs-circle">VS</div>
-        <div class="team-box">
-          <div class="team-flag">🇨🇼</div>
-          <div class="team-name">库拉索</div>
-          <div class="team-power">武力 65</div>
-        </div>
-      </div>
-      <div class="scores-row">
-        <div class="score-chip main">
-          <div class="num">2-0</div>
-          <div class="od">×6.50</div>
-          <div class="lb">稳健推荐</div>
-        </div>
-        <div class="score-chip">
-          <div class="num">3-0</div>
-          <div class="od">×8.00</div>
-          <div class="lb">可能</div>
-        </div>
-        <div class="score-chip">
-          <div class="num">4-0</div>
-          <div class="od">×12.00</div>
-          <div class="lb">冷门</div>
-        </div>
-      </div>
-      <div class="advice">💡 厄瓜多尔实力碾压，必胜之战</div>
-    </div>
-
-    <!-- 突尼斯 vs 日本 -->
-    <div class="match">
-      <div class="match-header">
-        <span class="match-time">🕐 12:00 · F组 · 洛杉矶</span>
-        <span class="match-tag">主推 ×7.00</span>
-      </div>
-      <div class="teams">
-        <div class="team-box">
-          <div class="team-flag">🇹🇳</div>
-          <div class="team-name">突尼斯</div>
-          <div class="team-power">武力 74</div>
-        </div>
-        <div class="vs-circle">VS</div>
-        <div class="team-box">
-          <div class="team-flag">🇯🇵</div>
-          <div class="team-name">日本</div>
-          <div class="team-power">武力 84</div>
-        </div>
-      </div>
-      <div class="scores-row">
-        <div class="score-chip main">
-          <div class="num">0-2</div>
-          <div class="od">×7.00</div>
-          <div class="lb">稳健推荐</div>
-        </div>
-        <div class="score-chip">
-          <div class="num">0-3</div>
-          <div class="od">×12.00</div>
-          <div class="lb">可能</div>
-        </div>
-        <div class="score-chip">
-          <div class="num">1-3</div>
-          <div class="od">×15.00</div>
-          <div class="lb">冷门</div>
-        </div>
-      </div>
-      <div class="advice">💡 日本状态稳定，突尼斯军心大乱</div>
-    </div>
-
+<div class="container">
+  <div class="header">
+    <h1>🎵 涛哥 BGM 下载站</h1>
+    <div class="subtitle">搜歌 → 点链接 → 直接下载 MP3/FLAC（网易云 / QQ / 咪咕）</div>
+  </div>
+  <div class="search-bar">
+    <input id="q" placeholder="输入歌名，例如：精卫 / 二拜天地 / FAKE LOVE" autofocus>
+    <button onclick="search()">搜索</button>
+  </div>
+  <div class="results" id="results">
+    <div class="empty">输入歌名开始搜索 👆</div>
+  </div>
+  <div class="footer">
+    Powered by musicdl · 后端跑在新加坡 VPS · 任何地方可访问
   </div>
 </div>
 
-<!-- 武力榜 -->
-<div class="power-section">
-  <div class="section-label">⚔️ 球队武力值 · TOP 20</div>
-  <div class="power-list">
+<script>
+// Cloudflare Tunnel 地址
+const API_BASE = 'https://screen-camp-turtle-stored.trycloudflare.com';
 
-    <div class="power-item top">
-      <div class="pos">🥇</div><div class="flag">🇦🇷</div><div class="name">阿根廷</div>
-      <div class="bar-wrap"><div class="bar" style="width:96%;background:#ff4757"></div></div>
-      <div class="val" style="color:#ff4757">96</div>
-    </div>
-    <div class="power-item top">
-      <div class="pos">🥈</div><div class="flag">🇫🇷</div><div class="name">法国</div>
-      <div class="bar-wrap"><div class="bar" style="width:96%;background:#ff4757"></div></div>
-      <div class="val" style="color:#ff4757">96</div>
-    </div>
-    <div class="power-item top">
-      <div class="pos">🥉</div><div class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</div><div class="name">英格兰</div>
-      <div class="bar-wrap"><div class="bar" style="width:93%;background:#ff4757"></div></div>
-      <div class="val" style="color:#ff4757">93</div>
-    </div>
-    <div class="power-item top">
-      <div class="pos">4</div><div class="flag">🇧🇷</div><div class="name">巴西</div>
-      <div class="bar-wrap"><div class="bar" style="width:92%;background:#ff4757"></div></div>
-      <div class="val" style="color:#ff4757">92</div>
-    </div>
-    <div class="power-item top">
-      <div class="pos">5</div><div class="flag">🇪🇸</div><div class="name">西班牙</div>
-      <div class="bar-wrap"><div class="bar" style="width:92%;background:#ff4757"></div></div>
-      <div class="val" style="color:#ff4757">92</div>
-    </div>
-    <div class="power-item top">
-      <div class="pos">6</div><div class="flag">🇩🇪</div><div class="name">德国</div>
-      <div class="bar-wrap"><div class="bar" style="width:90%;background:#ff4757"></div></div>
-      <div class="val" style="color:#ff4757">90</div>
-    </div>
-    <div class="power-item">
-      <div class="pos">7</div><div class="flag">🇵🇹</div><div class="name">葡萄牙</div>
-      <div class="bar-wrap"><div class="bar" style="width:89%;background:#ff8c00"></div></div>
-      <div class="val" style="color:#ff8c00">89</div>
-    </div>
-    <div class="power-item">
-      <div class="pos">8</div><div class="flag">🇳🇱</div><div class="name">荷兰</div>
-      <div class="bar-wrap"><div class="bar" style="width:87%;background:#ff8c00"></div></div>
-      <div class="val" style="color:#ff8c00">87</div>
-    </div>
-    <div class="power-item">
-      <div class="pos">9</div><div class="flag">🇺🇾</div><div class="name">乌拉圭</div>
-      <div class="bar-wrap"><div class="bar" style="width:86%;background:#ff8c00"></div></div>
-      <div class="val" style="color:#ff8c00">86</div>
-    </div>
-    <div class="power-item">
-      <div class="pos">10</div><div class="flag">🇲🇦</div><div class="name">摩洛哥</div>
-      <div class="bar-wrap"><div class="bar" style="width:85%;background:#ff8c00"></div></div>
-      <div class="val" style="color:#ff8c00">85</div>
-    </div>
-    <div class="power-item">
-      <div class="pos">11</div><div class="flag">🇧🇪</div><div class="name">比利时</div>
-      <div class="bar-wrap"><div class="bar" style="width:84%;background:#ff8c00"></div></div>
-      <div class="val" style="color:#ff8c00">84</div>
-    </div>
-    <div class="power-item">
-      <div class="pos">12</div><div class="flag">🇨🇴</div><div class="name">哥伦比亚</div>
-      <div class="bar-wrap"><div class="bar" style="width:84%;background:#ff8c00"></div></div>
-      <div class="val" style="color:#ff8c00">84</div>
-    </div>
-    <div class="power-item">
-      <div class="pos">13</div><div class="flag">🇭🇷</div><div class="name">克罗地亚</div>
-      <div class="bar-wrap"><div class="bar" style="width:84%;background:#ff8c00"></div></div>
-      <div class="val" style="color:#ff8c00">84</div>
-    </div>
-    <div class="power-item">
-      <div class="pos">14</div><div class="flag">🇯🇵</div><div class="name">日本</div>
-      <div class="bar-wrap"><div class="bar" style="width:79%;background:#ffd700"></div></div>
-      <div class="val" style="color:#ffd700">79</div>
-    </div>
-    <div class="power-item">
-      <div class="pos">15</div><div class="flag">🇺🇸</div><div class="name">美国</div>
-      <div class="bar-wrap"><div class="bar" style="width:79%;background:#ffd700"></div></div>
-      <div class="val" style="color:#ffd700">79</div>
-    </div>
-    <div class="power-item">
-      <div class="pos">16</div><div class="flag">🇪🇨</div><div class="name">厄瓜多尔</div>
-      <div class="bar-wrap"><div class="bar" style="width:78%;background:#ffd700"></div></div>
-      <div class="val" style="color:#ffd700">78</div>
-    </div>
-    <div class="power-item">
-      <div class="pos">17</div><div class="flag">🇰🇷</div><div class="name">韩国</div>
-      <div class="bar-wrap"><div class="bar" style="width:78%;background:#ffd700"></div></div>
-      <div class="val" style="color:#ffd700">78</div>
-    </div>
-    <div class="power-item">
-      <div class="pos">18</div><div class="flag">🇸🇪</div><div class="name">瑞典</div>
-      <div class="bar-wrap"><div class="bar" style="width:74%;background:#ffd700"></div></div>
-      <div class="val" style="color:#ffd700">74</div>
-    </div>
-    <div class="power-item">
-      <div class="pos">19</div><div class="flag">🇨🇮</div><div class="name">科特迪瓦</div>
-      <div class="bar-wrap"><div class="bar" style="width:74%;background:#ffd700"></div></div>
-      <div class="val" style="color:#ffd700">74</div>
-    </div>
-    <div class="power-item">
-      <div class="pos">20</div><div class="flag">🇹🇷</div><div class="name">土耳其</div>
-      <div class="bar-wrap"><div class="bar" style="width:73%;background:#ffd700"></div></div>
-      <div class="val" style="color:#ffd700">73</div>
-    </div>
+async function search() {
+  const q = document.getElementById('q').value.trim();
+  if (!q) return;
+  const btn = document.querySelector('button');
+  btn.disabled = true; btn.textContent = '搜索中...';
+  document.getElementById('results').innerHTML = '<div class="status">🔍 正在搜索：' + q + ' ...</div>';
+  try {
+    const resp = await fetch(API_BASE + '/search?q=' + encodeURIComponent(q));
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    if (data.error) throw new Error(data.error);
+    renderResults(data.results, q);
+  } catch (e) {
+    document.getElementById('results').innerHTML = '<div class="status">❌ 搜索失败：' + e.message + '</div>';
+  }
+  btn.disabled = false; btn.textContent = '搜索';
+}
 
-  </div>
-</div>
+function renderResults(results, q) {
+  const div = document.getElementById('results');
+  if (!results || results.length === 0) {
+    div.innerHTML = '<div class="empty">没找到「' + q + '」相关歌曲，换个关键词试试</div>';
+    return;
+  }
+  let html = '<div class="status">找到 <b>' + results.length + '</b> 个结果，点击直接下载</div>';
+  results.forEach((r, i) => {
+    const tagClass = 'tag-' + r.source.toLowerCase();
+    const safeName = (r.song_name + ' - ' + r.singers).replace(/[<>"']/g, '');
+    html += `
+      <div class="result">
+        <div class="info">
+          <div class="song-name">${r.song_name}</div>
+          <div class="meta">
+            <span class="source-tag ${tagClass}">${r.source}</span>
+            ${r.singers} · ${r.duration || ''}
+          </div>
+        </div>
+        <a class="download-btn" href="${r.download_url}" download target="_blank" rel="noopener">⬇ 下载</a>
+      </div>
+    `;
+  });
+  div.innerHTML = html;
+}
 
-<footer>
-  武力值为综合评估 · 非官方 · 仅供娱乐<br>
-  数据来源：FIFA官方
-</footer>
+document.getElementById('q').addEventListener('keydown', e => {
+  if (e.key === 'Enter') search();
+});
+</script>
 </body>
 </html>
